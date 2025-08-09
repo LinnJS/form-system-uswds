@@ -11,8 +11,8 @@ const ThemeImage = (props: Props) => {
 
   return (
     <>
-      <Image {...rest} src={srcLight} className="block dark:hidden" />
-      <Image {...rest} src={srcDark} className="hidden dark:block" />
+      <Image {...rest} src={srcLight} alt="" className="block dark:hidden" />
+      <Image {...rest} src={srcDark} alt="" className="hidden dark:block" />
     </>
   );
 };

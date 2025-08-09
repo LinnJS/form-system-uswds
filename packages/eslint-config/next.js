@@ -6,7 +6,8 @@ import pluginReactHooks from "eslint-plugin-react-hooks";
 import pluginReact from "eslint-plugin-react";
 import globals from "globals";
 import pluginNext from "@next/eslint-plugin-next";
-import { config as baseConfig } from "./base.js";
+import turboPlugin from "eslint-plugin-turbo";
+import onlyWarn from "eslint-plugin-only-warn";
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -18,7 +19,6 @@ const compat = new FlatCompat({
  * @type {import("eslint").Linter.Config[]}
  * */
 export const nextJsConfig = [
-  ...baseConfig,
   js.configs.recommended,
   eslintConfigPrettier,
   ...tseslint.configs.recommended,
@@ -29,16 +29,39 @@ export const nextJsConfig = [
       ...pluginReact.configs.flat.recommended.languageOptions,
       globals: {
         ...globals.serviceworker,
+        ...globals.browser,
       },
     },
   },
   {
     plugins: {
       "@next/next": pluginNext,
+      turbo: turboPlugin,
     },
     rules: {
       ...pluginNext.configs.recommended.rules,
       ...pluginNext.configs["core-web-vitals"].rules,
+      "turbo/no-undeclared-env-vars": "warn",
+      
+      // TypeScript rules (without type checking)
+      "@typescript-eslint/array-type": "off",
+      "@typescript-eslint/consistent-type-definitions": "off",
+      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "@typescript-eslint/no-explicit-any": "error",
+      
+      // Code quality rules
+      "no-console": [
+        "error",
+        {
+          allow: ["warn", "error", "info", "debug"],
+        },
+      ],
+      "no-debugger": "error",
+      "no-trailing-spaces": "error",
+      "eol-last": ["error", "always"],
+      "linebreak-style": ["error", "unix"],
+      "prefer-const": "error",
+      "no-var": "error",
     },
   },
   {
@@ -52,9 +75,17 @@ export const nextJsConfig = [
       "react/react-in-jsx-scope": "off",
     },
   },
+  {
+    plugins: {
+      onlyWarn,
+    },
+  },
+  {
+    ignores: ["dist/**", ".next", "node_modules", "build", ".turbo"],
+  },
   // Override for Next.js specific files
   {
-    files: ["next.config.js", "tailwind.config.js", "postcss.config.js"],
+    files: ["next.config.js", "tailwind.config.js", "postcss.config.js", "*.config.cjs"],
     rules: {
       "@typescript-eslint/explicit-function-return-type": "off",
     },
