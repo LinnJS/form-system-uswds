@@ -8,12 +8,12 @@ type Props = Omit<ImageProps, "src"> & {
 };
 
 const ThemeImage = (props: Props) => {
-  const { srcLight, srcDark, ...rest } = props;
+  const { srcLight, srcDark, alt, ...rest } = props;
 
   return (
     <>
-      <Image {...rest} src={srcLight} alt="" className="block dark:hidden" />
-      <Image {...rest} src={srcDark} alt="" className="hidden dark:block" />
+      <Image {...rest} src={srcLight} alt={alt} className="block dark:hidden" />
+      <Image {...rest} src={srcDark} alt={alt} className="hidden dark:block" />
     </>
   );
 };
