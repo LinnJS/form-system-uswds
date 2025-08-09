@@ -4,6 +4,7 @@ import turboPlugin from "eslint-plugin-turbo";
 import tseslint from "typescript-eslint";
 import onlyWarn from "eslint-plugin-only-warn";
 import tsdoc from "eslint-plugin-tsdoc";
+import tailwindcss from "eslint-plugin-tailwindcss";
 
 /**
  * A shared ESLint configuration for the repository.
@@ -69,6 +70,24 @@ export const config = [
   {
     plugins: {
       onlyWarn,
+    },
+  },
+  // Tailwind CSS configuration
+  {
+    plugins: {
+      tailwindcss,
+    },
+    rules: {
+      ...tailwindcss.configs.recommended.rules,
+      "tailwindcss/classnames-order": "warn",
+      "tailwindcss/no-custom-classname": "off",  // Allow custom classes
+      "tailwindcss/no-contradicting-classname": "error",
+    },
+    settings: {
+      tailwindcss: {
+        callees: ["cn", "clsx", "cva"],
+        config: "tailwind.config.js",
+      },
     },
   },
   {

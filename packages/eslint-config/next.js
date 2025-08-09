@@ -9,6 +9,7 @@ import pluginNext from "@next/eslint-plugin-next";
 import turboPlugin from "eslint-plugin-turbo";
 import onlyWarn from "eslint-plugin-only-warn";
 import tsdoc from "eslint-plugin-tsdoc";
+import tailwindcss from "eslint-plugin-tailwindcss";
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -48,7 +49,11 @@ export const nextJsConfig = [
       // TypeScript rules (without type checking)
       "@typescript-eslint/array-type": "off",
       "@typescript-eslint/consistent-type-definitions": "off",
+      // Note: consistent-type-imports requires type checking which conflicts with Next.js
+      // This rule is disabled for Next.js apps
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "@typescript-eslint/require-await": "off",
+      "@typescript-eslint/no-misused-promises": "off",
       "@typescript-eslint/no-explicit-any": "error",
       
       // Code quality rules
@@ -85,6 +90,24 @@ export const nextJsConfig = [
       onlyWarn,
     },
   },
+  // Tailwind CSS configuration
+  {
+    plugins: {
+      tailwindcss,
+    },
+    rules: {
+      ...tailwindcss.configs.recommended.rules,
+      "tailwindcss/classnames-order": "warn",
+      "tailwindcss/no-custom-classname": "off",  // Allow custom classes
+      "tailwindcss/no-contradicting-classname": "error",
+    },
+    settings: {
+      tailwindcss: {
+        callees: ["cn", "clsx", "cva"],
+        config: "tailwind.config.cjs",
+      },
+    },
+  },
   {
     ignores: ["dist/**", ".next", "node_modules", "build", ".turbo"],
   },
@@ -93,6 +116,39 @@ export const nextJsConfig = [
     files: ["next.config.js", "tailwind.config.js", "postcss.config.js", "*.config.cjs"],
     rules: {
       "@typescript-eslint/explicit-function-return-type": "off",
+    },
+  },
+  // Override for scripts directory - allow console.log
+  {
+    files: ["scripts/**/*.ts", "scripts/**/*.js"],
+    rules: {
+      "no-console": "off",
+      "@typescript-eslint/explicit-function-return-type": "off",
+    },
+  },
+  // Override for test files
+  {
+    files: ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
+    rules: {
+      "no-console": "off",
+      "@typescript-eslint/explicit-function-return-type": "off",
+    },
+  },
+  // Override for config files
+  {
+    files: ["*.config.js", "*.config.ts", "*.config.mjs"],
+    rules: {
+      "@typescript-eslint/explicit-function-return-type": "off",
+    },
+  },
+  // Stricter rules for components
+  {
+    files: ["**/components/**/*.tsx", "**/src/components/**/*.tsx"],
+    rules: {
+      // Enforce TSDoc comments for exported components
+      "tsdoc/syntax": "warn",
+      // Ensure all exports have proper types - off for React components as JSX.Element is implicit
+      "@typescript-eslint/explicit-module-boundary-types": "off",
     },
   },
 ];
