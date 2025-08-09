@@ -7,9 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from "./card";
-import { Button } from "./button";
+import { Button } from "../button";
 
-const meta: Meta<typeof Card> = {
+const meta = {
   title: "Components/Card",
   component: Card,
   parameters: {
@@ -23,11 +23,11 @@ const meta: Meta<typeof Card> = {
       description: "The visual style variant of the card",
     },
   },
-};
+} satisfies Meta<typeof Card>;
 
 export default meta;
 
-type Story = StoryObj<typeof Card>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (

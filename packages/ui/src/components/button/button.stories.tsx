@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "./button";
 
-const meta: Meta<typeof Button> = {
+const meta = {
   title: "Components/Button",
   component: Button,
   parameters: {
@@ -25,15 +25,22 @@ const meta: Meta<typeof Button> = {
     },
     onClick: { action: "clicked" },
   },
-};
+} satisfies Meta<typeof Button>;
 
 export default meta;
 
-type Story = StoryObj<typeof Button>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
     children: "Button",
+    variant: "default",
+  },
+};
+
+export const Primary: Story = {
+  args: {
+    children: "Primary Button",
     variant: "default",
   },
 };

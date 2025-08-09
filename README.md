@@ -17,48 +17,63 @@ This project provides a comprehensive form system that combines USWDS design pri
 
 ## Packages
 
-| Package | Description |
-|---------|-------------|
-| `@acme/ui` | Core USWDS React component library with compiled CSS |
-| `@acme/form` | Advanced form components and validation built on `@acme/ui` |
-| `@acme/form-renderer` | Dynamic form rendering engine for JSON-based forms |
-| `@acme/uswds-tailwind-preset` | Optional Tailwind CSS preset for custom styling |
+| Package | Description | Status |
+|---------|-------------|--------|
+| `@acme/ui` | Core React component library with Tailwind CSS | ✅ Implemented |
+| `@acme/eslint-config` | Shared ESLint configuration | ✅ Implemented |
+| `@acme/tailwind-config` | Shared Tailwind CSS configuration | ✅ Implemented |
+| `@acme/typescript-config` | Shared TypeScript configuration | ✅ Implemented |
+| `@acme/form` | Advanced form components and validation | 🚧 Planned |
+| `@acme/form-renderer` | Dynamic form rendering engine | 🚧 Planned |
+| `@acme/uswds-tailwind-preset` | USWDS Tailwind preset | 🚧 Planned |
 
 ## Installation
 
+**Note: This is currently a monorepo under development. NPM packages are not yet published.**
+
+For development:
 ```bash
-# Using npm
-npm install @acme/ui @acme/form
+# Clone the repository
+git clone https://github.com/linnjs/form-system-uswds.git
+cd form-system-uswds
 
-# Using yarn
-yarn add @acme/ui @acme/form
+# Install dependencies
+pnpm install
 
-# Using pnpm
-pnpm add @acme/ui @acme/form
+# Build all packages
+pnpm build
 ```
 
 ## Usage
 
-### Standard Setup (No Build Tools Required)
+### Current Implementation
 
-```jsx
-// Import pre-compiled CSS
-import '@acme/ui/tokens.css';
-import '@acme/ui/styles.css';
+The `@acme/ui` package provides React components styled with Tailwind CSS and Class Variance Authority (CVA):
 
+```tsx
 // Import components
-import { Button, TextInput, Form } from '@acme/ui';
-import { FormValidator } from '@acme/form';
+import { Button, Card, CardHeader, CardTitle, CardContent, Code } from '@acme/ui';
 
-function MyForm() {
+function MyApp() {
   return (
-    <Form>
-      <TextInput label="Email" type="email" required />
-      <Button type="submit">Submit</Button>
-    </Form>
+    <Card>
+      <CardHeader>
+        <CardTitle>Example Card</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Button variant="default" size="md">Click me</Button>
+        <Code>console.log('Hello')</Code>
+      </CardContent>
+    </Card>
   );
 }
 ```
+
+#### Available Components
+
+- **Button**: Multiple variants (default, destructive, outline, secondary, ghost, link) and sizes (sm, default, lg, icon)
+- **Card**: Compound component with CardHeader, CardTitle, CardDescription, CardContent, CardFooter
+- **Code**: Inline code display component
 
 ### With Tailwind CSS
 
@@ -151,6 +166,17 @@ pnpm test
 
 # Run linting
 pnpm lint
+
+# Run type checking
+pnpm check-types
+
+# Start Storybook for component development
+cd packages/ui
+pnpm dev          # Without auto-opening browser
+pnpm dev:open     # With auto-opening browser
+
+# Build Storybook static site
+pnpm build-storybook
 ```
 
 ### Project Structure
@@ -158,14 +184,23 @@ pnpm lint
 ```text
 .
 ├── apps/
-│   ├── docs/              # Documentation site
-│   └── web/               # Component showcase and testing
+│   ├── docs/                    # Documentation site (Next.js)
+│   └── web/                     # Component showcase (Next.js)
 ├── packages/
-│   ├── ui/                # Core component library
-│   ├── form/              # Form components
-│   ├── form-renderer/     # Dynamic form engine
-│   └── uswds-tailwind-preset/  # Tailwind configuration
-└── turbo.json             # Turborepo configuration
+│   ├── ui/                      # Core component library
+│   │   ├── src/
+│   │   │   ├── components/      # React components
+│   │   │   │   ├── button/
+│   │   │   │   ├── card/
+│   │   │   │   └── code/
+│   │   │   ├── foundations/     # Typography stories
+│   │   │   ├── lib/            # Utilities
+│   │   │   └── styles/         # Global CSS
+│   │   └── .storybook/         # Storybook configuration
+│   ├── eslint-config/          # Shared ESLint rules
+│   ├── tailwind-config/        # Shared Tailwind configuration
+│   └── typescript-config/      # Shared TypeScript configs
+└── turbo.json                  # Turborepo configuration
 ```
 
 ## Accessibility
@@ -228,8 +263,13 @@ This is a proof of concept (POC) implementation. While functional, it's under ac
 ### Phase 1: Foundation (Current)
 
 - [x] Core component architecture
-- [x] Basic USWDS components (Button, TextInput, Select)
 - [x] Monorepo setup with Turborepo
+- [x] Component library with TypeScript
+- [x] Tailwind CSS integration with shared config
+- [x] Storybook for component development
+- [x] Class Variance Authority (CVA) for component variants
+- [x] ESLint and TypeScript configurations
+- [x] Button, Card, and Code components
 - [ ] Pre-compiled CSS distribution
 - [ ] Basic form validation
 - [ ] Initial accessibility testing

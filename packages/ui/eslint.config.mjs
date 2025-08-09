@@ -8,6 +8,7 @@ export default [
       "eslint.config.mjs", 
       "tailwind.config.cjs", 
       "postcss.config.cjs",
+      "vite.config.mjs",
       "storybook-static/**",
       ".storybook/**",
       "**/*.stories.ts",
