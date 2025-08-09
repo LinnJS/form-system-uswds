@@ -1,4 +1,6 @@
-import { Button } from "@repo/ui/button";
+"use client";
+
+import { Button } from "@acme/ui/button";
 import Image, { type ImageProps } from "next/image";
 import { Header } from "~/components/Header";
 
@@ -68,8 +70,9 @@ export default function Home() {
           </a>
         </div>
         <Button
-          appName="web"
+          variant="outline"
           className="flex h-10 items-center justify-center rounded-full border border-solid border-black/10 px-4 text-sm transition-colors hover:border-transparent hover:bg-gray-100 sm:h-12 sm:min-w-44 sm:px-5 sm:text-base dark:border-white/20 dark:hover:bg-gray-900"
+          onClick={() => alert("Hello from your web app!")}
         >
           Open alert
         </Button>

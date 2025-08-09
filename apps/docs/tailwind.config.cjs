@@ -1,4 +1,4 @@
-const sharedConfig = require('@repo/tailwind-config')
+const sharedConfig = require('@acme/tailwind-config')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {

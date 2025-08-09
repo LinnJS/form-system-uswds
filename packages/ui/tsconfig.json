@@ -1,8 +1,8 @@
 {
-  "extends": "@repo/typescript-config/react-library.json",
+  "extends": "@acme/typescript-config/react-library.json",
   "compilerOptions": {
     "outDir": "dist"
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src", "src/**/*.d.ts", ".storybook/*.ts", ".storybook/*.tsx", "vite.config.mjs"],
+  "exclude": ["node_modules", "dist", "storybook-static", "**/*.stories.tsx"]
 }
