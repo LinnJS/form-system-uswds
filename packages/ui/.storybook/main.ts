@@ -41,12 +41,6 @@ const config: StorybookConfig = {
       };
     }
     
-    // Auto-inject React import to avoid needing it in every story file
-    config.esbuild = {
-      ...config.esbuild,
-      jsxInject: `import React from 'react'`,
-    };
-    
     return config;
   },
 };
