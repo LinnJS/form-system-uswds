@@ -25,60 +25,73 @@ pnpm start        # Start production server
 ## Architecture & Package Structure
 
 ### Monorepo Layout
+
 - **apps/web**: Main application (Next.js 15, port 3000)
 - **apps/docs**: Documentation site (Next.js 15, port 3001)
 - **packages/ui**: Component library (@repo/ui) - exports React components directly from source
 - **packages/eslint-config**: Shared ESLint configurations (@repo/eslint-config)
 - **packages/typescript-config**: Shared TypeScript configs (@repo/typescript-config)
+- **packages/tailwind-config**: Shared Tailwind CSS configuration (@repo/tailwind-config)
 
 ### Key Technical Decisions
+
 - **Node.js 22** required (check .nvmrc)
 - **pnpm 9+** for package management with workspaces
 - **React 19.1.0** with Next.js 15.4.2
 - **TypeScript 5.8.3** with strict mode enabled
+- **Tailwind CSS 3.4+** with shared configuration package
 - Components exported directly from source (no build step for packages/ui)
 - Turborepo for orchestrating builds and caching
 
 ## Development Standards
 
 ### TypeScript Configuration
+
 - Strict mode enabled with `noUncheckedIndexedAccess`
 - Module resolution: bundler
 - Target: ES2022
 - JSX: react-jsx
 
 ### Code Style
+
 - 2-space indentation (enforced by .editorconfig)
 - Unix line endings (LF)
 - UTF-8 encoding
 - ESLint v9 with flat config
 - Prettier for formatting
 - No console.log except in scripts/tests/configs
+- Tailwind CSS for styling with utility-first approach
 
 ### Component Development
+
 When creating components in packages/ui:
+
 - Export from packages/ui/src/index.tsx
 - Use TSDoc comments for documentation
 - Follow accessibility guidelines (WCAG 2.1 AA)
 - Components should be functional with TypeScript types
+- Use clsx for dynamic class composition
+- Follow Tailwind CSS best practices
 
 ## Current Implementation Status
 
 ### What Exists
+
 - Basic monorepo structure with Turborepo
 - Two Next.js apps with minimal scaffolding
 - Placeholder Button and Card components in @repo/ui
 - Shared ESLint and TypeScript configurations
+- Tailwind CSS integration with shared configuration
 - MIT License and contribution guidelines
 
 ### What's Missing (Mentioned in README but not implemented)
+
 - USWDS form components
 - @acme/form package for advanced form components
 - @acme/form-renderer package for dynamic rendering
 - @acme/uswds-tailwind-preset package
 - Testing framework (no Jest/Vitest configured)
 - Storybook for component documentation
-- CSS/styling system for USWDS
 - Accessibility testing automation
 - GitHub Actions workflows
 
@@ -92,6 +105,7 @@ When creating components in packages/ui:
 ## Commit Standards
 
 Follow conventional commits format:
+
 - feat: New feature
 - fix: Bug fix
 - docs: Documentation changes
@@ -103,9 +117,16 @@ Follow conventional commits format:
 ## Build Pipeline (Turborepo)
 
 The turbo.json defines these task dependencies:
+
 - `build` depends on upstream builds
 - `check-types` depends on upstream check-types
 - `dev` runs without dependencies (parallel)
 - `lint` depends on upstream lints
 
 When making changes that affect multiple packages, run commands from the root to leverage Turborepo's caching and parallelization.
+
+# important-instruction-reminders
+Do what has been asked; nothing more, nothing less.
+NEVER create files unless they're absolutely necessary for achieving your goal.
+ALWAYS prefer editing an existing file to creating a new one.
+NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.

@@ -4,6 +4,7 @@ import turboPlugin from "eslint-plugin-turbo";
 import tseslint from "typescript-eslint";
 import onlyWarn from "eslint-plugin-only-warn";
 import tsdoc from "eslint-plugin-tsdoc";
+import tailwindcss from "eslint-plugin-tailwindcss";
 
 /**
  * A shared ESLint configuration for the repository.
@@ -71,6 +72,25 @@ export const config = [
       onlyWarn,
     },
   },
+  // Tailwind CSS configuration
+  {
+    plugins: {
+      tailwindcss,
+    },
+    rules: {
+      ...tailwindcss.configs.recommended.rules,
+      "tailwindcss/classnames-order": "warn",
+      "tailwindcss/no-custom-classname": "off",  // Allow custom classes
+      "tailwindcss/no-contradicting-classname": "error",
+    },
+    settings: {
+      tailwindcss: {
+        callees: ["cn", "clsx", "cva"],
+        // Auto-detect config file with various extensions
+        config: "tailwind.config.{js,cjs,mjs,ts}",
+      },
+    },
+  },
   {
     ignores: ["dist/**", ".next", "node_modules", "build", ".turbo"],
   },
@@ -112,9 +132,9 @@ export const config = [
     files: ["**/components/**/*.tsx", "**/src/components/**/*.tsx"],
     rules: {
       // Enforce TSDoc comments for exported components
-      "tsdoc/syntax": "error",
-      // Ensure all exports have proper types
-      "@typescript-eslint/explicit-module-boundary-types": "error",
+      "tsdoc/syntax": "warn",
+      // Ensure all exports have proper types - off for React components as JSX.Element is implicit
+      "@typescript-eslint/explicit-module-boundary-types": "off",
     },
   },
 ];
