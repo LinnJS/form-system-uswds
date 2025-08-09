@@ -29,20 +29,18 @@ This project provides a comprehensive form system that combines USWDS design pri
 
 ## Installation
 
-**Note: This is currently a monorepo under development. NPM packages are not yet published.**
-
-For development:
 ```bash
-# Clone the repository
-git clone https://github.com/linnjs/form-system-uswds.git
-cd form-system-uswds
+# Using npm
+npm install @acme/ui
 
-# Install dependencies
-pnpm install
+# Using yarn
+yarn add @acme/ui
 
-# Build all packages
-pnpm build
+# Using pnpm
+pnpm add @acme/ui
 ```
+
+**Note: Packages are not yet published to npm. This shows the intended installation method once published.**
 
 ## Usage
 
