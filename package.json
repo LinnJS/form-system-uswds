@@ -9,6 +9,7 @@
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
+    "eslint-plugin-tailwindcss": "^3.18.2",
     "prettier": "^3.6.2",
     "turbo": "^2.5.5",
     "typescript": "5.8.3"
@@ -16,5 +17,8 @@
   "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=22"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1"
   }
 }

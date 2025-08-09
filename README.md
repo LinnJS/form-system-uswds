@@ -62,13 +62,64 @@ function MyForm() {
 
 ### With Tailwind CSS
 
+This project includes Tailwind CSS integration for custom styling and rapid UI development.
+
+#### Setting up Tailwind in your app
+
+1. Install required dependencies:
+```bash
+pnpm add -D tailwindcss postcss autoprefixer
+```
+
+2. Create or update your `tailwind.config.js`:
 ```js
 // tailwind.config.js
+const sharedConfig = require('@repo/tailwind-config')
+
 module.exports = {
-  presets: [require('@acme/uswds-tailwind-preset')],
-  // Your custom configuration
+  presets: [sharedConfig],
+  content: [
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    // Include UI package components
+    '../../packages/ui/src/**/*.{js,ts,jsx,tsx}',
+  ],
+  theme: {
+    extend: {
+      // Your custom theme extensions
+    },
+  },
 }
 ```
+
+3. Add Tailwind directives to your CSS:
+```css
+/* globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+4. Configure PostCSS:
+```js
+// postcss.config.js
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+```
+
+#### Using the shared Tailwind configuration
+
+The `@repo/tailwind-config` package provides a consistent design system across all applications with:
+- Custom color palettes (primary and secondary scales)
+- Geist font family configuration
+- Responsive breakpoints
+- Dark mode support
+
+See the [Tailwind configuration documentation](./packages/tailwind-config/README.md) for more details on available utilities and customization options.
 
 ## Development
 
