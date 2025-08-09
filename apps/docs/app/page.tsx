@@ -1,5 +1,6 @@
 import { Button } from "@repo/ui/button";
 import Image, { type ImageProps } from "next/image";
+import { Header } from "~/components/Header";
 
 type Props = Omit<ImageProps, "src"> & {
   srcLight: string;
@@ -19,8 +20,9 @@ const ThemeImage = (props: Props) => {
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 gap-16 font-sans">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+    <div className="grid grid-rows-[auto_1fr_20px] items-center justify-items-center min-h-screen gap-16 font-sans">
+      <Header />
+      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start p-8 sm:p-20">
         <ThemeImage
           className="dark:invert"
           srcLight="turborepo-dark.svg"

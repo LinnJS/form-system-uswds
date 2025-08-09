@@ -8,6 +8,7 @@ import globals from "globals";
 import pluginNext from "@next/eslint-plugin-next";
 import turboPlugin from "eslint-plugin-turbo";
 import onlyWarn from "eslint-plugin-only-warn";
+import tsdoc from "eslint-plugin-tsdoc";
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -37,6 +38,7 @@ export const nextJsConfig = [
     plugins: {
       "@next/next": pluginNext,
       turbo: turboPlugin,
+      tsdoc,
     },
     rules: {
       ...pluginNext.configs.recommended.rules,
@@ -62,6 +64,9 @@ export const nextJsConfig = [
       "linebreak-style": ["error", "unix"],
       "prefer-const": "error",
       "no-var": "error",
+      
+      // Documentation rules
+      "tsdoc/syntax": "error",
     },
   },
   {
