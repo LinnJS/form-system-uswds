@@ -4,14 +4,30 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "inputs": ["$TURBO_DEFAULT$", ".env*", "src/**", ".storybook/**"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", "storybook-static/**"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "inputs": ["$TURBO_DEFAULT$", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
+    },
+    "typecheck": {
+      "dependsOn": ["^typecheck"],
+      "inputs": ["$TURBO_DEFAULT$", "**/*.ts", "**/*.tsx"]
     },
     "check-types": {
-      "dependsOn": ["^check-types"]
+      "dependsOn": ["^check-types"],
+      "inputs": ["$TURBO_DEFAULT$", "**/*.ts", "**/*.tsx"]
+    },
+    "lint:all": {
+      "dependsOn": ["lint", "typecheck", "check-types"]
+    },
+    "lint:fix": {
+      "dependsOn": ["^lint:fix"],
+      "inputs": ["$TURBO_DEFAULT$", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
+    },
+    "lint:fix:all": {
+      "dependsOn": ["lint:fix", "typecheck", "check-types"]
     },
     "dev": {
       "cache": false,
@@ -25,9 +41,9 @@
       "cache": false,
       "persistent": true
     },
-    "build-storybook": {
-      "dependsOn": ["^build"],
-      "outputs": ["storybook-static/**"]
+    "test": {
+      "dependsOn": ["build"],
+      "cache": false
     }
   }
 }

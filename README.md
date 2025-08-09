@@ -175,6 +175,13 @@ pnpm dev:open     # With auto-opening browser
 
 # Build Storybook static site
 pnpm build-storybook
+
+# Run tests
+pnpm test                # Run all tests (lint, type-check, build, storybook tests)
+
+# Run Storybook tests specifically
+pnpm test:storybook      # Run tests with running Storybook
+pnpm test:storybook:ci   # Run tests in CI mode (builds and serves Storybook)
 ```
 
 ### Project Structure
@@ -216,6 +223,15 @@ We take accessibility seriously. All components are tested against:
 - Lighthouse: Accessibility score ≥ 95
 - Keyboard testing: Full form submission without mouse
 - Focus management: Error summary with proper focus sequencing
+
+### Component Testing
+
+All components include:
+
+- **Interaction tests**: Using Storybook play functions with Testing Library
+- **Accessibility tests**: Automated axe-core checks via @storybook/addon-a11y
+- **Visual testing**: Storybook stories for all component variants
+- **Test runner**: Playwright-based test runner for CI/CD integration
 
 ## Browser Support
 

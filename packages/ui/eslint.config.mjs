@@ -9,6 +9,7 @@ export default [
       "tailwind.config.cjs", 
       "postcss.config.cjs",
       "vite.config.mjs",
+      "test-runner-jest.config.js",
       "storybook-static/**",
       ".storybook/**",
       "**/*.stories.ts",

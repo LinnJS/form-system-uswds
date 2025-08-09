@@ -10,6 +10,12 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    a11y: {
+      element: '#storybook-root',
+      config: {},
+      options: {},
+      manual: false,
+    },
   },
 };
 

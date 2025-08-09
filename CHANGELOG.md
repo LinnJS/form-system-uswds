@@ -32,6 +32,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Storybook build scripts (dev, dev:open, build-storybook)
   - Updated Turbo configuration for new scripts
   - Proper TypeScript and ESLint configurations for Storybook
+- **Testing Infrastructure:**
+  - Playwright testing integration for Storybook (@storybook/test-runner)
+  - Accessibility testing addon (@storybook/addon-a11y)
+  - Interaction tests using Storybook play functions on ALL stories
+  - Test runner configuration for CI/CD pipelines
+  - Automated accessibility checks with axe-core
+  - CI test scripts for automated testing (test-simple.sh, test-storybook-ci.sh)
+  - GitHub Actions workflow for continuous integration
+  - Complete test coverage for Button (11 stories), Card (6 stories), Code (5 stories), and Typography (2 stories)
 
 ### Changed
 

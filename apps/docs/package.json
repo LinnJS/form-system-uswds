@@ -8,7 +8,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "lint:fix": "next lint --fix",
+    "typecheck": "tsc --noEmit",
+    "check-types": "tsc --noEmit",
+    "lint:all": "pnpm lint && pnpm typecheck",
+    "lint:fix:all": "pnpm lint:fix && pnpm typecheck"
   },
   "dependencies": {
     "@acme/tailwind-config": "workspace:^",

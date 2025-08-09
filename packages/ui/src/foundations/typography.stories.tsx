@@ -1,4 +1,6 @@
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
+import { expect, within } from "@storybook/test";
 import { Button } from "../components/button";
 
 const meta = {
@@ -25,13 +27,19 @@ export const FontShowcase: Story = {
       <div className="space-y-4">
         <h3 className="text-lg font-semibold mb-2">Font Weights</h3>
         <p className="font-thin">Thin (100) - The quick brown fox jumps over the lazy dog</p>
-        <p className="font-extralight">Extra Light (200) - The quick brown fox jumps over the lazy dog</p>
+        <p className="font-extralight">
+          Extra Light (200) - The quick brown fox jumps over the lazy dog
+        </p>
         <p className="font-light">Light (300) - The quick brown fox jumps over the lazy dog</p>
         <p className="font-normal">Regular (400) - The quick brown fox jumps over the lazy dog</p>
         <p className="font-medium">Medium (500) - The quick brown fox jumps over the lazy dog</p>
-        <p className="font-semibold">Semibold (600) - The quick brown fox jumps over the lazy dog</p>
+        <p className="font-semibold">
+          Semibold (600) - The quick brown fox jumps over the lazy dog
+        </p>
         <p className="font-bold">Bold (700) - The quick brown fox jumps over the lazy dog</p>
-        <p className="font-extrabold">Extra Bold (800) - The quick brown fox jumps over the lazy dog</p>
+        <p className="font-extrabold">
+          Extra Bold (800) - The quick brown fox jumps over the lazy dog
+        </p>
         <p className="font-black">Black (900) - The quick brown fox jumps over the lazy dog</p>
       </div>
 
@@ -61,51 +69,92 @@ export const FontShowcase: Story = {
       <div className="space-y-4">
         <h3 className="text-lg font-semibold mb-2">Line Heights</h3>
         <p className="leading-none">
-          Leading None (1) - Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-          Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Leading None (1) - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua.
         </p>
         <p className="leading-tight mt-4">
-          Leading Tight (1.25) - Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-          Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Leading Tight (1.25) - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
         <p className="leading-snug mt-4">
-          Leading Snug (1.375) - Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-          Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Leading Snug (1.375) - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
         <p className="leading-normal mt-4">
-          Leading Normal (1.5) - Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-          Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Leading Normal (1.5) - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
         <p className="leading-relaxed mt-4">
-          Leading Relaxed (1.625) - Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-          Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Leading Relaxed (1.625) - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
         <p className="leading-loose mt-4">
-          Leading Loose (2) - Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-          Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Leading Loose (2) - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
       </div>
 
       <div className="space-y-4">
         <h3 className="text-lg font-semibold mb-2">Letter Spacing</h3>
-        <p className="tracking-tighter">Tracking Tighter (-0.05em) - The quick brown fox jumps over the lazy dog</p>
-        <p className="tracking-tight">Tracking Tight (-0.025em) - The quick brown fox jumps over the lazy dog</p>
-        <p className="tracking-normal">Tracking Normal (0em) - The quick brown fox jumps over the lazy dog</p>
-        <p className="tracking-wide">Tracking Wide (0.025em) - The quick brown fox jumps over the lazy dog</p>
-        <p className="tracking-wider">Tracking Wider (0.05em) - The quick brown fox jumps over the lazy dog</p>
-        <p className="tracking-widest">Tracking Widest (0.1em) - The quick brown fox jumps over the lazy dog</p>
+        <p className="tracking-tighter">
+          Tracking Tighter (-0.05em) - The quick brown fox jumps over the lazy dog
+        </p>
+        <p className="tracking-tight">
+          Tracking Tight (-0.025em) - The quick brown fox jumps over the lazy dog
+        </p>
+        <p className="tracking-normal">
+          Tracking Normal (0em) - The quick brown fox jumps over the lazy dog
+        </p>
+        <p className="tracking-wide">
+          Tracking Wide (0.025em) - The quick brown fox jumps over the lazy dog
+        </p>
+        <p className="tracking-wider">
+          Tracking Wider (0.05em) - The quick brown fox jumps over the lazy dog
+        </p>
+        <p className="tracking-widest">
+          Tracking Widest (0.1em) - The quick brown fox jumps over the lazy dog
+        </p>
       </div>
 
       <div className="space-y-4">
         <h3 className="text-lg font-semibold mb-2">Monospace Font</h3>
         <code className="block p-4 bg-muted rounded-md font-mono">
-          const Button = (&#123; children &#125;) =&gt; &#123;<br />
-          &nbsp;&nbsp;return &lt;button&gt;&#123;children&#125;&lt;/button&gt;;<br />
+          const Button = (&#123; children &#125;) =&gt; &#123;
+          <br />
+          &nbsp;&nbsp;return &lt;button&gt;&#123;children&#125;&lt;/button&gt;;
+          <br />
           &#125;;
         </code>
       </div>
     </div>
   ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Test that Inter font is being used
+    const heading = canvas.getByText("Inter Font Family");
+    await expect(heading).toBeInTheDocument();
+
+    // Test font weights are displayed
+    await expect(canvas.getByText(/Thin \(100\)/)).toBeInTheDocument();
+    await expect(canvas.getByText(/Bold \(700\)/)).toBeInTheDocument();
+    await expect(canvas.getByText(/Black \(900\)/)).toBeInTheDocument();
+
+    // Test heading hierarchy
+    const h1 = canvas.getByText("Heading 1 - Page Title");
+    await expect(h1.tagName).toBe("H1");
+
+    const h2Elements = canvasElement.querySelectorAll("h2");
+    await expect(h2Elements.length).toBeGreaterThan(0);
+
+    // Test text sizes
+    await expect(canvas.getByText(/Extra Small \(xs\)/)).toBeInTheDocument();
+    await expect(canvas.getByText(/5X Large \(5xl\)/)).toBeInTheDocument();
+
+    // Test monospace font
+    const codeBlock = canvasElement.querySelector("code.font-mono");
+    await expect(codeBlock).toBeInTheDocument();
+  },
 };
 
 export const ColorSystem: Story = {
@@ -171,4 +220,33 @@ export const ColorSystem: Story = {
       </div>
     </div>
   ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Test color system heading
+    const heading = canvas.getByText("Color System");
+    await expect(heading).toBeInTheDocument();
+
+    // Test semantic color sections - use getAllByText since there are multiple elements
+    await expect(canvas.getByText("Background")).toBeInTheDocument();
+    await expect(canvas.getByText("Primary")).toBeInTheDocument();
+    const secondaryElements = canvas.getAllByText("Secondary");
+    await expect(secondaryElements).toHaveLength(2); // One label, one button
+    const destructiveElements = canvas.getAllByText("Destructive");
+    await expect(destructiveElements).toHaveLength(2); // One label, one button
+
+    // Test text colors section
+    const textColorsHeading = canvas.getByText("Text Colors");
+    await expect(textColorsHeading).toBeInTheDocument();
+
+    // Test that buttons are rendered with different variants
+    const defaultButton = canvas.getByRole("button", { name: /Default Button/i });
+    const destructiveButton = canvas.getByRole("button", { name: /^Destructive$/i });
+    await expect(defaultButton).toBeInTheDocument();
+    await expect(destructiveButton).toBeInTheDocument();
+
+    // Test color boxes are rendered
+    const colorBoxes = canvasElement.querySelectorAll('[class*="bg-"]');
+    await expect(colorBoxes.length).toBeGreaterThan(0);
+  },
 };

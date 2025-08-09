@@ -11,12 +11,14 @@ function getAbsolutePath(value: string): string {
 
 const config: StorybookConfig = {
   stories: [
-    "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
+    "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    "../src/**/*.mdx"
   ],
   addons: [
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
-    "@storybook/addon-links",
+    getAbsolutePath("@storybook/addon-essentials"),
+    getAbsolutePath("@storybook/addon-interactions"),
+    getAbsolutePath("@storybook/addon-links"),
+    getAbsolutePath("@storybook/addon-a11y"),
   ],
   framework: {
     name: "@storybook/react-vite",
@@ -24,6 +26,11 @@ const config: StorybookConfig = {
   },
   core: {
     builder: "@storybook/builder-vite",
+    disableTelemetry: true,
+  },
+  typescript: {
+    check: false,
+    reactDocgen: "react-docgen-typescript"
   },
   viteFinal: async (config) => {
     // Fix storybook/test import issue
@@ -33,6 +40,12 @@ const config: StorybookConfig = {
         'storybook/test': '@storybook/test',
       };
     }
+    
+    // Auto-inject React import to avoid needing it in every story file
+    config.esbuild = {
+      ...config.esbuild,
+      jsxInject: `import React from 'react'`,
+    };
     
     return config;
   },
