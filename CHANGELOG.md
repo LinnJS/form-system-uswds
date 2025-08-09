@@ -39,7 +39,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Test runner configuration for CI/CD pipelines
   - Automated accessibility checks with axe-core
   - CI test scripts for automated testing (test-simple.sh, test-storybook-ci.sh)
-  - GitHub Actions workflow for continuous integration
+  - GitHub Actions workflow for continuous integration with lint, typecheck, build, and test jobs
+  - Test job in CI pipeline to run Storybook tests with Playwright
   - Complete test coverage for Button (11 stories), Card (6 stories), Code (5 stories), and Typography (2 stories)
 
 ### Changed
@@ -77,7 +78,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed Tailwind class ordering issues
 - Fixed Next.js apps to use client components for interactivity
 - Fixed all TypeScript type errors across the monorepo
-- Fixed story files to use latest Storybook patterns (`satisfies Meta`)
 
 ### Security
 
