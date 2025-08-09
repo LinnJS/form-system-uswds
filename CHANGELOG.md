@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
 - Initial monorepo setup with Turborepo and pnpm workspaces
 - Basic Next.js applications (web and docs)
 - Shared ESLint and TypeScript configurations
@@ -17,16 +18,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CLAUDE.md for AI-assisted development
 
 ### Changed
+
 - Nothing yet
 
 ### Deprecated
+
 - Nothing yet
 
 ### Removed
+
 - Nothing yet
 
 ### Fixed
+
 - Nothing yet
 
 ### Security
+
 - Nothing yet

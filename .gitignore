@@ -64,3 +64,6 @@ lerna-debug.log*
 # Testing
 *.lcov
 
+
+*storybook.log
+storybook-static

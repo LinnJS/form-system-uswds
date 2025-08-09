@@ -1,4 +1,4 @@
-import { Button } from "@repo/ui/button";
+import { Button } from "@acme/ui/button";
 import Image, { type ImageProps } from "next/image";
 import { Header } from "~/components/Header";
 

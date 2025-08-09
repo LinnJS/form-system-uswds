@@ -1,5 +1,5 @@
 {
-  "name": "@repo/tailwind-config",
+  "name": "@acme/tailwind-config",
   "version": "0.0.0",
   "private": true,
   "main": "index.js",

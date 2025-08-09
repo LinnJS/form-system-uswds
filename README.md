@@ -74,7 +74,7 @@ pnpm add -D tailwindcss postcss autoprefixer
 2. Create or update your `tailwind.config.js`:
 ```js
 // tailwind.config.js
-const sharedConfig = require('@repo/tailwind-config')
+const sharedConfig = require('@acme/tailwind-config')
 
 module.exports = {
   presets: [sharedConfig],
@@ -113,7 +113,7 @@ module.exports = {
 
 #### Using the shared Tailwind configuration
 
-The `@repo/tailwind-config` package provides a consistent design system across all applications with:
+The `@acme/tailwind-config` package provides a consistent design system across all applications with:
 - Custom color palettes (primary and secondary scales)
 - Geist font family configuration
 - Responsive breakpoints
