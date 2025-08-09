@@ -80,9 +80,6 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Install Playwright browsers
         run: pnpm exec playwright install chromium
-      - run: pnpm turbo run build
-        env:
-          TURBO_TELEMETRY_DISABLED: 1
       - run: pnpm turbo run test
         env:
           TURBO_TELEMETRY_DISABLED: 1
