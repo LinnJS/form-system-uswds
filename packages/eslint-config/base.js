@@ -86,7 +86,8 @@ export const config = [
     settings: {
       tailwindcss: {
         callees: ["cn", "clsx", "cva"],
-        config: "tailwind.config.cjs",
+        // Auto-detect config file with various extensions
+        config: "tailwind.config.{js,cjs,mjs,ts}",
       },
     },
   },
@@ -131,9 +132,9 @@ export const config = [
     files: ["**/components/**/*.tsx", "**/src/components/**/*.tsx"],
     rules: {
       // Enforce TSDoc comments for exported components
-      "tsdoc/syntax": "error",
-      // Ensure all exports have proper types
-      "@typescript-eslint/explicit-module-boundary-types": "error",
+      "tsdoc/syntax": "warn",
+      // Ensure all exports have proper types - off for React components as JSX.Element is implicit
+      "@typescript-eslint/explicit-module-boundary-types": "off",
     },
   },
 ];

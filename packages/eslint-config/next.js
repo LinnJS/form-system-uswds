@@ -1,15 +1,9 @@
 import { FlatCompat } from "@eslint/eslintrc";
-import js from "@eslint/js";
-import eslintConfigPrettier from "eslint-config-prettier";
-import tseslint from "typescript-eslint";
+import { config as baseConfig } from "./base.js";
 import pluginReactHooks from "eslint-plugin-react-hooks";
 import pluginReact from "eslint-plugin-react";
 import globals from "globals";
 import pluginNext from "@next/eslint-plugin-next";
-import turboPlugin from "eslint-plugin-turbo";
-import onlyWarn from "eslint-plugin-only-warn";
-import tsdoc from "eslint-plugin-tsdoc";
-import tailwindcss from "eslint-plugin-tailwindcss";
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -20,10 +14,59 @@ const compat = new FlatCompat({
  *
  * @type {import("eslint").Linter.Config[]}
  * */
+// Filter out type-checking configs from base that conflict with Next.js
+const baseConfigWithoutTypeChecking = baseConfig.map(config => {
+  // Skip arrays and undefined
+  if (Array.isArray(config) || config === undefined) return null;
+  
+  // Check for TypeScript type-checking configs to exclude
+  const isTypeCheckConfig = 
+    config.name?.includes('typescript-eslint/recommended-type-checked') ||
+    config.name?.includes('typescript-eslint/stylistic-type-checked');
+  
+  // Check for projectService in languageOptions
+  const hasProjectService = config.languageOptions?.parserOptions?.projectService;
+  
+  if (isTypeCheckConfig || hasProjectService) {
+    return null;
+  }
+  
+  // For configs with rules, filter out type-checking rules
+  if (config.rules) {
+    const filteredRules = Object.entries(config.rules).reduce((acc, [key, value]) => {
+      // Skip type-checking rules
+      const typeCheckRules = [
+        '@typescript-eslint/await-thenable',
+        '@typescript-eslint/no-floating-promises',
+        '@typescript-eslint/no-for-in-array',
+        '@typescript-eslint/no-implied-eval',
+        '@typescript-eslint/no-misused-promises',
+        '@typescript-eslint/no-unnecessary-type-assertion',
+        '@typescript-eslint/no-unsafe-argument',
+        '@typescript-eslint/no-unsafe-assignment',
+        '@typescript-eslint/no-unsafe-call',
+        '@typescript-eslint/no-unsafe-member-access',
+        '@typescript-eslint/no-unsafe-return',
+        '@typescript-eslint/require-await',
+        '@typescript-eslint/restrict-plus-operands',
+        '@typescript-eslint/restrict-template-expressions',
+        '@typescript-eslint/unbound-method'
+      ];
+      
+      if (!typeCheckRules.includes(key)) {
+        acc[key] = value;
+      }
+      return acc;
+    }, {});
+    
+    return { ...config, rules: filteredRules };
+  }
+  
+  return config;
+}).filter(Boolean);
+
 export const nextJsConfig = [
-  js.configs.recommended,
-  eslintConfigPrettier,
-  ...tseslint.configs.recommended,
+  ...baseConfigWithoutTypeChecking,
   ...compat.extends("next/core-web-vitals"),
   {
     ...pluginReact.configs.flat.recommended,
@@ -35,43 +78,16 @@ export const nextJsConfig = [
       },
     },
   },
+  // Next.js specific plugin and rules
   {
     plugins: {
       "@next/next": pluginNext,
-      turbo: turboPlugin,
-      tsdoc,
     },
     rules: {
       ...pluginNext.configs.recommended.rules,
       ...pluginNext.configs["core-web-vitals"].rules,
-      "turbo/no-undeclared-env-vars": "warn",
-      
-      // TypeScript rules (without type checking)
-      "@typescript-eslint/array-type": "off",
-      "@typescript-eslint/consistent-type-definitions": "off",
-      // Note: consistent-type-imports requires type checking which conflicts with Next.js
-      // This rule is disabled for Next.js apps
-      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
-      "@typescript-eslint/require-await": "off",
-      "@typescript-eslint/no-misused-promises": "off",
-      "@typescript-eslint/no-explicit-any": "error",
-      
-      // Code quality rules
-      "no-console": [
-        "error",
-        {
-          allow: ["warn", "error", "info", "debug"],
-        },
-      ],
-      "no-debugger": "error",
-      "no-trailing-spaces": "error",
-      "eol-last": ["error", "always"],
-      "linebreak-style": ["error", "unix"],
-      "prefer-const": "error",
-      "no-var": "error",
-      
-      // Documentation rules
-      "tsdoc/syntax": "error",
+      // Override consistent-type-imports since it requires type checking
+      "@typescript-eslint/consistent-type-imports": "off",
     },
   },
   {
@@ -85,70 +101,6 @@ export const nextJsConfig = [
       "react/react-in-jsx-scope": "off",
     },
   },
-  {
-    plugins: {
-      onlyWarn,
-    },
-  },
-  // Tailwind CSS configuration
-  {
-    plugins: {
-      tailwindcss,
-    },
-    rules: {
-      ...tailwindcss.configs.recommended.rules,
-      "tailwindcss/classnames-order": "warn",
-      "tailwindcss/no-custom-classname": "off",  // Allow custom classes
-      "tailwindcss/no-contradicting-classname": "error",
-    },
-    settings: {
-      tailwindcss: {
-        callees: ["cn", "clsx", "cva"],
-        config: "tailwind.config.cjs",
-      },
-    },
-  },
-  {
-    ignores: ["dist/**", ".next", "node_modules", "build", ".turbo"],
-  },
-  // Override for Next.js specific files
-  {
-    files: ["next.config.js", "tailwind.config.js", "postcss.config.js", "*.config.cjs"],
-    rules: {
-      "@typescript-eslint/explicit-function-return-type": "off",
-    },
-  },
-  // Override for scripts directory - allow console.log
-  {
-    files: ["scripts/**/*.ts", "scripts/**/*.js"],
-    rules: {
-      "no-console": "off",
-      "@typescript-eslint/explicit-function-return-type": "off",
-    },
-  },
-  // Override for test files
-  {
-    files: ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
-    rules: {
-      "no-console": "off",
-      "@typescript-eslint/explicit-function-return-type": "off",
-    },
-  },
-  // Override for config files
-  {
-    files: ["*.config.js", "*.config.ts", "*.config.mjs"],
-    rules: {
-      "@typescript-eslint/explicit-function-return-type": "off",
-    },
-  },
-  // Stricter rules for components
-  {
-    files: ["**/components/**/*.tsx", "**/src/components/**/*.tsx"],
-    rules: {
-      // Enforce TSDoc comments for exported components
-      "tsdoc/syntax": "warn",
-      // Ensure all exports have proper types - off for React components as JSX.Element is implicit
-      "@typescript-eslint/explicit-module-boundary-types": "off",
-    },
-  },
+  // Note: All other configurations (onlyWarn, tailwindcss, ignores, overrides) 
+  // are inherited from baseConfig
 ];
