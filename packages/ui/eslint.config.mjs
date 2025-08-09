@@ -4,6 +4,6 @@ import { config } from "@repo/eslint-config/react-internal";
 export default [
   ...config,
   {
-    ignores: ["eslint.config.mjs"],
+    ignores: ["eslint.config.mjs", "tailwind.config.cjs"],
   },
 ];

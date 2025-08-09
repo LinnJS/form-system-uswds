@@ -86,7 +86,7 @@ export const config = [
     settings: {
       tailwindcss: {
         callees: ["cn", "clsx", "cva"],
-        config: "tailwind.config.js",
+        config: "tailwind.config.cjs",
       },
     },
   },
