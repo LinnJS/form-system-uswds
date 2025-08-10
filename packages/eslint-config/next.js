@@ -101,6 +101,14 @@ export const nextJsConfig = [
       "react/react-in-jsx-scope": "off",
     },
   },
+  // Special handling for Next.js error boundary files
+  {
+    files: ["**/error.tsx", "**/error.ts", "**/error.jsx", "**/error.js"],
+    rules: {
+      "@typescript-eslint/no-unused-vars": "off",
+      "no-unused-vars": "off",
+    },
+  },
   // Note: All other configurations (onlyWarn, tailwindcss, ignores, overrides) 
   // are inherited from baseConfig
 ];

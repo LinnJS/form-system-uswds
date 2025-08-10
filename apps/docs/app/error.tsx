@@ -21,14 +21,14 @@ export default function Error({
         Something went wrong!
       </h2>
       <p className="mb-8 max-w-md text-center text-gray-600 dark:text-gray-400">
-        We apologize for the inconvenience. An error occurred while processing your request.
+        We apologize for the inconvenience. An error occurred while loading the documentation.
       </p>
       <div className="flex gap-4">
         <Button onClick={reset} variant="default">
           Try again
         </Button>
         <Button onClick={() => window.location.href = "/"} variant="outline">
-          Go home
+          Go to docs home
         </Button>
       </div>
     </div>
