@@ -55,6 +55,92 @@ import { Code } from "@acme/ui/code";
 <Code>console.log("Hello World")</Code>;
 ```
 
+### Form Validation
+
+Complete form system with react-hook-form and Zod integration.
+
+```tsx
+import { Form, FormField, FormItem, FormLabel, FormInput, FormMessage } from "@acme/ui";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+const schema = z.object({
+  email: z.string().email("Invalid email"),
+  password: z.string().min(8, "Minimum 8 characters"),
+});
+
+function LoginForm() {
+  const form = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: { email: "", password: "" },
+  });
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormInput type="email" {...field} />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </form>
+    </Form>
+  );
+}
+```
+
+**Features:**
+
+- Schema-based validation with Zod
+- Built-in validation patterns (email, phone, SSN, ZIP code)
+- Accessible form components with ARIA attributes
+- TypeScript support with full type inference
+
+### Typography
+
+Semantic typography components with multiple variants.
+
+```tsx
+import { Heading, Text, List } from "@acme/ui";
+
+<Heading level={1}>Main Title</Heading>
+<Text size="lg" weight="medium">Body text</Text>
+<List type="unordered">
+  <li>Item 1</li>
+  <li>Item 2</li>
+</List>
+```
+
+**Components:** `Typography`, `Heading`, `Text`, `List`
+**Variants:** h1-h6, p, lead, small, muted, blockquote, code, pre
+
+## Pre-compiled CSS
+
+For non-Tailwind projects, use our pre-compiled CSS distribution:
+
+```html
+<!-- Production (minified ~16KB) -->
+<link rel="stylesheet" href="node_modules/@acme/ui/dist/styles.min.css">
+
+<!-- Development -->
+<link rel="stylesheet" href="node_modules/@acme/ui/dist/styles.css">
+```
+
+**Available Classes:**
+
+- `.btn`, `.btn-default`, `.btn-secondary`, etc.
+- `.card`, `.card-header`, `.card-content`, etc.
+- `.form-field`, `.form-field-input`, `.form-field-label`, etc.
+
+Build CSS: `pnpm build:css`
+
 ## Development
 
 ### Storybook

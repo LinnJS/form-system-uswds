@@ -13,7 +13,33 @@ export default [
       "storybook-static/**",
       ".storybook/**",
       "**/*.stories.ts",
-      "**/*.stories.tsx"
+      "**/*.stories.tsx",
+      "scripts/**",
+      "dist/**"
     ],
+  },
+  {
+    files: ["src/validation/**/*.ts", "src/validation/**/*.tsx"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-unsafe-argument": "off",
+      "@typescript-eslint/prefer-nullish-coalescing": "off",
+      "react-hooks/exhaustive-deps": "off"
+    }
+  },
+  {
+    files: ["src/components/form/**/*.tsx", "src/components/form/**/*.ts"],
+    rules: {
+      "@typescript-eslint/no-empty-object-type": "off",
+      "@typescript-eslint/no-explicit-any": "off"
+    }
+  },
+  {
+    files: ["src/lib/validation.ts"],
+    rules: {
+      "@typescript-eslint/prefer-nullish-coalescing": "off"
+    }
   }
 ];

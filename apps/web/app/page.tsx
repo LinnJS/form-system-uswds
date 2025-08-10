@@ -1,7 +1,9 @@
 "use client";
 
 import { Button } from "@acme/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@acme/ui/card";
 import Image, { type ImageProps } from "next/image";
+import Link from "next/link";
 import { Header } from "~/components/Header";
 
 type Props = Omit<ImageProps, "src"> & {
@@ -22,7 +24,7 @@ const ThemeImage = (props: Props) => {
 
 export default function Home() {
   return (
-    <div className="grid min-h-screen grid-rows-[auto_1fr_20px] place-items-center gap-16 font-sans">
+    <div className="grid min-h-screen grid-rows-[auto_1fr_20px] place-items-center gap-16">
       <Header />
       <main className="row-start-2 flex flex-col items-center gap-8 p-8 sm:items-start sm:p-20">
         <ThemeImage
@@ -34,15 +36,61 @@ export default function Home() {
           height={38}
           priority
         />
-        <ol className="list-inside list-decimal text-center font-mono text-sm sm:text-left">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="rounded bg-black/5 px-1 py-0.5 font-semibold dark:bg-white/10">
-              apps/web/app/page.tsx
-            </code>
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+        <Card className="w-full max-w-2xl">
+          <CardHeader>
+            <CardTitle>Component Showcase</CardTitle>
+            <CardDescription>
+              Explore the available components and features in the @acme/ui library
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Link href="/validation-demo" className="group">
+                <Card className="transition-colors hover:bg-gray-50 dark:hover:bg-gray-900">
+                  <CardHeader>
+                    <CardTitle className="text-lg">Form Validation</CardTitle>
+                    <CardDescription>
+                      React Hook Form + Zod validation with accessible form components
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </Link>
+              
+              <div className="group opacity-50">
+                <Card className="cursor-not-allowed">
+                  <CardHeader>
+                    <CardTitle className="text-lg">Typography System</CardTitle>
+                    <CardDescription>
+                      Semantic typography components with multiple variants (Coming soon)
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </div>
+              
+              <div className="group opacity-50">
+                <Card className="cursor-not-allowed">
+                  <CardHeader>
+                    <CardTitle className="text-lg">USWDS Components</CardTitle>
+                    <CardDescription>
+                      Full suite of U.S. Web Design System components (Coming soon)
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </div>
+              
+              <div className="group opacity-50">
+                <Card className="cursor-not-allowed">
+                  <CardHeader>
+                    <CardTitle className="text-lg">Accessibility Testing</CardTitle>
+                    <CardDescription>
+                      Interactive a11y testing playground (Coming soon)
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         <div className="flex flex-col items-center gap-4 sm:flex-row">
           <a
@@ -69,15 +117,27 @@ export default function Home() {
             Read our docs
           </a>
         </div>
-        <Button
-          variant="outline"
-          className="flex h-10 items-center justify-center rounded-full border border-solid border-black/10 px-4 text-sm transition-colors hover:border-transparent hover:bg-gray-100 sm:h-12 sm:min-w-44 sm:px-5 sm:text-base dark:border-white/20 dark:hover:bg-gray-900"
-          onClick={() => alert("Hello from your web app!")}
-        >
-          Open alert
-        </Button>
+        
+        <div className="flex flex-col items-center gap-4 sm:flex-row">
+          <Button
+            variant="outline"
+            className="flex h-10 items-center justify-center rounded-full border border-solid border-black/10 px-4 text-sm transition-colors hover:border-transparent hover:bg-gray-100 sm:h-12 sm:min-w-44 sm:px-5 sm:text-base dark:border-white/20 dark:hover:bg-gray-900"
+            onClick={() => alert("Hello from your web app!")}
+          >
+            Open alert
+          </Button>
+          
+          <Link href="/validation-demo">
+            <Button
+              variant="default"
+              className="flex h-10 items-center justify-center rounded-full px-4 text-sm transition-colors sm:h-12 sm:min-w-44 sm:px-5 sm:text-base"
+            >
+              Form Validation Demo
+            </Button>
+          </Link>
+        </div>
       </main>
-      <footer className="row-start-3 flex flex-wrap items-center justify-center gap-6 font-sans">
+      <footer className="row-start-3 flex flex-wrap items-center justify-center gap-6">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
           href="https://vercel.com/templates?search=turborepo&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
