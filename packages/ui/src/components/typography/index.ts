@@ -1,4 +1,1 @@
-export * from './typography';
-export * from './heading';
-export * from './text';
-export * from './list';
+export { H1, H2, H3, Paragraph, Lead, Text } from "../../typography";

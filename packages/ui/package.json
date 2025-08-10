@@ -22,6 +22,10 @@
       "types": "./src/components/code/index.ts",
       "import": "./src/components/code/index.ts"
     },
+    "./typography": {
+      "types": "./src/components/typography/index.ts",
+      "import": "./src/components/typography/index.ts"
+    },
     "./form-field": {
       "types": "./src/components/form-field/index.ts",
       "import": "./src/components/form-field/index.ts"

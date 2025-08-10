@@ -130,6 +130,6 @@
   }
 
   .prose {
-    @apply max-w-65ch text-gray-700 leading-relaxed;
+    @apply max-w-prose text-gray-700 leading-relaxed;
   }
 }

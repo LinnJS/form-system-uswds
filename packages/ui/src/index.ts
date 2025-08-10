@@ -69,35 +69,12 @@ export type {
 
 // Typography exports
 export {
-  Typography,
-  typographyVariants,
-  Heading,
-  headingVariants,
   H1,
   H2,
   H3,
-  H4,
-  H5,
-  H6,
-  Text,
-  textVariants,
   Paragraph,
   Lead,
-  Small,
-  Strong,
-  Emphasis,
-  Blockquote,
-  InlineCode,
-  Pre,
-  Kbd,
-  List,
-  listVariants,
-  ListItem,
-  UnorderedList,
-  OrderedList,
-  DescriptionList,
-  DescriptionTerm,
-  DescriptionDetails,
+  Text,
 } from "./components/typography";
 
 // Utility exports
