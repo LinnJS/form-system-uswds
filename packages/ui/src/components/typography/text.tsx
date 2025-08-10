@@ -27,8 +27,8 @@ const textVariants = cva("", {
       default: "",
       primary: "text-blue-600",
       secondary: "text-gray-600",
-      success: "text-green-600",
-      warning: "text-yellow-600",
+      success: "text-green-700",
+      warning: "text-yellow-700",
       danger: "text-red-600",
       muted: "text-gray-500",
       white: "text-white",
@@ -211,7 +211,7 @@ export const Kbd = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElemen
     <kbd
       ref={ref}
       className={cn(
-        "inline-flex items-center rounded border border-gray-200 bg-gray-100 px-1.5 py-0.5 font-mono text-xs",
+        "inline-flex items-center rounded border border-gray-300 bg-gray-50 px-1.5 py-0.5 font-mono text-xs text-gray-700",
         className
       )}
       {...props}

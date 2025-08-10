@@ -55,7 +55,7 @@ export default function Home() {
                   </CardHeader>
                 </Card>
               </Link>
-              
+
               <div className="group opacity-50">
                 <Card className="cursor-not-allowed">
                   <CardHeader>
@@ -66,7 +66,7 @@ export default function Home() {
                   </CardHeader>
                 </Card>
               </div>
-              
+
               <div className="group opacity-50">
                 <Card className="cursor-not-allowed">
                   <CardHeader>
@@ -77,7 +77,7 @@ export default function Home() {
                   </CardHeader>
                 </Card>
               </div>
-              
+
               <div className="group opacity-50">
                 <Card className="cursor-not-allowed">
                   <CardHeader>
@@ -117,7 +117,7 @@ export default function Home() {
             Read our docs
           </a>
         </div>
-        
+
         <div className="flex flex-col items-center gap-4 sm:flex-row">
           <Button
             variant="outline"
@@ -126,7 +126,7 @@ export default function Home() {
           >
             Open alert
           </Button>
-          
+
           <Link href="/validation-demo">
             <Button
               variant="default"

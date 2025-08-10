@@ -92,9 +92,9 @@ export const LoginForm = () => {
                 onChange={field.onChange}
                 className="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
               />
-              <FormLabel className="!mb-0 !mt-0 font-normal cursor-pointer">
+              <label htmlFor="remember" className="font-normal cursor-pointer">
                 Remember me
-              </FormLabel>
+              </label>
             </FormItem>
           )}
         />
@@ -215,9 +215,9 @@ export const SignupForm = () => {
                 className="h-4 w-4 mt-1 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
               />
               <div className="flex-1">
-                <FormLabel className="!mb-0 font-normal cursor-pointer">
+                <label htmlFor="terms" className="font-normal cursor-pointer">
                   I accept the terms and conditions
-                </FormLabel>
+                </label>
                 <FormMessage />
               </div>
             </FormItem>
