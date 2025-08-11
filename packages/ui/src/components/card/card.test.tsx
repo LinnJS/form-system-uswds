@@ -22,14 +22,17 @@ describe("Card", () => {
   });
 
   it("applies variant classes correctly", () => {
-    const { rerender } = render(<Card variant="default">Default Card</Card>);
-    expect(screen.getByText("Default Card").parentElement).toHaveClass("border-gray-200");
+    const { container, rerender } = render(<Card variant="default">Default Card</Card>);
+    const card = container.firstChild as HTMLElement;
+    expect(card).toHaveClass("usa-card");
 
-    rerender(<Card variant="outline">Outline Card</Card>);
-    expect(screen.getByText("Outline Card").parentElement).toHaveClass("border-2");
+    rerender(<Card variant="flag">Flag Card</Card>);
+    const flagCard = container.firstChild as HTMLElement;
+    expect(flagCard).toHaveClass("usa-card--flag");
 
-    rerender(<Card variant="elevated">Elevated Card</Card>);
-    expect(screen.getByText("Elevated Card").parentElement).toHaveClass("shadow-lg");
+    rerender(<Card variant="media-right">Media Right Card</Card>);
+    const mediaRightCard = container.firstChild as HTMLElement;
+    expect(mediaRightCard).toHaveClass("usa-card--media-right");
   });
 
   it("forwards ref correctly", () => {
@@ -39,7 +42,8 @@ describe("Card", () => {
   });
 
   it("applies custom className", () => {
-    render(<Card className="custom-class">Custom Card</Card>);
-    expect(screen.getByText("Custom Card").parentElement).toHaveClass("custom-class");
+    const { container } = render(<Card className="custom-class">Custom Card</Card>);
+    const card = container.firstChild as HTMLElement;
+    expect(card).toHaveClass("custom-class");
   });
 });

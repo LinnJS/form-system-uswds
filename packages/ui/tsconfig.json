@@ -9,7 +9,9 @@
     ".storybook/*.ts",
     ".storybook/*.tsx",
     "vite.config.mjs",
-    "vitest.config.ts"
+    "vitest.config.ts",
+    "tailwind.config.ts",
+    "postcss.config.cjs"
   ],
   "exclude": ["node_modules", "dist", "storybook-static", "**/*.stories.tsx"]
 }

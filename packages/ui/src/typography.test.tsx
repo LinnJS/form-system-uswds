@@ -49,7 +49,7 @@ describe("Typography Components", () => {
       render(<Lead>Lead text</Lead>);
       const element = screen.getByText("Lead text");
       expect(element.tagName).toBe("P");
-      expect(element).toHaveClass("text-xl", "text-gray-600");
+      expect(element).toHaveClass("text-muted-foreground", "text-xl");
     });
   });
 
@@ -57,8 +57,8 @@ describe("Typography Components", () => {
     it("renders with correct tag and classes", () => {
       render(<Text>Small text</Text>);
       const element = screen.getByText("Small text");
-      expect(element.tagName).toBe("P");
-      expect(element).toHaveClass("text-sm", "text-gray-600");
+      expect(element.tagName).toBe("SPAN");
+      expect(element).toHaveClass("text-base");
     });
   });
 

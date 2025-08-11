@@ -10,21 +10,21 @@ describe("Button", () => {
 
   it("applies variant classes correctly", () => {
     const { rerender } = render(<Button variant="default">Default</Button>);
-    expect(screen.getByRole("button")).toHaveClass("bg-blue-600");
+    expect(screen.getByRole("button")).toHaveClass("usa-button");
 
-    rerender(<Button variant="destructive">Destructive</Button>);
-    expect(screen.getByRole("button")).toHaveClass("bg-red-600");
+    rerender(<Button variant="secondary">Secondary</Button>);
+    expect(screen.getByRole("button")).toHaveClass("usa-button--secondary");
 
     rerender(<Button variant="outline">Outline</Button>);
-    expect(screen.getByRole("button")).toHaveClass("border-gray-300");
+    expect(screen.getByRole("button")).toHaveClass("usa-button--outline");
   });
 
   it("applies size classes correctly", () => {
     const { rerender } = render(<Button size="sm">Small</Button>);
-    expect(screen.getByRole("button")).toHaveClass("h-9");
+    expect(screen.getByRole("button")).toHaveClass("usa-button");
 
     rerender(<Button size="lg">Large</Button>);
-    expect(screen.getByRole("button")).toHaveClass("h-11");
+    expect(screen.getByRole("button")).toHaveClass("usa-button--big");
   });
 
   it("handles disabled state", () => {

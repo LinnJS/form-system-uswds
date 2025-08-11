@@ -3,8 +3,10 @@ export {
   CardContent,
   CardDescription,
   CardFooter,
+  CardGroup,
   CardHeader,
+  CardImage,
+  CardMedia,
   CardTitle,
-  cardVariants,
 } from "./card";
 export type { CardProps } from "./card";

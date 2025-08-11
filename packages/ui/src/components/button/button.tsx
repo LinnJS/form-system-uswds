@@ -1,52 +1,84 @@
 "use client";
 
-import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
+import { uswdsClasses } from "../../lib/uswds-config";
 import { cn } from "../../lib/utils";
 
-const buttonVariants = cva(
-  "ring-offset-background focus-visible:ring-ring inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-  {
-    variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border-input bg-background hover:bg-accent hover:text-accent-foreground border",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-      },
-      size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "size-10",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-);
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /**
+   * The visual style variant of the button
+   * Maps to USWDS usa-button--[variant]
+   */
+  variant?:
+    | "default"
+    | "secondary"
+    | "accent-cool"
+    | "accent-warm"
+    | "base"
+    | "outline"
+    | "inverse"
+    | "unstyled";
+  /**
+   * The size of the button
+   * Maps to USWDS usa-button--big for "big"/"lg" size
+   * "sm" maps to default for compatibility
+   */
+  size?: "default" | "sm" | "big" | "lg";
+  /**
+   * Whether the button should take full width of its container
+   */
+  fullWidth?: boolean;
+}
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {}
-
+/**
+ * USWDS Button Component
+ * A flexible button component that wraps USWDS button styles
+ */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, ...props }, ref) => {
+  (
+    {
+      className,
+      variant = "default",
+      size = "default",
+      fullWidth = false,
+      type = "button",
+      disabled,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    // Build USWDS classes based on props
+    const buttonClasses = cn(
+      uswdsClasses.button.base,
+      variant === "secondary" && uswdsClasses.button.secondary,
+      variant === "accent-cool" && uswdsClasses.button.accentCool,
+      variant === "accent-warm" && uswdsClasses.button.accentWarm,
+      variant === "base" && uswdsClasses.button.baseStyle,
+      variant === "outline" && uswdsClasses.button.outline,
+      variant === "inverse" && uswdsClasses.button.inverse,
+      variant === "unstyled" && uswdsClasses.button.unstyled,
+      (size === "big" || size === "lg") && uswdsClasses.button.big,
+      fullWidth && "width-full",
+      disabled && "usa-button--disabled",
+      className
+    );
+
     return (
       <button
-        className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
-        type="button"
+        type={type}
+        className={buttonClasses}
+        disabled={disabled}
+        aria-disabled={disabled}
         {...props}
-      />
+      >
+        {children}
+      </button>
     );
   }
 );
 
 Button.displayName = "Button";
 
-export { Button, buttonVariants };
+export { Button };
