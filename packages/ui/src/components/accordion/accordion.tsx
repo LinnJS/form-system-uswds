@@ -1,199 +1,178 @@
 "use client";
 
-import React, { createContext, forwardRef, useContext, useId, useState } from "react";
-import { uswdsClasses } from "../../lib/uswds-config";
+import * as React from "react";
+import { forwardRef, useId, useState } from "react";
 import { cn } from "../../lib/utils";
 
-interface AccordionContextValue {
-  expandedItems: Set<string>;
-  toggleItem: (id: string) => void;
+export interface AccordionProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Allow multiple sections open at once */
   multiselectable?: boolean;
+  /** Add borders to accordion */
   bordered?: boolean;
+  /** Items to be expanded by default */
+  defaultExpanded?: string[];
+  /** Additional Tailwind utilities */
+  twClass?: string;
 }
 
-const AccordionContext = createContext<AccordionContextValue | undefined>(undefined);
-
-const useAccordion = () => {
-  const context = useContext(AccordionContext);
-  if (!context) {
-    throw new Error("Accordion components must be used within an Accordion");
-  }
-  return context;
-};
-
-export interface AccordionProps extends React.HTMLAttributes<HTMLDivElement> {
-  /**
-   * Whether multiple accordion items can be expanded at once
-   * Maps to USWDS usa-accordion--multiselectable
-   */
-  multiselectable?: boolean;
-  /**
-   * Whether the accordion has borders
-   * Maps to USWDS usa-accordion--bordered
-   */
-  bordered?: boolean;
-  /**
-   * Array of item IDs that should be expanded by default
-   */
-  defaultExpanded?: string[];
+export interface AccordionItemProps extends React.HTMLAttributes<HTMLElement> {
+  /** Heading text */
+  heading: string;
+  /** Unique ID for this item */
+  itemId?: string;
+  /** Heading level (h2-h6) */
+  headingLevel?: 2 | 3 | 4 | 5 | 6;
+  /** Whether item is expanded by default */
+  defaultExpanded?: boolean;
+  /** Additional Tailwind utilities */
+  twClass?: string;
 }
 
 /**
- * USWDS Accordion Component
- * Wraps the USWDS accordion with React functionality
+ * Direct USWDS Accordion Component
+ * Implements full USWDS accordion HTML structure with ARIA attributes
  */
-const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
+export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
   (
     {
       className,
-      bordered = false,
       multiselectable = false,
+      bordered = false,
       defaultExpanded = [],
+      twClass,
       children,
       ...props
     },
     ref
   ) => {
-    const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set(defaultExpanded));
-
-    const toggleItem = (id: string) => {
-      setExpandedItems((prev) => {
-        const next = new Set(prev);
-        if (next.has(id)) {
-          next.delete(id);
-        } else {
-          if (!multiselectable) {
-            next.clear();
-          }
-          next.add(id);
-        }
-        return next;
-      });
-    };
-
-    // Build USWDS classes
     const accordionClasses = cn(
-      uswdsClasses.accordion.base,
-      bordered && uswdsClasses.accordion.bordered,
-      multiselectable && uswdsClasses.accordion.multiselectable,
+      "usa-accordion",
+      bordered && "usa-accordion--bordered",
+      twClass,
       className
     );
 
+    // Track expanded items
+    const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set(defaultExpanded));
+
+    const toggleItem = (itemId: string) => {
+      setExpandedItems((prev) => {
+        const newSet = new Set(prev);
+        if (newSet.has(itemId)) {
+          newSet.delete(itemId);
+        } else {
+          if (!multiselectable) {
+            newSet.clear();
+          }
+          newSet.add(itemId);
+        }
+        return newSet;
+      });
+    };
+
+    // Clone children with expanded state
+    const enhancedChildren = React.Children.map(children, (child) => {
+      if (React.isValidElement<AccordionItemProps & { expanded?: boolean; onToggle?: () => void }>(child) && child.type === AccordionItem) {
+        const itemId = child.props.itemId ?? child.props.heading;
+        return React.cloneElement(child, {
+          expanded: expandedItems.has(itemId),
+          onToggle: () => toggleItem(itemId),
+        });
+      }
+      return child;
+    });
+
     return (
-      <AccordionContext.Provider value={{ expandedItems, toggleItem, multiselectable, bordered }}>
-        <div
-          ref={ref}
-          className={accordionClasses}
-          data-allow-multiple={multiselectable || undefined}
-          {...props}
-        >
-          {children}
-        </div>
-      </AccordionContext.Provider>
+      <div
+        ref={ref}
+        className={accordionClasses}
+        data-allow-multiple={multiselectable || undefined}
+        {...props}
+      >
+        {enhancedChildren}
+      </div>
     );
   }
 );
 
 Accordion.displayName = "Accordion";
 
-export interface AccordionItemProps extends React.HTMLAttributes<HTMLDivElement> {
-  /**
-   * Unique ID for the accordion item
-   */
-  id?: string;
-}
-
 /**
- * USWDS Accordion Item
- * Container for accordion button and content
+ * Direct USWDS Accordion Item
+ * Uses proper heading elements and ARIA attributes
  */
-const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>(
-  ({ className, id: providedId, children, ...props }, ref) => {
+export const AccordionItem = forwardRef<
+  HTMLElement,
+  AccordionItemProps & { expanded?: boolean; onToggle?: () => void }
+>(
+  (
+    {
+      className,
+      heading,
+      itemId,
+      headingLevel = 2,
+      defaultExpanded = false,
+      expanded: controlledExpanded,
+      onToggle,
+      twClass,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     const generatedId = useId();
-    const id = providedId ?? generatedId;
+    const id = itemId || generatedId;
+    const contentId = `${id}-content`;
+    const buttonId = `${id}-button`;
+
+    // Use local state if not controlled
+    const [localExpanded, setLocalExpanded] = useState(defaultExpanded);
+    const isExpanded = controlledExpanded !== undefined ? controlledExpanded : localExpanded;
+
+    const handleToggle = () => {
+      if (onToggle) {
+        onToggle();
+      } else {
+        setLocalExpanded(!localExpanded);
+      }
+    };
+
+    const HeadingTag = `h${headingLevel}` as "h2" | "h3" | "h4" | "h5" | "h6";
 
     return (
-      <div ref={ref} className={className} {...props}>
-        {React.Children.map(children, (child) => {
-          if (React.isValidElement(child)) {
-            return React.cloneElement(
-              child as React.ReactElement<AccordionButtonProps | AccordionContentProps>,
-              {
-                "data-accordion-id": id,
-              }
-            );
-          }
-          return child;
-        })}
-      </div>
+      <>
+        <HeadingTag className="usa-accordion__heading">
+          <button
+            ref={ref as any}
+            type="button"
+            className={cn("usa-accordion__button", twClass, className)}
+            aria-expanded={isExpanded}
+            aria-controls={contentId}
+            id={buttonId}
+            onClick={handleToggle}
+            {...props}
+          >
+            {heading}
+          </button>
+        </HeadingTag>
+        <div
+          id={contentId}
+          className="usa-accordion__content usa-prose"
+          hidden={!isExpanded}
+          aria-labelledby={buttonId}
+        >
+          {children}
+        </div>
+      </>
     );
   }
 );
 
 AccordionItem.displayName = "AccordionItem";
 
-export interface AccordionButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  "data-accordion-id"?: string;
-}
+// Legacy exports for compatibility
+export const AccordionButton = AccordionItem;
+export const AccordionContent = ({ children }: { children: React.ReactNode }) => <>{children}</>;
 
-/**
- * USWDS Accordion Button
- * Toggles the accordion content
- */
-const AccordionButton = forwardRef<HTMLButtonElement, AccordionButtonProps>(
-  ({ className, children, "data-accordion-id": accordionId, ...props }, ref) => {
-    const { expandedItems, toggleItem } = useAccordion();
-    const id = accordionId ?? "";
-    const isExpanded = expandedItems.has(id);
-
-    return (
-      <h2 className={uswdsClasses.accordion.heading}>
-        <button
-          ref={ref}
-          type="button"
-          className={cn(uswdsClasses.accordion.button, className)}
-          aria-expanded={isExpanded}
-          aria-controls={`accordion-${id}`}
-          onClick={() => toggleItem(id)}
-          {...props}
-        >
-          {children}
-        </button>
-      </h2>
-    );
-  }
-);
-
-AccordionButton.displayName = "AccordionButton";
-
-export interface AccordionContentProps extends React.HTMLAttributes<HTMLDivElement> {
-  "data-accordion-id"?: string;
-}
-
-/**
- * USWDS Accordion Content
- * The collapsible content area
- */
-const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
-  ({ className, children, "data-accordion-id": accordionId, ...props }, ref) => {
-    const { expandedItems } = useAccordion();
-    const id = accordionId ?? "";
-    const isExpanded = expandedItems.has(id);
-
-    return (
-      <div
-        ref={ref}
-        id={`accordion-${id}`}
-        className={cn(uswdsClasses.accordion.content, className)}
-        hidden={!isExpanded}
-        {...props}
-      >
-        {children}
-      </div>
-    );
-  }
-);
-
-AccordionContent.displayName = "AccordionContent";
-
-export { Accordion, AccordionButton, AccordionContent, AccordionItem };
+export interface AccordionButtonProps extends AccordionItemProps {}
+export interface AccordionContentProps extends React.HTMLAttributes<HTMLDivElement> {}

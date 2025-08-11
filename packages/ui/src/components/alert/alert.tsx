@@ -1,45 +1,31 @@
 "use client";
 
-import React, { forwardRef } from "react";
-import { uswdsClasses } from "../../lib/uswds-config";
+import * as React from "react";
+import { forwardRef } from "react";
 import { cn } from "../../lib/utils";
 
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
-  /**
-   * The type of alert
-   * Maps to USWDS usa-alert--[variant]
-   */
-  variant?: "info" | "success" | "warning" | "error" | "emergency";
-  /**
-   * Whether to use the slim variant
-   * Maps to USWDS usa-alert--slim
-   */
+  /** Alert type/severity */
+  variant?: "info" | "warning" | "error" | "success" | "emergency";
+  /** Slim variant */
   slim?: boolean;
-  /**
-   * Whether to hide the icon
-   * Maps to USWDS usa-alert--no-icon
-   */
+  /** No icon variant */
   noIcon?: boolean;
-  /**
-   * Optional heading for the alert
-   */
+  /** Alert heading */
   heading?: string;
-  /**
-   * Heading level to use for semantic HTML
-   */
-  headingLevel?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-  /**
-   * Whether this is a validation alert
-   * Maps to USWDS usa-alert--validation
-   */
-  validation?: boolean;
+  /** Additional Tailwind utilities */
+  twClass?: string;
+  /** Dismissible alert */
+  dismissible?: boolean;
+  /** Callback when dismissed */
+  onDismiss?: () => void;
 }
 
 /**
- * USWDS Alert Component
- * Displays important information to users
+ * Direct USWDS Alert Component
+ * Implements full USWDS alert HTML structure with proper ARIA
  */
-const Alert = forwardRef<HTMLDivElement, AlertProps>(
+export const Alert = forwardRef<HTMLDivElement, AlertProps>(
   (
     {
       className,
@@ -47,44 +33,68 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(
       slim = false,
       noIcon = false,
       heading,
-      headingLevel = "h4",
-      validation = false,
+      twClass,
+      dismissible = false,
+      onDismiss,
       children,
       ...props
     },
     ref
   ) => {
-    const HeadingTag = headingLevel;
+    const [visible, setVisible] = React.useState(true);
 
-    // Build USWDS classes
+    const handleDismiss = () => {
+      setVisible(false);
+      onDismiss?.();
+    };
+
+    if (!visible) return null;
+
+    const variantClasses = {
+      info: "usa-alert--info",
+      warning: "usa-alert--warning",
+      error: "usa-alert--error",
+      success: "usa-alert--success",
+      emergency: "usa-alert--emergency",
+    };
+
     const alertClasses = cn(
-      uswdsClasses.alert.base,
-      variant === "info" && uswdsClasses.alert.info,
-      variant === "success" && uswdsClasses.alert.success,
-      variant === "warning" && uswdsClasses.alert.warning,
-      variant === "error" && uswdsClasses.alert.error,
-      variant === "emergency" && uswdsClasses.alert.emergency,
-      slim && uswdsClasses.alert.slim,
-      noIcon && uswdsClasses.alert.noIcon,
-      validation && "usa-alert--validation",
+      "usa-alert",
+      variantClasses[variant],
+      slim && "usa-alert--slim",
+      noIcon && "usa-alert--no-icon",
+      twClass,
       className
     );
 
-    // Determine ARIA attributes based on variant
-    const isUrgent = variant === "error" || variant === "emergency";
+    // ARIA role based on variant
+    const role = variant === "error" ? "alert" : variant === "success" ? "status" : "region";
+    const ariaLive = variant === "error" || variant === "emergency" ? "assertive" : "polite";
 
     return (
       <div
         ref={ref}
         className={alertClasses}
-        role={isUrgent ? "alert" : "region"}
-        aria-live={isUrgent ? "assertive" : "polite"}
+        role={role}
+        aria-live={ariaLive}
         aria-atomic="true"
         {...props}
       >
-        <div className={uswdsClasses.alert.body}>
-          {heading && <HeadingTag className={uswdsClasses.alert.heading}>{heading}</HeadingTag>}
-          <p className={uswdsClasses.alert.text}>{children}</p>
+        <div className="usa-alert__body">
+          {heading && <h3 className="usa-alert__heading">{heading}</h3>}
+          <div className="usa-alert__text">{children}</div>
+          {dismissible && (
+            <button
+              type="button"
+              className="usa-button usa-button--unstyled position-absolute padding-1 right-1 top-1"
+              onClick={handleDismiss}
+              aria-label="Close alert"
+            >
+              <svg className="usa-icon" aria-hidden="true" focusable="false" role="img">
+                <use xlinkHref="#close"></use>
+              </svg>
+            </button>
+          )}
         </div>
       </div>
     );
@@ -93,4 +103,37 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(
 
 Alert.displayName = "Alert";
 
-export { Alert };
+/**
+ * Site Alert Component (full-width alerts)
+ */
+export const SiteAlert = forwardRef<HTMLDivElement, AlertProps>(
+  ({ className, variant = "info", slim = false, twClass, children, ...props }, ref) => {
+    const variantClasses = {
+      info: "usa-site-alert--info",
+      warning: "usa-site-alert--info",
+      error: "usa-site-alert--emergency",
+      success: "usa-site-alert--info",
+      emergency: "usa-site-alert--emergency",
+    };
+
+    const siteAlertClasses = cn(
+      "usa-site-alert",
+      variantClasses[variant],
+      slim && "usa-site-alert--slim",
+      twClass,
+      className
+    );
+
+    return (
+      <section ref={ref} className={siteAlertClasses} aria-label="Site alert" {...props}>
+        <div className="usa-alert">
+          <div className="usa-alert__body">
+            <div className="usa-alert__text">{children}</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+);
+
+SiteAlert.displayName = "SiteAlert";

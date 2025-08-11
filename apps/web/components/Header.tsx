@@ -52,12 +52,12 @@ export function Header() {
 
         <div className="flex items-center gap-4">
           <Link href="/validation-demo">
-            <Button size="sm" variant="outline" className="hidden sm:inline-flex">
+            <Button variant="outline" className="hidden sm:inline-flex">
               Try Demo
             </Button>
           </Link>
           <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-            <Button size="sm" className="inline-flex items-center gap-2">
+            <Button className="inline-flex items-center gap-2">
               <GitHubIcon />
               <span className="hidden sm:inline">Star on GitHub</span>
               <span className="sm:hidden">Star</span>

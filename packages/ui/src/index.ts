@@ -1,5 +1,5 @@
 // Button exports
-export { Button } from "./components/button";
+export { Button, ButtonGroup } from "./components/button";
 export type { ButtonProps } from "./components/button";
 
 // Card exports
@@ -26,6 +26,10 @@ export { FormInput, FormSelect, FormTextarea } from "./components/form/form-fiel
 export { FormLabel } from "./components/form/form-label";
 export { FormDescription, FormMessage } from "./components/form/form-message";
 export { FormProvider } from "./components/form/form-provider";
+
+// Direct USWDS Form Components with enhanced accessibility
+export { Input, Textarea, USWDSFormField, USWDSForm, Fieldset } from "./components/form";
+export type { InputProps } from "./components/form";
 
 // Validation schemas and utilities (using Zod)
 export {
@@ -58,7 +62,7 @@ export { H1, H2, H3, Lead, Paragraph, Text } from "./components/typography";
 
 // USWDS Components exports
 // Alert exports
-export { Alert } from "./components/alert";
+export { Alert, SiteAlert } from "./components/alert";
 export type { AlertProps } from "./components/alert";
 
 // Accordion exports
