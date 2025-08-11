@@ -1,44 +1,44 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod";
+import type { Meta } from "@storybook/react";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { loginFormSchema, profileFormSchema, signupFormSchema } from "../../lib/validation";
+import { Button } from "../button";
 import {
   Form,
+  FormDescription,
   FormField,
+  FormInput,
   FormItem,
   FormLabel,
-  FormInput,
-  FormTextarea,
-  FormSelect,
   FormMessage,
-  FormDescription,
-} from './index';
-import { Button } from '../button';
-import { loginFormSchema, signupFormSchema, profileFormSchema } from '../../lib/validation';
+  FormSelect,
+  FormTextarea,
+} from "./index";
 
 const meta = {
-  title: 'Components/Form',
+  title: "Components/Form",
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } satisfies Meta;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
 export const LoginForm = () => {
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       remember: false,
     },
   });
 
   const onSubmit = (data: z.infer<typeof loginFormSchema>) => {
-    console.log('Form submitted:', data);
+    console.log("Form submitted:", data);
     alert(`Login successful!\nEmail: ${data.email}`);
   };
 
@@ -51,11 +51,7 @@ export const LoginForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel required>Email</FormLabel>
-              <FormInput
-                type="email"
-                placeholder="Enter your email"
-                {...field}
-              />
+              <FormInput type="email" placeholder="Enter your email" {...field} />
               <FormMessage />
             </FormItem>
           )}
@@ -67,11 +63,7 @@ export const LoginForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel required>Password</FormLabel>
-              <FormInput
-                type="password"
-                placeholder="Enter your password"
-                {...field}
-              />
+              <FormInput type="password" placeholder="Enter your password" {...field} />
               <FormDescription>
                 Must be at least 8 characters with uppercase, lowercase, and number
               </FormDescription>
@@ -111,17 +103,17 @@ export const SignupForm = () => {
   const form = useForm<z.infer<typeof signupFormSchema>>({
     resolver: zodResolver(signupFormSchema),
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
       acceptTerms: false,
     },
   });
 
   const onSubmit = (data: z.infer<typeof signupFormSchema>) => {
-    console.log('Form submitted:', data);
+    console.log("Form submitted:", data);
     alert(`Signup successful!\nWelcome ${data.firstName} ${data.lastName}!`);
   };
 
@@ -160,11 +152,7 @@ export const SignupForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel required>Email</FormLabel>
-              <FormInput
-                type="email"
-                placeholder="john.doe@example.com"
-                {...field}
-              />
+              <FormInput type="email" placeholder="john.doe@example.com" {...field} />
               <FormMessage />
             </FormItem>
           )}
@@ -176,11 +164,7 @@ export const SignupForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel required>Password</FormLabel>
-              <FormInput
-                type="password"
-                placeholder="Create a strong password"
-                {...field}
-              />
+              <FormInput type="password" placeholder="Create a strong password" {...field} />
               <FormMessage />
             </FormItem>
           )}
@@ -192,11 +176,7 @@ export const SignupForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel required>Confirm Password</FormLabel>
-              <FormInput
-                type="password"
-                placeholder="Confirm your password"
-                {...field}
-              />
+              <FormInput type="password" placeholder="Confirm your password" {...field} />
               <FormMessage />
             </FormItem>
           )}
@@ -236,17 +216,17 @@ export const ProfileForm = () => {
   const form = useForm<z.infer<typeof profileFormSchema>>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'john.doe@example.com',
-      phone: '',
-      bio: '',
+      firstName: "John",
+      lastName: "Doe",
+      email: "john.doe@example.com",
+      phone: "",
+      bio: "",
     },
   });
 
   const onSubmit = (data: z.infer<typeof profileFormSchema>) => {
-    console.log('Form submitted:', data);
-    alert('Profile updated successfully!');
+    console.log("Form submitted:", data);
+    alert("Profile updated successfully!");
   };
 
   return (
@@ -308,14 +288,8 @@ export const ProfileForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Bio</FormLabel>
-              <FormTextarea
-                placeholder="Tell us about yourself..."
-                rows={4}
-                {...field}
-              />
-              <FormDescription>
-                Maximum 500 characters
-              </FormDescription>
+              <FormTextarea placeholder="Tell us about yourself..." rows={4} {...field} />
+              <FormDescription>Maximum 500 characters</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -336,36 +310,37 @@ export const CustomValidation = () => {
   const schema = z.object({
     username: z
       .string()
-      .min(3, 'Username must be at least 3 characters')
-      .max(20, 'Username must be less than 20 characters')
-      .regex(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores'),
-    age: z.coerce
-      .number()
-      .min(18, 'You must be at least 18 years old')
-      .max(120, 'Please enter a valid age'),
-    website: z
-      .string()
-      .url('Please enter a valid URL')
-      .optional()
-      .or(z.literal('')),
-    role: z.enum(['user', 'admin', 'moderator'], {
-      errorMap: () => ({ message: 'Please select a valid role' }),
+      .min(3, "Username must be at least 3 characters")
+      .max(20, "Username must be less than 20 characters")
+      .regex(/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores"),
+    age: z
+      .number({ message: "Age must be a number" })
+      .min(18, "You must be at least 18 years old")
+      .max(120, "Please enter a valid age"),
+    website: z.union([
+      z.string().url("Please enter a valid URL"),
+      z.literal(""),
+    ]).optional(),
+    role: z.enum(["user", "admin", "moderator"], {
+      message: "Please select a valid role",
     }),
   });
 
-  const form = useForm<z.infer<typeof schema>>({
+  type FormData = z.infer<typeof schema>;
+
+  const form = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-      username: '',
-      age: undefined,
-      website: '',
-      role: 'user',
+      username: "",
+      age: 18,
+      website: "",
+      role: "user",
     },
   });
 
-  const onSubmit = (data: z.infer<typeof schema>) => {
-    console.log('Form submitted:', data);
-    alert('Form validated successfully!');
+  const onSubmit = (data: FormData) => {
+    console.log("Form submitted:", data);
+    alert("Form validated successfully!");
   };
 
   return (
@@ -392,7 +367,12 @@ export const CustomValidation = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel required>Age</FormLabel>
-              <FormInput type="number" placeholder="25" {...field} />
+              <FormInput 
+                type="number" 
+                placeholder="25" 
+                {...field}
+                onChange={(e) => field.onChange(e.target.valueAsNumber)}
+              />
               <FormMessage />
             </FormItem>
           )}
@@ -441,11 +421,11 @@ export const CustomValidation = () => {
 
 export const LiveValidation = () => {
   const form = useForm({
-    mode: 'onChange', // Validate on every change
+    mode: "onChange", // Validate on every change
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
   });
 
@@ -460,11 +440,7 @@ export const LiveValidation = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel required>Email</FormLabel>
-              <FormInput
-                type="email"
-                placeholder="Enter your email"
-                {...field}
-              />
+              <FormInput type="email" placeholder="Enter your email" {...field} />
               <FormMessage />
             </FormItem>
           )}
@@ -476,11 +452,7 @@ export const LiveValidation = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel required>Password</FormLabel>
-              <FormInput
-                type="password"
-                placeholder="Enter your password"
-                {...field}
-              />
+              <FormInput type="password" placeholder="Enter your password" {...field} />
               <FormMessage />
             </FormItem>
           )}
@@ -490,8 +462,8 @@ export const LiveValidation = () => {
           <p className="text-sm">
             <strong>Form State:</strong>
           </p>
-          <p className="text-sm">Valid: {isValid ? '✅' : '❌'}</p>
-          <p className="text-sm">Dirty: {isDirty ? 'Yes' : 'No'}</p>
+          <p className="text-sm">Valid: {isValid ? "✅" : "❌"}</p>
+          <p className="text-sm">Dirty: {isDirty ? "Yes" : "No"}</p>
         </div>
 
         <Button type="submit" disabled={!isValid}>

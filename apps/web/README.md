@@ -1,36 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/create-next-app).
+# Form System USWDS - Web Application
 
-## Getting Started
+The main web application showcasing Form System USWDS components and capabilities.
 
-First, run the development server:
+## Overview
+
+This Next.js application serves as the primary demonstration platform for the Form System USWDS component library. It showcases real-world implementations, form validation patterns, and accessibility features.
+
+## Features
+
+- **Component Showcase**: Interactive demos of all USWDS-compliant form components
+- **Form Validation Demo**: Complete form validation using React Hook Form and Zod
+- **Accessibility First**: WCAG 2.1 AA compliant with automated testing
+- **Dark Mode Support**: Full theme switching with Tailwind CSS
+- **TypeScript**: Fully typed with strict mode enabled
+- **Modern Stack**: React 19, Next.js 15, TypeScript 5.8
+
+## Development
+
+### Prerequisites
+
+- Node.js 22+ (check `.nvmrc`)
+- pnpm 10.14.0+
+
+### Getting Started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# From the monorepo root
+pnpm install
 pnpm dev
-# or
-bun dev
+
+# Or from this directory
+pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Available Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load Inter, a custom Google Font.
+```bash
+# Development
+pnpm dev          # Start development server
+pnpm build        # Build for production
+pnpm start        # Start production server
+pnpm lint         # Run ESLint
+pnpm typecheck    # Run TypeScript type checking
 
-## Learn More
+# Testing (from monorepo root)
+pnpm test         # Run all tests including accessibility
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+apps/web/
+├── app/                    # Next.js App Router
+│   ├── layout.tsx         # Root layout with metadata
+│   ├── page.tsx           # Homepage with component demos
+│   ├── validation-demo/   # Form validation demonstration
+│   ├── error.tsx          # Error boundary
+│   ├── loading.tsx        # Loading state
+│   └── not-found.tsx      # 404 page
+├── components/            # Application components
+│   ├── Header.tsx         # Site header with navigation
+│   └── Footer.tsx         # Site footer with links
+└── public/               # Static assets
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Key Features
 
-## Deploy on Vercel
+### Form Validation Demo
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Located at `/validation-demo`, this page demonstrates:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Email, password, and age field validation
+- Real-time validation with Zod schemas
+- Accessible error messages
+- Form submission handling
+- Field-level and form-level validation
+
+### Component Integration
+
+All components from `@acme/ui` are available:
+
+- Typography (H1, H2, H3, Paragraph, Lead, Text)
+- Button with multiple variants
+- Card with compound components
+- Form components (coming soon)
+
+### Styling
+
+- Tailwind CSS with shared configuration
+- CSS custom properties for theming
+- Responsive design with mobile-first approach
+- Dark mode support via CSS classes
+
+## Environment Variables
+
+No environment variables are required for basic development. For production deployments:
+
+```bash
+# .env.local (optional)
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+```
+
+## Deployment
+
+### Vercel (Recommended)
+
+1. Connect your GitHub repository to Vercel
+2. Set the root directory to `apps/web`
+3. Vercel will auto-detect Next.js settings
+4. Deploy
+
+### Docker
+
+```dockerfile
+# Coming soon - Docker support planned for Phase 3
+```
+
+### Static Export
+
+```bash
+pnpm build
+# Output will be in .next directory
+```
+
+## Contributing
+
+Please see the [root CONTRIBUTING.md](../../CONTRIBUTING.md) for contribution guidelines.
+
+## Related
+
+- [Documentation Site](../docs/README.md) - Complete API documentation
+- [UI Package](../../packages/ui/README.md) - Component library source
+- [Root README](../../README.md) - Project overview
+
+## License
+
+MIT - See [LICENSE](../../LICENSE) for details

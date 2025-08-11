@@ -127,10 +127,10 @@ For non-Tailwind projects, use our pre-compiled CSS distribution:
 
 ```html
 <!-- Production (minified ~16KB) -->
-<link rel="stylesheet" href="node_modules/@acme/ui/dist/styles.min.css">
+<link rel="stylesheet" href="node_modules/@acme/ui/dist/styles.min.css" />
 
 <!-- Development -->
-<link rel="stylesheet" href="node_modules/@acme/ui/dist/styles.css">
+<link rel="stylesheet" href="node_modules/@acme/ui/dist/styles.css" />
 ```
 
 **Available Classes:**

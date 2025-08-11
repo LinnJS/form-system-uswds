@@ -1,5 +1,5 @@
-import * as React from "react";
 import { clsx } from "clsx";
+import * as React from "react";
 import { useFormField } from "./form";
 
 export interface FormMessageProps extends React.HTMLAttributes<HTMLParagraphElement> {}
@@ -43,4 +43,4 @@ const FormDescription = React.forwardRef<HTMLParagraphElement, FormMessageProps>
 );
 FormDescription.displayName = "FormDescription";
 
-export { FormMessage, FormDescription };
+export { FormDescription, FormMessage };

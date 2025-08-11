@@ -46,5 +46,17 @@
   },
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "cSpell.words": [
+    "autodocs",
+    "clsx",
+    "jsdom",
+    "plusplus",
+    "storybook",
+    "tailwindcss",
+    "turborepo",
+    "typecheck",
+    "uswds",
+    "vitest"
+  ]
 }

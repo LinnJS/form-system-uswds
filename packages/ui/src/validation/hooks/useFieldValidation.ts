@@ -1,6 +1,6 @@
-import { useState, useCallback, useEffect } from 'react';
-import type { FieldValidation } from '../types';
-import { validateField } from '../validators';
+import { useCallback, useEffect, useState } from "react";
+import type { FieldValidation } from "../types";
+import { validateField } from "../validators";
 
 export interface UseFieldValidationOptions {
   validation?: FieldValidation;
@@ -13,7 +13,7 @@ export function useFieldValidation({
   validation,
   validateOnChange = false,
   validateOnBlur = true,
-  initialValue = '',
+  initialValue = "",
 }: UseFieldValidationOptions = {}) {
   const [value, setValue] = useState(initialValue);
   const [error, setError] = useState<string | undefined>();

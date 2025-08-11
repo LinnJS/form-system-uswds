@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
 import { Button } from "@acme/ui/button";
+import { useEffect } from "react";
 
 export default function Error({
   error,
@@ -12,7 +12,10 @@ export default function Error({
 }) {
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error(error);
+    // In production, replace with your error tracking service:
+    // Example: Sentry.captureException(error);
+    // Example: logErrorToService(error);
+    console.error("Error boundary caught:", error);
   }, [error]);
 
   return (
@@ -27,7 +30,7 @@ export default function Error({
         <Button onClick={reset} variant="default">
           Try again
         </Button>
-        <Button onClick={() => window.location.href = "/"} variant="outline">
+        <Button onClick={() => window.location.replace("/")} variant="outline">
           Go home
         </Button>
       </div>

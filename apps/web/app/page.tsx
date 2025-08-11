@@ -2,7 +2,7 @@
 
 import { Button } from "@acme/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@acme/ui/card";
-import { H1, H2, H3, Paragraph, Lead, Text } from "@acme/ui/typography";
+import { H1, H2, H3, Lead, Paragraph, Text } from "@acme/ui/typography";
 import Link from "next/link";
 
 export default function Home() {
@@ -19,7 +19,8 @@ export default function Home() {
           </H1>
           <Lead className="mb-8 text-xl text-gray-600 dark:text-gray-300">
             A modern, accessible form component library built on U.S. Web Design System standards.
-            Production-ready components with built-in validation, TypeScript support, and comprehensive accessibility.
+            Production-ready components with built-in validation, TypeScript support, and
+            comprehensive accessibility.
           </Lead>
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
             <Link href="/validation-demo">
@@ -52,12 +53,18 @@ export default function Home() {
               <CardHeader>
                 <div className="mb-2 flex size-12 items-center justify-center rounded-lg bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
                   <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                 </div>
                 <CardTitle>WCAG 2.1 AA Compliant</CardTitle>
                 <CardDescription>
-                  Full accessibility support with ARIA labels, keyboard navigation, and screen reader optimization
+                  Full accessibility support with ARIA labels, keyboard navigation, and screen
+                  reader optimization
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -66,12 +73,18 @@ export default function Home() {
               <CardHeader>
                 <div className="mb-2 flex size-12 items-center justify-center rounded-lg bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
                   <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
                   </svg>
                 </div>
                 <CardTitle>React Hook Form + Zod</CardTitle>
                 <CardDescription>
-                  Powerful form validation with TypeScript-first schema validation and optimized re-renders
+                  Powerful form validation with TypeScript-first schema validation and optimized
+                  re-renders
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -80,12 +93,18 @@ export default function Home() {
               <CardHeader>
                 <div className="mb-2 flex size-12 items-center justify-center rounded-lg bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400">
                   <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                    />
                   </svg>
                 </div>
                 <CardTitle>TypeScript Native</CardTitle>
                 <CardDescription>
-                  Built from the ground up with TypeScript for complete type safety and excellent IDE support
+                  Built from the ground up with TypeScript for complete type safety and excellent
+                  IDE support
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -94,12 +113,18 @@ export default function Home() {
               <CardHeader>
                 <div className="mb-2 flex size-12 items-center justify-center rounded-lg bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400">
                   <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+                    />
                   </svg>
                 </div>
                 <CardTitle>Tailwind CSS + CVA</CardTitle>
                 <CardDescription>
-                  Utility-first styling with Class Variance Authority for consistent, maintainable component variants
+                  Utility-first styling with Class Variance Authority for consistent, maintainable
+                  component variants
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -108,12 +133,18 @@ export default function Home() {
               <CardHeader>
                 <div className="mb-2 flex size-12 items-center justify-center rounded-lg bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-400">
                   <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
+                    />
                   </svg>
                 </div>
                 <CardTitle>Pre-compiled CSS</CardTitle>
                 <CardDescription>
-                  Use with or without Tailwind - includes minified CSS distribution for non-JS environments
+                  Use with or without Tailwind - includes minified CSS distribution for non-JS
+                  environments
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -122,12 +153,18 @@ export default function Home() {
               <CardHeader>
                 <div className="mb-2 flex size-12 items-center justify-center rounded-lg bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400">
                   <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                    />
                   </svg>
                 </div>
                 <CardTitle>Storybook Integration</CardTitle>
                 <CardDescription>
-                  Interactive component documentation with built-in accessibility testing and visual regression
+                  Interactive component documentation with built-in accessibility testing and visual
+                  regression
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -152,8 +189,10 @@ export default function Home() {
             <CardContent className="space-y-4">
               <div className="rounded-lg bg-gray-900 p-4 dark:bg-gray-950">
                 <code className="text-sm text-gray-100">
-                  <span className="text-gray-500"># Install with pnpm</span><br />
-                  <span className="text-green-400">pnpm</span> add @acme/ui react-hook-form zod @hookform/resolvers
+                  <span className="text-gray-500"># Install with pnpm</span>
+                  <br />
+                  <span className="text-green-400">pnpm</span> add @acme/ui react-hook-form zod
+                  @hookform/resolvers
                 </code>
               </div>
 
@@ -161,7 +200,7 @@ export default function Home() {
                 <H3 className="text-lg font-semibold">Quick Example</H3>
                 <div className="rounded-lg bg-gray-900 p-4 dark:bg-gray-950">
                   <pre className="overflow-x-auto text-sm text-gray-100">
-{`import { Form, FormField, Button } from '@acme/ui';
+                    {`import { Form, FormField, Button } from '@acme/ui';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -174,7 +213,7 @@ function MyForm() {
   const form = useForm({
     resolver: zodResolver(schema)
   });
-  
+
   return (
     <Form {...form} onSubmit={handleSubmit}>
       <FormField name="email" label="Email" type="email" />
@@ -182,7 +221,8 @@ function MyForm() {
       <Button type="submit">Submit</Button>
     </Form>
   );
-}`}</pre>
+}`}
+                  </pre>
                 </div>
               </div>
             </CardContent>
@@ -210,7 +250,8 @@ function MyForm() {
                     Form Validation Demo
                   </CardTitle>
                   <CardDescription>
-                    Complete example with React Hook Form, Zod validation, error handling, and accessibility features
+                    Complete example with React Hook Form, Zod validation, error handling, and
+                    accessibility features
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -229,11 +270,10 @@ function MyForm() {
                       COMING SOON
                     </div>
                   </div>
-                  <CardTitle className="text-xl text-gray-500">
-                    Typography System
-                  </CardTitle>
+                  <CardTitle className="text-xl text-gray-500">Typography System</CardTitle>
                   <CardDescription>
-                    Complete typography components with heading hierarchy, text utilities, and semantic HTML
+                    Complete typography components with heading hierarchy, text utilities, and
+                    semantic HTML
                   </CardDescription>
                 </CardHeader>
               </Card>
@@ -247,9 +287,7 @@ function MyForm() {
                       COMING SOON
                     </div>
                   </div>
-                  <CardTitle className="text-xl text-gray-500">
-                    USWDS Components
-                  </CardTitle>
+                  <CardTitle className="text-xl text-gray-500">USWDS Components</CardTitle>
                   <CardDescription>
                     Full implementation of U.S. Web Design System components with federal compliance
                   </CardDescription>
@@ -265,9 +303,7 @@ function MyForm() {
                       COMING SOON
                     </div>
                   </div>
-                  <CardTitle className="text-xl text-gray-500">
-                    Dynamic Form Builder
-                  </CardTitle>
+                  <CardTitle className="text-xl text-gray-500">Dynamic Form Builder</CardTitle>
                   <CardDescription>
                     Build complex forms dynamically with JSON schema and conditional logic
                   </CardDescription>
@@ -280,4 +316,3 @@ function MyForm() {
     </div>
   );
 }
-

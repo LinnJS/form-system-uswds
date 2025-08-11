@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { H3, Text } from "@acme/ui/typography";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -14,17 +14,26 @@ export function Footer() {
             </H3>
             <ul className="space-y-2">
               <li>
-                <Link href="/getting-started" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <Link
+                  href="/getting-started"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   Getting Started
                 </Link>
               </li>
               <li>
-                <Link href="/components" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <Link
+                  href="/components"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   Components
                 </Link>
               </li>
               <li>
-                <Link href="/api" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <Link
+                  href="/api"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   API Reference
                 </Link>
               </li>
@@ -37,17 +46,30 @@ export function Footer() {
             </H3>
             <ul className="space-y-2">
               <li>
-                <a href="https://github.com" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <a
+                  href="https://github.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   GitHub Repository
                 </a>
               </li>
               <li>
-                <a href="https://storybook.js.org" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <a
+                  href="https://storybook.js.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   Storybook
                 </a>
               </li>
               <li>
-                <Link href="/examples" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <Link
+                  href="/examples"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   Examples
                 </Link>
               </li>
@@ -60,17 +82,30 @@ export function Footer() {
             </H3>
             <ul className="space-y-2">
               <li>
-                <a href="https://discord.com" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <a
+                  href="https://discord.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   Discord
                 </a>
               </li>
               <li>
-                <a href="https://twitter.com" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <a
+                  href="https://twitter.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   Twitter
                 </a>
               </li>
               <li>
-                <Link href="/contributing" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <Link
+                  href="/contributing"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   Contributing
                 </Link>
               </li>

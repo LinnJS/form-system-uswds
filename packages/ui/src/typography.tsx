@@ -11,10 +11,7 @@ export const H1 = React.forwardRef<HTMLHeadingElement, TypographyProps>(
     return (
       <h1
         ref={ref}
-        className={cn(
-          "scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl",
-          className
-        )}
+        className={cn("scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl", className)}
         {...props}
       >
         {children}
@@ -47,10 +44,7 @@ export const H3 = React.forwardRef<HTMLHeadingElement, TypographyProps>(
     return (
       <h3
         ref={ref}
-        className={cn(
-          "scroll-m-20 text-2xl font-semibold tracking-tight",
-          className
-        )}
+        className={cn("scroll-m-20 text-2xl font-semibold tracking-tight", className)}
         {...props}
       >
         {children}
@@ -63,11 +57,7 @@ H3.displayName = "H3";
 export const Paragraph = React.forwardRef<HTMLParagraphElement, TypographyProps>(
   ({ className, children, ...props }, ref) => {
     return (
-      <p
-        ref={ref}
-        className={cn("leading-7 [&:not(:first-child)]:mt-6", className)}
-        {...props}
-      >
+      <p ref={ref} className={cn("leading-7 [&:not(:first-child)]:mt-6", className)} {...props}>
         {children}
       </p>
     );
@@ -78,11 +68,7 @@ Paragraph.displayName = "Paragraph";
 export const Lead = React.forwardRef<HTMLParagraphElement, TypographyProps>(
   ({ className, children, ...props }, ref) => {
     return (
-      <p
-        ref={ref}
-        className={cn("text-muted-foreground text-xl", className)}
-        {...props}
-      >
+      <p ref={ref} className={cn("text-muted-foreground text-xl", className)} {...props}>
         {children}
       </p>
     );
@@ -93,11 +79,7 @@ Lead.displayName = "Lead";
 export const Text = React.forwardRef<HTMLSpanElement, TypographyProps>(
   ({ className, children, ...props }, ref) => {
     return (
-      <span
-        ref={ref}
-        className={cn("text-base", className)}
-        {...props}
-      >
+      <span ref={ref} className={cn("text-base", className)} {...props}>
         {children}
       </span>
     );

@@ -14,9 +14,7 @@ export function FormProvider<TFieldValues extends Record<string, any> = Record<s
 }: FormProviderProps<TFieldValues>) {
   return (
     <RHFFormProvider {...methods}>
-      <form onSubmit={onSubmit ? methods.handleSubmit(onSubmit) : undefined}>
-        {children}
-      </form>
+      <form onSubmit={onSubmit ? methods.handleSubmit(onSubmit) : undefined}>{children}</form>
     </RHFFormProvider>
   );
 }

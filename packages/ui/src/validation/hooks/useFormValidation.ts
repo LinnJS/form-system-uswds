@@ -1,6 +1,6 @@
-import { useState, useCallback, useMemo } from 'react';
-import type { FieldValidation, FormValidationState } from '../types';
-import { validateField, validateForm } from '../validators';
+import { useCallback, useMemo, useState } from "react";
+import type { FieldValidation, FormValidationState } from "../types";
+import { validateField, validateForm } from "../validators";
 
 export interface UseFormValidationOptions<T> {
   initialValues: T;
@@ -77,7 +77,7 @@ export function useFormValidation<T extends Record<string, any>>({
   const validateAllFields = useCallback(() => {
     const allErrors = validateForm(values, validations as Record<keyof T, FieldValidation>);
     setErrors(allErrors);
-    
+
     const allTouched: Record<string, boolean> = {};
     Object.keys(values).forEach((key) => {
       allTouched[key] = true;
@@ -93,9 +93,12 @@ export function useFormValidation<T extends Record<string, any>>({
     setTouched({});
   }, [initialValues]);
 
-  const setFieldValue = useCallback((field: keyof T, value: any) => {
-    handleChange(field)(value);
-  }, [handleChange]);
+  const setFieldValue = useCallback(
+    (field: keyof T, value: any) => {
+      handleChange(field)(value);
+    },
+    [handleChange]
+  );
 
   const setFieldError = useCallback((field: keyof T, error: string | string[]) => {
     setErrors((prev) => ({

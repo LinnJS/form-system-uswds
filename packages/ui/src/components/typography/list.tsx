@@ -1,5 +1,5 @@
-import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react";
 import { cn } from "../../lib/utils";
 
 const listVariants = cva("", {
@@ -41,11 +41,7 @@ const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListProps>(
       Component,
       {
         ref,
-        className: cn(
-          listVariants({ type, spacing, position }),
-          "ml-6",
-          className
-        ),
+        className: cn(listVariants({ type, spacing, position }), "ml-6", className),
         ...props,
       },
       children
@@ -70,21 +66,18 @@ const ListItem = React.forwardRef<HTMLLIElement, ListItemProps>(
 ListItem.displayName = "ListItem";
 
 // Convenience components
-export const UnorderedList = React.forwardRef<
-  HTMLUListElement,
-  Omit<ListProps, "as" | "type">
->((props, ref) => <List ref={ref} as="ul" type="unordered" {...props} />);
+export const UnorderedList = React.forwardRef<HTMLUListElement, Omit<ListProps, "as" | "type">>(
+  (props, ref) => <List ref={ref} as="ul" type="unordered" {...props} />
+);
 UnorderedList.displayName = "UnorderedList";
 
-export const OrderedList = React.forwardRef<
-  HTMLOListElement,
-  Omit<ListProps, "as" | "type">
->((props, ref) => <List ref={ref} as="ol" type="ordered" {...props} />);
+export const OrderedList = React.forwardRef<HTMLOListElement, Omit<ListProps, "as" | "type">>(
+  (props, ref) => <List ref={ref} as="ol" type="ordered" {...props} />
+);
 OrderedList.displayName = "OrderedList";
 
 // Description list components
-export interface DescriptionListProps
-  extends React.HTMLAttributes<HTMLDListElement> {
+export interface DescriptionListProps extends React.HTMLAttributes<HTMLDListElement> {
   children?: React.ReactNode;
   spacing?: "tight" | "normal" | "loose";
 }
@@ -98,11 +91,7 @@ const DescriptionList = React.forwardRef<HTMLDListElement, DescriptionListProps>
     };
 
     return (
-      <dl
-        ref={ref}
-        className={cn(spacingClasses[spacing], className)}
-        {...props}
-      >
+      <dl ref={ref} className={cn(spacingClasses[spacing], className)} {...props}>
         {children}
       </dl>
     );
@@ -110,25 +99,18 @@ const DescriptionList = React.forwardRef<HTMLDListElement, DescriptionListProps>
 );
 DescriptionList.displayName = "DescriptionList";
 
-export const DescriptionTerm = React.forwardRef<
-  HTMLElement,
-  React.HTMLAttributes<HTMLElement>
->(({ className, ...props }, ref) => (
-  <dt ref={ref} className={cn("font-semibold", className)} {...props} />
-));
+export const DescriptionTerm = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
+  ({ className, ...props }, ref) => (
+    <dt ref={ref} className={cn("font-semibold", className)} {...props} />
+  )
+);
 DescriptionTerm.displayName = "DescriptionTerm";
 
-export const DescriptionDetails = React.forwardRef<
-  HTMLElement,
-  React.HTMLAttributes<HTMLElement>
->(({ className, ...props }, ref) => (
-  <dd ref={ref} className={cn("ml-0 text-gray-600", className)} {...props} />
-));
+export const DescriptionDetails = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
+  ({ className, ...props }, ref) => (
+    <dd ref={ref} className={cn("ml-0 text-gray-600", className)} {...props} />
+  )
+);
 DescriptionDetails.displayName = "DescriptionDetails";
 
-export {
-  List,
-  ListItem,
-  DescriptionList,
-  listVariants,
-};
+export { DescriptionList, List, ListItem, listVariants };

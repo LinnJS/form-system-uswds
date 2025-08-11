@@ -1,16 +1,22 @@
-import type { FieldValidation, ValidatorFunction } from './types';
+import type { FieldValidation, ValidatorFunction } from "./types";
 
 export const validators = {
-  required: (message = 'This field is required'): ValidatorFunction => 
+  required:
+    (message = "This field is required"): ValidatorFunction =>
     (value: any) => {
-      if (value === null || value === undefined || value === '' || 
-          (Array.isArray(value) && value.length === 0)) {
+      if (
+        value === null ||
+        value === undefined ||
+        value === "" ||
+        (Array.isArray(value) && value.length === 0)
+      ) {
         return message;
       }
       return undefined;
     },
 
-  minLength: (min: number, message?: string): ValidatorFunction => 
+  minLength:
+    (min: number, message?: string): ValidatorFunction =>
     (value: any) => {
       const msg = message || `Must be at least ${min} characters`;
       if (value && value.length < min) {
@@ -19,7 +25,8 @@ export const validators = {
       return undefined;
     },
 
-  maxLength: (max: number, message?: string): ValidatorFunction => 
+  maxLength:
+    (max: number, message?: string): ValidatorFunction =>
     (value: any) => {
       const msg = message || `Must be no more than ${max} characters`;
       if (value && value.length > max) {
@@ -28,7 +35,8 @@ export const validators = {
       return undefined;
     },
 
-  email: (message = 'Please enter a valid email address'): ValidatorFunction => 
+  email:
+    (message = "Please enter a valid email address"): ValidatorFunction =>
     (value: any) => {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (value && !emailRegex.test(value)) {
@@ -37,7 +45,8 @@ export const validators = {
       return undefined;
     },
 
-  pattern: (pattern: RegExp, message = 'Invalid format'): ValidatorFunction => 
+  pattern:
+    (pattern: RegExp, message = "Invalid format"): ValidatorFunction =>
     (value: any) => {
       if (value && !pattern.test(value)) {
         return message;
@@ -45,7 +54,8 @@ export const validators = {
       return undefined;
     },
 
-  min: (min: number, message?: string): ValidatorFunction => 
+  min:
+    (min: number, message?: string): ValidatorFunction =>
     (value: any) => {
       const msg = message || `Must be at least ${min}`;
       const numValue = Number(value);
@@ -55,7 +65,8 @@ export const validators = {
       return undefined;
     },
 
-  max: (max: number, message?: string): ValidatorFunction => 
+  max:
+    (max: number, message?: string): ValidatorFunction =>
     (value: any) => {
       const msg = message || `Must be no more than ${max}`;
       const numValue = Number(value);
@@ -65,7 +76,8 @@ export const validators = {
       return undefined;
     },
 
-  compose: (...validators: ValidatorFunction[]): ValidatorFunction => 
+  compose:
+    (...validators: ValidatorFunction[]): ValidatorFunction =>
     (value: any) => {
       for (const validator of validators) {
         const error = validator(value);
@@ -81,9 +93,7 @@ export function createValidator(validation: FieldValidation): ValidatorFunction 
   const validatorFunctions: ValidatorFunction[] = [];
 
   if (validation.required) {
-    validatorFunctions.push(
-      validators.required(validation.messages?.required)
-    );
+    validatorFunctions.push(validators.required(validation.messages?.required));
   }
 
   if (validation.minLength !== undefined) {
@@ -99,27 +109,19 @@ export function createValidator(validation: FieldValidation): ValidatorFunction 
   }
 
   if (validation.email) {
-    validatorFunctions.push(
-      validators.email(validation.messages?.email)
-    );
+    validatorFunctions.push(validators.email(validation.messages?.email));
   }
 
   if (validation.pattern) {
-    validatorFunctions.push(
-      validators.pattern(validation.pattern, validation.messages?.pattern)
-    );
+    validatorFunctions.push(validators.pattern(validation.pattern, validation.messages?.pattern));
   }
 
   if (validation.min !== undefined) {
-    validatorFunctions.push(
-      validators.min(validation.min, validation.messages?.min)
-    );
+    validatorFunctions.push(validators.min(validation.min, validation.messages?.min));
   }
 
   if (validation.max !== undefined) {
-    validatorFunctions.push(
-      validators.max(validation.max, validation.messages?.max)
-    );
+    validatorFunctions.push(validators.max(validation.max, validation.messages?.max));
   }
 
   if (validation.custom) {

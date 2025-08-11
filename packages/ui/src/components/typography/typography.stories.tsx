@@ -1,26 +1,21 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { within, expect } from '@storybook/test';
-import {
-  H1,
-  H2,
-  H3,
-  Paragraph,
-  Lead,
-  Text,
-} from './index';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, within } from "@storybook/test";
+import React from "react";
+import { H1, H2, H3, Lead, Paragraph, Text } from "./index";
 
 const meta = {
-  title: 'Components/Typography',
+  title: "Components/Typography",
   component: H1,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
-        component: 'A comprehensive typography system with semantic HTML elements and accessibility features.',
+        component:
+          "A comprehensive typography system with semantic HTML elements and accessibility features.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } satisfies Meta<typeof H1>;
 
 export default meta;
@@ -40,17 +35,17 @@ export const Paragraphs: Story = {
   render: () => (
     <div className="space-y-4">
       <Lead>
-        This is a lead paragraph that stands out from regular text.
-        It's perfect for introductions and important callouts.
+        This is a lead paragraph that stands out from regular text. It's perfect for introductions
+        and important callouts.
       </Lead>
       <Paragraph>
-        This is a regular paragraph. The quick brown fox jumps over the lazy dog.
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
+        This is a regular paragraph. The quick brown fox jumps over the lazy dog. Lorem ipsum dolor
+        sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua.
       </Paragraph>
       <Paragraph>
-        Another paragraph to show spacing. Ut enim ad minim veniam, quis nostrud
-        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Another paragraph to show spacing. Ut enim ad minim veniam, quis nostrud exercitation
+        ullamco laboris nisi ut aliquip ex ea commodo consequat.
       </Paragraph>
     </div>
   ),
@@ -84,27 +79,27 @@ export const CompleteExample: Story = {
       </Lead>
       <H2>Introduction</H2>
       <Paragraph>
-        The Form System USWDS provides a comprehensive set of React components
-        for building accessible, compliant web forms. Built with TypeScript and
-        following WCAG 2.1 AA standards, it ensures your forms are usable by everyone.
+        The Form System USWDS provides a comprehensive set of React components for building
+        accessible, compliant web forms. Built with TypeScript and following WCAG 2.1 AA standards,
+        it ensures your forms are usable by everyone.
       </Paragraph>
       <H3>Key Features</H3>
       <Paragraph>
-        Our component library includes full TypeScript support, React Hook Form
-        integration, Zod validation, and comprehensive accessibility features.
-        Each component is thoroughly tested and documented.
+        Our component library includes full TypeScript support, React Hook Form integration, Zod
+        validation, and comprehensive accessibility features. Each component is thoroughly tested
+        and documented.
       </Paragraph>
       <H3>Getting Started</H3>
       <Paragraph>
-        Installation is simple with your preferred package manager. The library
-        works seamlessly with Next.js, Remix, and standard React applications.
+        Installation is simple with your preferred package manager. The library works seamlessly
+        with Next.js, Remix, and standard React applications.
       </Paragraph>
     </article>
   ),
 };
 
 export const AccessibilityTest: Story = {
-  name: 'Accessibility',
+  name: "Accessibility",
   render: () => (
     <div className="space-y-4">
       <H1 id="main-heading">Main Page Heading</H1>
@@ -121,16 +116,16 @@ export const AccessibilityTest: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    
+
     // Test heading hierarchy
-    const h1 = canvas.getByRole('heading', { level: 1 });
+    const h1 = canvas.getByRole("heading", { level: 1 });
     await expect(h1).toBeInTheDocument();
-    await expect(h1).toHaveTextContent('Main Page Heading');
-    
-    const h2 = canvas.getByRole('heading', { level: 2 });
+    await expect(h1).toHaveTextContent("Main Page Heading");
+
+    const h2 = canvas.getByRole("heading", { level: 2 });
     await expect(h2).toBeInTheDocument();
-    
-    const h3 = canvas.getByRole('heading', { level: 3 });
+
+    const h3 = canvas.getByRole("heading", { level: 3 });
     await expect(h3).toBeInTheDocument();
   },
 };

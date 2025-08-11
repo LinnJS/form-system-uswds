@@ -12,18 +12,16 @@ const Form = FormProvider;
 
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > = {
   name: TName;
 };
 
-const FormFieldContext = React.createContext<FormFieldContextValue>(
-  {} as FormFieldContextValue
-);
+const FormFieldContext = React.createContext<FormFieldContextValue>({} as FormFieldContextValue);
 
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
@@ -61,29 +59,19 @@ type FormItemContextValue = {
   id: string;
 };
 
-const FormItemContext = React.createContext<FormItemContextValue>(
-  {} as FormItemContextValue
+const FormItemContext = React.createContext<FormItemContextValue>({} as FormItemContextValue);
+
+const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => {
+    const id = React.useId();
+
+    return (
+      <FormItemContext.Provider value={{ id }}>
+        <div ref={ref} className={className} {...props} />
+      </FormItemContext.Provider>
+    );
+  }
 );
-
-const FormItem = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
-  const id = React.useId();
-
-  return (
-    <FormItemContext.Provider value={{ id }}>
-      <div ref={ref} className={className} {...props} />
-    </FormItemContext.Provider>
-  );
-});
 FormItem.displayName = "FormItem";
 
-export {
-  useFormField,
-  Form,
-  FormItem,
-  FormField,
-  FormFieldContext,
-  FormItemContext,
-};
+export { Form, FormField, FormFieldContext, FormItem, FormItemContext, useFormField };

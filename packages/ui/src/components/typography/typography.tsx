@@ -1,5 +1,5 @@
-import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react";
 import { cn } from "../../lib/utils";
 
 const typographyVariants = cva("", {
@@ -85,10 +85,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       Component,
       {
         ref,
-        className: cn(
-          typographyVariants({ variant, align, textColor, weight, size }),
-          className
-        ),
+        className: cn(typographyVariants({ variant, align, textColor, weight, size }), className),
         ...props,
       },
       children
@@ -98,9 +95,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
 
 Typography.displayName = "Typography";
 
-function getComponentFromVariant(
-  variant?: TypographyProps["variant"]
-): React.ElementType {
+function getComponentFromVariant(variant?: TypographyProps["variant"]): React.ElementType {
   switch (variant) {
     case "h1":
       return "h1";

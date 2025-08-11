@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { H3, Text } from "@acme/ui/typography";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -14,17 +14,28 @@ export function Footer() {
             </H3>
             <ul className="space-y-2">
               <li>
-                <Link href="/validation-demo" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <Link
+                  href="/validation-demo"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   Form Validation Demo
                 </Link>
               </li>
               <li>
-                <a href="https://github.com" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <a
+                  href="https://github.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   GitHub Repository
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <a
+                  href="#"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   Documentation
                 </a>
               </li>
@@ -37,22 +48,42 @@ export function Footer() {
             </H3>
             <ul className="space-y-2">
               <li>
-                <a href="https://react.dev" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <a
+                  href="https://react.dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   React 19
                 </a>
               </li>
               <li>
-                <a href="https://nextjs.org" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <a
+                  href="https://nextjs.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   Next.js 15
                 </a>
               </li>
               <li>
-                <a href="https://tailwindcss.com" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <a
+                  href="https://tailwindcss.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   Tailwind CSS
                 </a>
               </li>
               <li>
-                <a href="https://www.typescriptlang.org" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <a
+                  href="https://www.typescriptlang.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   TypeScript
                 </a>
               </li>
@@ -65,17 +96,32 @@ export function Footer() {
             </H3>
             <ul className="space-y-2">
               <li>
-                <a href="https://designsystem.digital.gov" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <a
+                  href="https://designsystem.digital.gov"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   USWDS Standards
                 </a>
               </li>
               <li>
-                <a href="https://www.w3.org/WAI/WCAG21/quickref/" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <a
+                  href="https://www.w3.org/WAI/WCAG21/quickref/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   WCAG 2.1 Guidelines
                 </a>
               </li>
               <li>
-                <a href="https://www.section508.gov" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <a
+                  href="https://www.section508.gov"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
                   Section 508
                 </a>
               </li>

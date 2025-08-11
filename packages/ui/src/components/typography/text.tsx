@@ -1,5 +1,5 @@
-import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react";
 import { cn } from "../../lib/utils";
 
 const textVariants = cva("", {
@@ -74,7 +74,23 @@ const textVariants = cva("", {
 export interface TextProps
   extends React.HTMLAttributes<HTMLElement>,
     VariantProps<typeof textVariants> {
-  as?: "p" | "span" | "div" | "label" | "small" | "mark" | "del" | "ins" | "sub" | "sup" | "strong" | "em" | "b" | "i" | "u" | "s";
+  as?:
+    | "p"
+    | "span"
+    | "div"
+    | "label"
+    | "small"
+    | "mark"
+    | "del"
+    | "ins"
+    | "sub"
+    | "sup"
+    | "strong"
+    | "em"
+    | "b"
+    | "i"
+    | "u"
+    | "s";
   children?: React.ReactNode;
 }
 
@@ -123,29 +139,19 @@ const Text = React.forwardRef<HTMLElement, TextProps>(
 Text.displayName = "Text";
 
 // Convenience components for common text elements
-export const Paragraph = React.forwardRef<
-  HTMLParagraphElement,
-  Omit<TextProps, "as">
->((props, ref) => <Text ref={ref} as="p" leading="relaxed" {...props} />);
+export const Paragraph = React.forwardRef<HTMLParagraphElement, Omit<TextProps, "as">>(
+  (props, ref) => <Text ref={ref} as="p" leading="relaxed" {...props} />
+);
 Paragraph.displayName = "Paragraph";
 
-export const Lead = React.forwardRef<HTMLParagraphElement, Omit<TextProps, "as">>(
-  (props, ref) => (
-    <Text
-      ref={ref}
-      as="p"
-      size="xl"
-      textColor="secondary"
-      leading="relaxed"
-      {...props}
-    />
-  )
-);
+export const Lead = React.forwardRef<HTMLParagraphElement, Omit<TextProps, "as">>((props, ref) => (
+  <Text ref={ref} as="p" size="xl" textColor="secondary" leading="relaxed" {...props} />
+));
 Lead.displayName = "Lead";
 
-export const Small = React.forwardRef<HTMLElement, Omit<TextProps, "as" | "size">>(
-  (props, ref) => <Text ref={ref} as="small" size="sm" {...props} />
-);
+export const Small = React.forwardRef<HTMLElement, Omit<TextProps, "as" | "size">>((props, ref) => (
+  <Text ref={ref} as="small" size="sm" {...props} />
+));
 Small.displayName = "Small";
 
 export const Strong = React.forwardRef<HTMLElement, Omit<TextProps, "as" | "weight">>(
@@ -153,9 +159,9 @@ export const Strong = React.forwardRef<HTMLElement, Omit<TextProps, "as" | "weig
 );
 Strong.displayName = "Strong";
 
-export const Emphasis = React.forwardRef<HTMLElement, Omit<TextProps, "as">>(
-  (props, ref) => <Text ref={ref} as="em" {...props} />
-);
+export const Emphasis = React.forwardRef<HTMLElement, Omit<TextProps, "as">>((props, ref) => (
+  <Text ref={ref} as="em" {...props} />
+));
 Emphasis.displayName = "Emphasis";
 
 export const Blockquote = React.forwardRef<
@@ -164,10 +170,7 @@ export const Blockquote = React.forwardRef<
 >(({ className, children, cite, ...props }, ref) => (
   <blockquote
     ref={ref}
-    className={cn(
-      "border-l-4 border-gray-200 pl-4 italic text-gray-700",
-      className
-    )}
+    className={cn("border-l-4 border-gray-200 pl-4 italic text-gray-700", className)}
     cite={cite}
     {...props}
   >
@@ -176,34 +179,29 @@ export const Blockquote = React.forwardRef<
 ));
 Blockquote.displayName = "Blockquote";
 
-export const InlineCode = React.forwardRef<
-  HTMLElement,
-  React.HTMLAttributes<HTMLElement>
->(({ className, ...props }, ref) => (
-  <code
-    ref={ref}
-    className={cn(
-      "relative rounded bg-gray-100 px-[0.3rem] py-[0.2rem] font-mono text-sm",
-      className
-    )}
-    {...props}
-  />
-));
+export const InlineCode = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
+  ({ className, ...props }, ref) => (
+    <code
+      ref={ref}
+      className={cn(
+        "relative rounded bg-gray-100 px-[0.3rem] py-[0.2rem] font-mono text-sm",
+        className
+      )}
+      {...props}
+    />
+  )
+);
 InlineCode.displayName = "InlineCode";
 
-export const Pre = React.forwardRef<
-  HTMLPreElement,
-  React.HTMLAttributes<HTMLPreElement>
->(({ className, ...props }, ref) => (
-  <pre
-    ref={ref}
-    className={cn(
-      "overflow-x-auto rounded-lg bg-gray-900 p-4 text-gray-100",
-      className
-    )}
-    {...props}
-  />
-));
+export const Pre = React.forwardRef<HTMLPreElement, React.HTMLAttributes<HTMLPreElement>>(
+  ({ className, ...props }, ref) => (
+    <pre
+      ref={ref}
+      className={cn("overflow-x-auto rounded-lg bg-gray-900 p-4 text-gray-100", className)}
+      {...props}
+    />
+  )
+);
 Pre.displayName = "Pre";
 
 export const Kbd = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(

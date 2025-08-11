@@ -31,8 +31,7 @@ export const ssnSchema = z
   .regex(/^\d{3}-?\d{2}-?\d{4}$/, "Please enter a valid SSN");
 
 // Helper functions for creating common schemas
-export const requiredString = (message = "This field is required") =>
-  z.string().min(1, message);
+export const requiredString = (message = "This field is required") => z.string().min(1, message);
 
 export const optionalString = () => z.string().optional();
 
