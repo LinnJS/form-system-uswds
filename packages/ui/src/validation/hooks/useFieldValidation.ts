@@ -62,7 +62,7 @@ export function useFieldValidation({
     if (touched && (validateOnChange || validateOnBlur)) {
       validate();
     }
-  }, [validation]);
+  }, [validation, validate, touched, validateOnChange, validateOnBlur]);
 
   return {
     value,

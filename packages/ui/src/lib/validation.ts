@@ -36,7 +36,7 @@ export const requiredString = (message = "This field is required") => z.string()
 export const optionalString = () => z.string().optional();
 
 export const requiredNumber = (message = "This field is required") =>
-  z.coerce.number().min(Number.MIN_SAFE_INTEGER, message);
+  z.coerce.number({ message });
 
 export const minLength = (min: number, message?: string) =>
   z.string().min(min, message || `Must be at least ${min} characters`);

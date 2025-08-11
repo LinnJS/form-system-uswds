@@ -34,24 +34,28 @@ export function useFormValidation<T extends Record<string, any>>({
     [validations]
   );
 
+  const updateFieldErrors = useCallback((field: keyof T, fieldErrors: string[] | undefined) => {
+    setErrors((prev) => {
+      const newErrors = { ...prev };
+      if (fieldErrors) {
+        newErrors[field as string] = fieldErrors;
+      } else {
+        delete newErrors[field as string];
+      }
+      return newErrors;
+    });
+  }, []);
+
   const handleChange = useCallback(
     (field: keyof T) => (value: any) => {
       setValues((prev) => ({ ...prev, [field]: value }));
 
       if (validateOnChange && touched[field as string]) {
         const fieldErrors = validateSingleField(field, value);
-        setErrors((prev) => {
-          const newErrors = { ...prev };
-          if (fieldErrors) {
-            newErrors[field as string] = fieldErrors;
-          } else {
-            delete newErrors[field as string];
-          }
-          return newErrors;
-        });
+        updateFieldErrors(field, fieldErrors);
       }
     },
-    [validateOnChange, touched, validateSingleField]
+    [validateOnChange, touched, validateSingleField, updateFieldErrors]
   );
 
   const handleBlur = useCallback(
@@ -60,18 +64,10 @@ export function useFormValidation<T extends Record<string, any>>({
 
       if (validateOnBlur) {
         const fieldErrors = validateSingleField(field, values[field]);
-        setErrors((prev) => {
-          const newErrors = { ...prev };
-          if (fieldErrors) {
-            newErrors[field as string] = fieldErrors;
-          } else {
-            delete newErrors[field as string];
-          }
-          return newErrors;
-        });
+        updateFieldErrors(field, fieldErrors);
       }
     },
-    [validateOnBlur, values, validateSingleField]
+    [validateOnBlur, values, validateSingleField, updateFieldErrors]
   );
 
   const validateAllFields = useCallback(() => {

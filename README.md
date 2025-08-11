@@ -281,7 +281,7 @@ This is a proof of concept (POC) implementation. While functional, it's under ac
 
 ## Roadmap
 
-### Phase 1: Foundation (Current)
+### Phase 1: Foundation ✅
 
 - [x] Core component architecture
 - [x] Monorepo setup with Turborepo
@@ -295,7 +295,7 @@ This is a proof of concept (POC) implementation. While functional, it's under ac
 - [x] Basic form validation
 - [x] Initial accessibility testing
 
-### Phase 2: Enhanced Components
+### Phase 2: Enhanced Components (current)
 
 - [ ] Complete USWDS form components
   - [ ] Radio buttons and checkboxes
