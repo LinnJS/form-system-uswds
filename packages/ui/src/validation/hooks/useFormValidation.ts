@@ -74,10 +74,10 @@ export function useFormValidation<T extends Record<string, any>>({
     const allErrors = validateForm(values, validations as Record<keyof T, FieldValidation>);
     setErrors(allErrors);
 
-    const allTouched: Record<string, boolean> = {};
-    Object.keys(values).forEach((key) => {
-      allTouched[key] = true;
-    });
+    const allTouched: Record<string, boolean> = Object.keys(values).reduce(
+      (acc, key) => ({ ...acc, [key]: true }),
+      {}
+    );
     setTouched(allTouched);
 
     return Object.keys(allErrors).length === 0;

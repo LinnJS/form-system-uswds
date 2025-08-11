@@ -142,10 +142,13 @@ export function validateForm<T extends Record<string, any>>(
 ): Record<string, string[]> {
   const errors: Record<string, string[]> = {};
 
-  for (const [field, validation] of Object.entries(validations)) {
-    const error = validateField(values[field], validation);
-    if (error) {
-      errors[field] = [error];
+  for (const field in validations) {
+    if (Object.prototype.hasOwnProperty.call(validations, field)) {
+      const validation = validations[field];
+      const error = validateField(values[field], validation);
+      if (error) {
+        errors[field] = [error];
+      }
     }
   }
 
