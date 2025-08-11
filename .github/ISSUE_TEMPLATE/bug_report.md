@@ -28,7 +28,7 @@ If applicable, add screenshots to help explain your problem.
  - Browser [e.g. chrome, safari]
  - Version [e.g. 22]
  - Node version: [e.g. 22.0.0]
- - Package version: [e.g. @repo/ui@1.0.0]
+ - Package version: [e.g. @acme/ui@1.0.0]
 
 **Additional context**
 Add any other context about the problem here.

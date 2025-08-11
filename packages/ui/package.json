@@ -22,20 +22,38 @@
       "types": "./src/components/code/index.ts",
       "import": "./src/components/code/index.ts"
     },
+    "./typography": {
+      "types": "./src/components/typography/index.ts",
+      "import": "./src/components/typography/index.ts"
+    },
+    "./form-field": {
+      "types": "./src/components/form-field/index.ts",
+      "import": "./src/components/form-field/index.ts"
+    },
+    "./validation": {
+      "types": "./src/validation/index.ts",
+      "import": "./src/validation/index.ts"
+    },
     "./lib/utils": {
       "types": "./src/lib/utils.ts",
       "import": "./src/lib/utils.ts"
     },
-    "./styles/*": "./src/styles/*"
+    "./styles/*": "./src/styles/*",
+    "./dist/styles.css": "./dist/styles.css",
+    "./dist/styles.min.css": "./dist/styles.min.css"
   },
   "scripts": {
-    "build": "storybook build",
+    "build": "storybook build && pnpm build:css",
+    "build:css": "tsx scripts/build-css.ts",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
     "lint:all": "pnpm lint && pnpm typecheck",
     "lint:fix:all": "pnpm lint:fix && pnpm typecheck",
     "test": "concurrently -k -s first -n \"SB,TEST\" \"http-server storybook-static --port 6006 --silent\" \"wait-on tcp:127.0.0.1:6006 && test-storybook --ci --url http://127.0.0.1:6006\"",
+    "test:unit": "vitest",
+    "test:unit:watch": "vitest watch",
+    "test:unit:coverage": "vitest run --coverage",
     "test:watch": "test-storybook --watch",
     "dev": "storybook dev -p 6006 --no-open",
     "dev:open": "storybook dev -p 6006",
@@ -45,6 +63,9 @@
     "@acme/eslint-config": "workspace:*",
     "@acme/tailwind-config": "workspace:*",
     "@acme/typescript-config": "workspace:*",
+    "@testing-library/jest-dom": "^6.6.4",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.6.0",
     "@storybook/addon-a11y": "^8.6.14",
     "@storybook/addon-essentials": "^8.6.14",
     "@storybook/addon-interactions": "^8.6.14",
@@ -61,22 +82,29 @@
     "autoprefixer": "^10.4.21",
     "axe-playwright": "^2.1.0",
     "concurrently": "^9.2.0",
+    "cssnano": "^7.0.6",
     "eslint": "^9.31.0",
     "eslint-plugin-storybook": "^0.11.0",
     "http-server": "^14.1.1",
+    "jsdom": "^25.0.1",
     "playwright": "^1.54.2",
     "postcss": "^8.5.6",
     "storybook": "^8.6.14",
     "tailwindcss": "^3.4.17",
+    "tsx": "^4.20.3",
     "typescript": "5.8.2",
     "vite": "^5.4.19",
+    "vitest": "^3.2.4",
     "wait-on": "^8.0.4"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "tailwind-merge": "^3.3.1"
+    "react-hook-form": "^7.62.0",
+    "tailwind-merge": "^3.3.1",
+    "zod": "^4.0.17"
   }
 }

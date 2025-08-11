@@ -1,114 +1,250 @@
 "use client";
 
 import { Button } from "@acme/ui/button";
-import Image, { type ImageProps } from "next/image";
-import { Header } from "~/components/Header";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@acme/ui/card";
+import { H1, H2, H3, Lead } from "@acme/ui/typography";
+import Link from "next/link";
+import {
+  BeakerIcon,
+  ChartIcon,
+  CheckCircleIcon,
+  CodeIcon,
+  GridIcon,
+  UsersIcon,
+} from "~/components/Icons";
 
-type Props = Omit<ImageProps, "src"> & {
-  srcLight: string;
-  srcDark: string;
-};
-
-const ThemeImage = (props: Props) => {
-  const { srcLight, srcDark, alt, ...rest } = props;
-
+export default function DocsHome() {
   return (
-    <>
-      <Image {...rest} src={srcLight} alt={alt} className="block dark:hidden" />
-      <Image {...rest} src={srcDark} alt={alt} className="hidden dark:block" />
-    </>
-  );
-};
-
-export default function Home() {
-  return (
-    <div className="grid min-h-screen grid-rows-[auto_1fr_20px] place-items-center gap-16 font-sans">
-      <Header />
-      <main className="row-start-2 flex flex-col items-center gap-8 p-8 sm:items-start sm:p-20">
-        <ThemeImage
-          className="dark:invert"
-          srcLight="turborepo-dark.svg"
-          srcDark="turborepo-light.svg"
-          alt="Turborepo logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-center font-mono text-sm sm:text-left">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="rounded bg-black/5 px-1 py-0.5 font-semibold dark:bg-white/10">
-              apps/docs/app/page.tsx
-            </code>
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex flex-col items-center gap-4 sm:flex-row">
-          <a
-            className="bg-foreground text-background flex h-10 items-center justify-center gap-2 rounded-full border border-solid border-transparent px-4 text-sm transition-colors hover:bg-gray-800 sm:h-12 sm:px-5 sm:text-base dark:hover:bg-gray-300"
-            href="https://vercel.com/new/clone?demo-description=Learn+to+implement+a+monorepo+with+a+two+Next.js+sites+that+has+installed+three+local+packages.&demo-image=%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F4K8ZISWAzJ8X1504ca0zmC%2F0b21a1c6246add355e55816278ef54bc%2FBasic.png&demo-title=Monorepo+with+Turborepo&demo-url=https%3A%2F%2Fexamples-basic-web.vercel.sh%2F&from=templates&project-name=Monorepo+with+Turborepo&repository-name=monorepo-turborepo&repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fturborepo%2Ftree%2Fmain%2Fexamples%2Fbasic&root-directory=apps%2Fdocs&skippable-integrations=1&teamSlug=vercel&utm_source=create-turbo"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://turborepo.com/docs?utm_source"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex h-10 items-center justify-center rounded-full border border-solid border-black/10 px-4 text-sm transition-colors hover:border-transparent hover:bg-gray-100 sm:h-12 sm:min-w-44 sm:px-5 sm:text-base dark:border-white/20 dark:hover:bg-gray-900"
-          >
-            Read our docs
-          </a>
+    <div className="bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
+      {/* Hero Section */}
+      <section className="container mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+        <div className="mx-auto max-w-4xl text-center">
+          <div className="mb-4 inline-flex items-center rounded-full bg-indigo-50 px-4 py-1 text-sm font-medium text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400">
+            v1.0.0 • React 19 • TypeScript 5.8
+          </div>
+          <H1 className="mb-6 text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-white">
+            Documentation
+          </H1>
+          <Lead className="mb-8 text-xl text-gray-600 dark:text-gray-300">
+            Learn how to build accessible, USWDS-compliant forms with our comprehensive component
+            library. Complete guides, API references, and real-world examples.
+          </Lead>
+          <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
+            <Link href="/getting-started">
+              <Button size="lg" className="w-full sm:w-auto">
+                Get Started
+              </Button>
+            </Link>
+            <Link href="/components">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                Browse Components
+              </Button>
+            </Link>
+          </div>
         </div>
-        <Button
-          variant="outline"
-          className="flex h-10 items-center justify-center rounded-full border border-solid border-black/10 px-4 text-sm transition-colors hover:border-transparent hover:bg-gray-100 sm:h-12 sm:min-w-44 sm:px-5 sm:text-base dark:border-white/20 dark:hover:bg-gray-900"
-          onClick={() => alert("Hello from your docs app!")}
-        >
-          Open alert
-        </Button>
-      </main>
-      <footer className="row-start-3 flex flex-wrap items-center justify-center gap-6 font-sans">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?search=turborepo&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://turborepo.com?utm_source=create-turbo"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to turborepo.com →
-        </a>
-      </footer>
+      </section>
+
+      {/* Quick Start */}
+      <section className="container mx-auto px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <H2 className="mb-8 text-center text-3xl font-bold text-gray-900 dark:text-white">
+            Quick Start
+          </H2>
+
+          <Card className="border-2">
+            <CardHeader>
+              <CardTitle>Installation</CardTitle>
+              <CardDescription>
+                Get started with Form System USWDS in your React application
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <H3 className="mb-2 text-lg font-semibold">1. Install the package</H3>
+                <div className="rounded-lg bg-gray-900 p-4 dark:bg-gray-950">
+                  <code className="text-sm text-gray-100">
+                    pnpm add @acme/ui react-hook-form zod @hookform/resolvers
+                  </code>
+                </div>
+              </div>
+
+              <div>
+                <H3 className="mb-2 text-lg font-semibold">2. Import styles</H3>
+                <div className="rounded-lg bg-gray-900 p-4 dark:bg-gray-950">
+                  <code className="text-sm text-gray-100">
+                    {`// In your app's root layout or CSS file\nimport '@acme/ui/dist/styles.css';`}
+                  </code>
+                </div>
+              </div>
+
+              <div>
+                <H3 className="mb-2 text-lg font-semibold">3. Use components</H3>
+                <div className="rounded-lg bg-gray-900 p-4 dark:bg-gray-950">
+                  <pre className="overflow-x-auto text-sm text-gray-100">
+                    {`import { Button, Card } from '@acme/ui';
+
+function MyComponent() {
+  return (
+    <Card>
+      <Button>Click me</Button>
+    </Card>
+  );
+}`}
+                  </pre>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Documentation Sections */}
+      <section className="container mx-auto px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <H2 className="mb-12 text-center text-3xl font-bold text-gray-900 dark:text-white">
+            Documentation Sections
+          </H2>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <Link href="/getting-started" className="group">
+              <Card className="h-full border-2 transition-all hover:border-indigo-500 hover:shadow-lg">
+                <CardHeader>
+                  <div className="mb-2 flex size-12 items-center justify-center rounded-lg bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400">
+                    <ChartIcon />
+                  </div>
+                  <CardTitle className="group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                    Getting Started
+                  </CardTitle>
+                  <CardDescription>
+                    Installation, setup, and your first form. Everything you need to begin.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+
+            <Link href="/components" className="group">
+              <Card className="h-full border-2 transition-all hover:border-indigo-500 hover:shadow-lg">
+                <CardHeader>
+                  <div className="mb-2 flex size-12 items-center justify-center rounded-lg bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                    <GridIcon />
+                  </div>
+                  <CardTitle className="group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                    Components
+                  </CardTitle>
+                  <CardDescription>
+                    Explore all available components with live examples and code snippets.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+
+            <Link href="/api" className="group">
+              <Card className="h-full border-2 transition-all hover:border-indigo-500 hover:shadow-lg">
+                <CardHeader>
+                  <div className="mb-2 flex size-12 items-center justify-center rounded-lg bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400">
+                    <CodeIcon />
+                  </div>
+                  <CardTitle className="group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                    API Reference
+                  </CardTitle>
+                  <CardDescription>
+                    Complete API documentation for all components, hooks, and utilities.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+
+            <Link href="/examples" className="group">
+              <Card className="h-full border-2 transition-all hover:border-indigo-500 hover:shadow-lg">
+                <CardHeader>
+                  <div className="mb-2 flex size-12 items-center justify-center rounded-lg bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400">
+                    <BeakerIcon />
+                  </div>
+                  <CardTitle className="group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                    Examples
+                  </CardTitle>
+                  <CardDescription>
+                    Real-world examples and patterns for common use cases.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+
+            <Link href="/accessibility" className="group">
+              <Card className="h-full border-2 transition-all hover:border-indigo-500 hover:shadow-lg">
+                <CardHeader>
+                  <div className="mb-2 flex size-12 items-center justify-center rounded-lg bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+                    <CheckCircleIcon />
+                  </div>
+                  <CardTitle className="group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                    Accessibility
+                  </CardTitle>
+                  <CardDescription>
+                    WCAG 2.1 AA compliance guide and best practices for accessible forms.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+
+            <Link href="/contributing" className="group">
+              <Card className="h-full border-2 transition-all hover:border-indigo-500 hover:shadow-lg">
+                <CardHeader>
+                  <div className="mb-2 flex size-12 items-center justify-center rounded-lg bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-400">
+                    <UsersIcon />
+                  </div>
+                  <CardTitle className="group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                    Contributing
+                  </CardTitle>
+                  <CardDescription>
+                    Join the community and help improve Form System USWDS.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Resources */}
+      <section className="container mx-auto px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <H2 className="mb-8 text-center text-3xl font-bold text-gray-900 dark:text-white">
+            Additional Resources
+          </H2>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <Card className="border-2">
+              <CardHeader>
+                <CardTitle>Storybook</CardTitle>
+                <CardDescription>
+                  Interactive component playground with live examples
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <a href="https://storybook.js.org" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" className="w-full">
+                    Open Storybook →
+                  </Button>
+                </a>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2">
+              <CardHeader>
+                <CardTitle>GitHub Repository</CardTitle>
+                <CardDescription>Source code, issues, and discussions</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" className="w-full">
+                    View on GitHub →
+                  </Button>
+                </a>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

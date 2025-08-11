@@ -15,7 +15,15 @@
 }
 
 @layer base {
+  html {
+    @apply font-sans;
+  }
+  
   body {
-    @apply text-foreground bg-background;
+    @apply text-foreground bg-background font-sans;
+  }
+  
+  code, pre {
+    @apply font-mono;
   }
 }

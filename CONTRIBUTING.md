@@ -109,6 +109,7 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/):
 - `chore:` Maintenance tasks
 
 Examples:
+
 ```
 feat: add date picker component
 fix: resolve focus trap in modal

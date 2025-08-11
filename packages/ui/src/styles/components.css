@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* Button Component Styles */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-900 disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-default {
+    @apply bg-gray-900 text-gray-50 shadow hover:bg-gray-900/90;
+  }
+
+  .btn-destructive {
+    @apply bg-red-500 text-gray-50 shadow-sm hover:bg-red-500/90;
+  }
+
+  .btn-outline {
+    @apply border border-gray-200 bg-white shadow-sm hover:bg-gray-100 hover:text-gray-900;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-900 shadow-sm hover:bg-gray-100/80;
+  }
+
+  .btn-ghost {
+    @apply hover:bg-gray-100 hover:text-gray-900;
+  }
+
+  .btn-link {
+    @apply text-gray-900 underline-offset-4 hover:underline;
+  }
+
+  .btn-sm {
+    @apply h-8 rounded-md px-3 text-xs;
+  }
+
+  .btn-md {
+    @apply h-9 px-4 py-2;
+  }
+
+  .btn-lg {
+    @apply h-10 rounded-md px-8;
+  }
+
+  .btn-icon {
+    @apply h-9 w-9;
+  }
+
+  /* Card Component Styles */
+  .card {
+    @apply rounded-xl border bg-white text-gray-900 shadow;
+  }
+
+  .card-header {
+    @apply flex flex-col space-y-1.5 p-6;
+  }
+
+  .card-title {
+    @apply font-semibold leading-none tracking-tight;
+  }
+
+  .card-description {
+    @apply text-sm text-gray-500;
+  }
+
+  .card-content {
+    @apply p-6 pt-0;
+  }
+
+  .card-footer {
+    @apply flex items-center p-6 pt-0;
+  }
+
+  /* Form Field Component Styles */
+  .form-field {
+    @apply mb-4;
+  }
+
+  .form-field-label {
+    @apply block text-sm font-medium mb-1 text-gray-700;
+  }
+
+  .form-field-label-error {
+    @apply text-red-600;
+  }
+
+  .form-field-required {
+    @apply text-red-500 ml-1;
+  }
+
+  .form-field-hint {
+    @apply text-sm text-gray-500 mb-1;
+  }
+
+  .form-field-input {
+    @apply block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2;
+  }
+
+  .form-field-input-normal {
+    @apply border-gray-300 focus:ring-blue-500 focus:border-blue-500;
+  }
+
+  .form-field-input-error {
+    @apply border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500;
+  }
+
+  .form-field-error-message {
+    @apply mt-1 text-sm text-red-600;
+  }
+
+  /* Code Component Styles */
+  .code {
+    @apply relative rounded bg-gray-100 px-[0.3rem] py-[0.2rem] font-mono text-sm;
+  }
+
+  /* Utility Classes */
+  .sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  }
+
+  .focus-visible {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2;
+  }
+
+  /* Layout utilities */
+  .container {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .prose {
+    @apply max-w-prose text-gray-700 leading-relaxed;
+  }
+}

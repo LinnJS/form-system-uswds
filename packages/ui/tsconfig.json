@@ -3,6 +3,13 @@
   "compilerOptions": {
     "outDir": "dist"
   },
-  "include": ["src", "src/**/*.d.ts", ".storybook/*.ts", ".storybook/*.tsx", "vite.config.mjs"],
+  "include": [
+    "src",
+    "src/**/*.d.ts",
+    ".storybook/*.ts",
+    ".storybook/*.tsx",
+    "vite.config.mjs",
+    "vitest.config.ts"
+  ],
   "exclude": ["node_modules", "dist", "storybook-static", "**/*.stories.tsx"]
 }

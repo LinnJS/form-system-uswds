@@ -1,10 +1,10 @@
 import js from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
+import onlyWarn from "eslint-plugin-only-warn";
+import tailwindcss from "eslint-plugin-tailwindcss";
+import tsdoc from "eslint-plugin-tsdoc";
 import turboPlugin from "eslint-plugin-turbo";
 import tseslint from "typescript-eslint";
-import onlyWarn from "eslint-plugin-only-warn";
-import tsdoc from "eslint-plugin-tsdoc";
-import tailwindcss from "eslint-plugin-tailwindcss";
 
 /**
  * A shared ESLint configuration for the repository.
@@ -24,7 +24,7 @@ export const config = [
     },
     rules: {
       "turbo/no-undeclared-env-vars": "warn",
-      
+
       // TypeScript rules
       "@typescript-eslint/array-type": "off",
       "@typescript-eslint/consistent-type-definitions": "off",
@@ -35,9 +35,19 @@ export const config = [
           fixStyle: "inline-type-imports",
         },
       ],
-      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
       "@typescript-eslint/require-await": "off",
-      "@typescript-eslint/no-misused-promises": ["error", { checksVoidReturn: { attributes: false } }],
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        { checksVoidReturn: { attributes: false } },
+      ],
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/explicit-function-return-type": [
         "off",
@@ -80,7 +90,7 @@ export const config = [
     rules: {
       ...tailwindcss.configs.recommended.rules,
       "tailwindcss/classnames-order": "warn",
-      "tailwindcss/no-custom-classname": "off",  // Allow custom classes
+      "tailwindcss/no-custom-classname": "off", // Allow custom classes
       "tailwindcss/no-contradicting-classname": "error",
     },
     settings: {

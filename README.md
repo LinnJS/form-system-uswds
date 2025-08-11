@@ -17,15 +17,15 @@ This project provides a comprehensive form system that combines USWDS design pri
 
 ## Packages
 
-| Package | Description | Status |
-|---------|-------------|--------|
-| `@acme/ui` | Core React component library with Tailwind CSS | ✅ Implemented |
-| `@acme/eslint-config` | Shared ESLint configuration | ✅ Implemented |
-| `@acme/tailwind-config` | Shared Tailwind CSS configuration | ✅ Implemented |
-| `@acme/typescript-config` | Shared TypeScript configuration | ✅ Implemented |
-| `@acme/form` | Advanced form components and validation | 🚧 Planned |
-| `@acme/form-renderer` | Dynamic form rendering engine | 🚧 Planned |
-| `@acme/uswds-tailwind-preset` | USWDS Tailwind preset | 🚧 Planned |
+| Package                       | Description                                    | Status         |
+| ----------------------------- | ---------------------------------------------- | -------------- |
+| `@acme/ui`                    | Core React component library with Tailwind CSS | ✅ Implemented |
+| `@acme/eslint-config`         | Shared ESLint configuration                    | ✅ Implemented |
+| `@acme/tailwind-config`       | Shared Tailwind CSS configuration              | ✅ Implemented |
+| `@acme/typescript-config`     | Shared TypeScript configuration                | ✅ Implemented |
+| `@acme/form`                  | Advanced form components and validation        | 🚧 Planned     |
+| `@acme/form-renderer`         | Dynamic form rendering engine                  | 🚧 Planned     |
+| `@acme/uswds-tailwind-preset` | USWDS Tailwind preset                          | 🚧 Planned     |
 
 ## Installation
 
@@ -50,7 +50,7 @@ The `@acme/ui` package provides React components styled with Tailwind CSS and Cl
 
 ```tsx
 // Import components
-import { Button, Card, CardHeader, CardTitle, CardContent, Code } from '@acme/ui';
+import { Button, Card, CardHeader, CardTitle, CardContent, Code } from "@acme/ui";
 
 function MyApp() {
   return (
@@ -59,7 +59,9 @@ function MyApp() {
         <CardTitle>Example Card</CardTitle>
       </CardHeader>
       <CardContent>
-        <Button variant="default" size="md">Click me</Button>
+        <Button variant="default" size="md">
+          Click me
+        </Button>
         <Code>console.log('Hello')</Code>
       </CardContent>
     </Card>
@@ -80,32 +82,35 @@ This project includes Tailwind CSS integration for custom styling and rapid UI d
 #### Setting up Tailwind in your app
 
 1. Install required dependencies:
+
 ```bash
 pnpm add -D tailwindcss postcss autoprefixer
 ```
 
 2. Create or update your `tailwind.config.js`:
+
 ```js
 // tailwind.config.js
-const sharedConfig = require('@acme/tailwind-config')
+const sharedConfig = require("@acme/tailwind-config");
 
 module.exports = {
   presets: [sharedConfig],
   content: [
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
     // Include UI package components
-    '../../packages/ui/src/**/*.{js,ts,jsx,tsx}',
+    "../../packages/ui/src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
       // Your custom theme extensions
     },
   },
-}
+};
 ```
 
 3. Add Tailwind directives to your CSS:
+
 ```css
 /* globals.css */
 @tailwind base;
@@ -114,6 +119,7 @@ module.exports = {
 ```
 
 4. Configure PostCSS:
+
 ```js
 // postcss.config.js
 module.exports = {
@@ -121,12 +127,13 @@ module.exports = {
     tailwindcss: {},
     autoprefixer: {},
   },
-}
+};
 ```
 
 #### Using the shared Tailwind configuration
 
 The `@acme/tailwind-config` package provides a consistent design system across all applications with:
+
 - Custom color palettes (primary and secondary scales)
 - Geist font family configuration
 - Responsive breakpoints
@@ -274,7 +281,7 @@ This is a proof of concept (POC) implementation. While functional, it's under ac
 
 ## Roadmap
 
-### Phase 1: Foundation (Current)
+### Phase 1: Foundation ✅
 
 - [x] Core component architecture
 - [x] Monorepo setup with Turborepo
@@ -284,11 +291,11 @@ This is a proof of concept (POC) implementation. While functional, it's under ac
 - [x] Class Variance Authority (CVA) for component variants
 - [x] ESLint and TypeScript configurations
 - [x] Button, Card, and Code components
-- [ ] Pre-compiled CSS distribution
-- [ ] Basic form validation
-- [ ] Initial accessibility testing
+- [x] Pre-compiled CSS distribution
+- [x] Basic form validation
+- [x] Initial accessibility testing
 
-### Phase 2: Enhanced Components
+### Phase 2: Enhanced Components (current)
 
 - [ ] Complete USWDS form components
   - [ ] Radio buttons and checkboxes
