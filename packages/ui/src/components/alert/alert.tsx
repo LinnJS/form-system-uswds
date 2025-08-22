@@ -1,20 +1,54 @@
 "use client";
 
+import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { forwardRef } from "react";
 import { cn } from "../../lib/utils";
 
-export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** Alert type/severity */
-  variant?: "info" | "warning" | "error" | "success" | "emergency";
-  /** Slim variant */
-  slim?: boolean;
-  /** No icon variant */
-  noIcon?: boolean;
+const alertVariants = cva(["usa-alert", "font-sans"], {
+  variants: {
+    variant: {
+      info: "usa-alert--info",
+      warning: "usa-alert--warning",
+      error: "usa-alert--error",
+      success: "usa-alert--success",
+      emergency: "usa-alert--emergency",
+    },
+    slim: {
+      true: "usa-alert--slim",
+    },
+    noIcon: {
+      true: "usa-alert--no-icon",
+    },
+  },
+  defaultVariants: {
+    variant: "info",
+  },
+});
+
+const siteAlertVariants = cva(["usa-site-alert", "font-sans"], {
+  variants: {
+    variant: {
+      info: "usa-site-alert--info",
+      warning: "usa-site-alert--info",
+      error: "usa-site-alert--emergency",
+      success: "usa-site-alert--info",
+      emergency: "usa-site-alert--emergency",
+    },
+    slim: {
+      true: "usa-site-alert--slim",
+    },
+  },
+  defaultVariants: {
+    variant: "info",
+  },
+});
+
+export interface AlertProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof alertVariants> {
   /** Alert heading */
   heading?: string;
-  /** Additional Tailwind utilities */
-  twClass?: string;
   /** Dismissible alert */
   dismissible?: boolean;
   /** Callback when dismissed */
@@ -29,11 +63,10 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
   (
     {
       className,
-      variant = "info",
-      slim = false,
-      noIcon = false,
+      variant,
+      slim,
+      noIcon,
       heading,
-      twClass,
       dismissible = false,
       onDismiss,
       children,
@@ -50,23 +83,6 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
 
     if (!visible) return null;
 
-    const variantClasses = {
-      info: "usa-alert--info",
-      warning: "usa-alert--warning",
-      error: "usa-alert--error",
-      success: "usa-alert--success",
-      emergency: "usa-alert--emergency",
-    };
-
-    const alertClasses = cn(
-      "usa-alert",
-      variantClasses[variant],
-      slim && "usa-alert--slim",
-      noIcon && "usa-alert--no-icon",
-      twClass,
-      className
-    );
-
     // ARIA role based on variant
     const role = variant === "error" ? "alert" : variant === "success" ? "status" : "region";
     const ariaLive = variant === "error" || variant === "emergency" ? "assertive" : "polite";
@@ -74,7 +90,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
     return (
       <div
         ref={ref}
-        className={alertClasses}
+        className={cn(alertVariants({ variant, slim, noIcon }), className)}
         role={role}
         aria-live={ariaLive}
         aria-atomic="true"
@@ -103,29 +119,22 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
 
 Alert.displayName = "Alert";
 
+export interface SiteAlertProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof siteAlertVariants> {}
+
 /**
  * Site Alert Component (full-width alerts)
  */
-export const SiteAlert = forwardRef<HTMLDivElement, AlertProps>(
-  ({ className, variant = "info", slim = false, twClass, children, ...props }, ref) => {
-    const variantClasses = {
-      info: "usa-site-alert--info",
-      warning: "usa-site-alert--info",
-      error: "usa-site-alert--emergency",
-      success: "usa-site-alert--info",
-      emergency: "usa-site-alert--emergency",
-    };
-
-    const siteAlertClasses = cn(
-      "usa-site-alert",
-      variantClasses[variant],
-      slim && "usa-site-alert--slim",
-      twClass,
-      className
-    );
-
+export const SiteAlert = forwardRef<HTMLDivElement, SiteAlertProps>(
+  ({ className, variant, slim, children, ...props }, ref) => {
     return (
-      <section ref={ref} className={siteAlertClasses} aria-label="Site alert" {...props}>
+      <section
+        ref={ref}
+        className={cn(siteAlertVariants({ variant, slim }), className)}
+        aria-label="Site alert"
+        {...props}
+      >
         <div className="usa-alert">
           <div className="usa-alert__body">
             <div className="usa-alert__text">{children}</div>
@@ -137,3 +146,5 @@ export const SiteAlert = forwardRef<HTMLDivElement, AlertProps>(
 );
 
 SiteAlert.displayName = "SiteAlert";
+
+export { alertVariants, siteAlertVariants };

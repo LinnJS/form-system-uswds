@@ -1,19 +1,19 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FormWizard, FormStep } from "../patterns/wizard/form-wizard";
-import { ReviewTable, createReviewFields } from "../patterns/wizard/review-table";
-import { StatusTimeline, ClaimStatus } from "../patterns/status/status-timeline";
+import { Alert } from "../components/alert";
 import { ButtonEnhanced } from "../components/button/button-enhanced";
-import { SSNInput, PhoneInput, ZIPInput, DateInput } from "../components/form/masked-input";
+import { Input } from "../components/form";
 import { Form, FormField, FormItem } from "../components/form/form";
 import { FormLabel } from "../components/form/form-label";
 import { FormMessage } from "../components/form/form-message";
-import { Input } from "../components/form/input-direct";
-import { Alert } from "../components/alert";
+import { DateInput, PhoneInput, SSNInput, ZIPInput } from "../components/form/masked-input";
+import { ClaimStatus } from "../patterns/status/status-timeline";
+import { FormStep, FormWizard } from "../patterns/wizard/form-wizard";
+import { ReviewTable, createReviewFields } from "../patterns/wizard/review-table";
 
 // Example schema for a VA benefits application
 const BenefitsApplicationSchema = z.object({
@@ -23,7 +23,7 @@ const BenefitsApplicationSchema = z.object({
   middleName: z.string().optional(),
   dateOfBirth: z.string().min(8, "Date of birth is required"),
   ssn: z.string().length(9, "SSN must be 9 digits"),
-  
+
   // Contact Information
   email: z.string().email("Invalid email address"),
   phone: z.string().length(10, "Phone number must be 10 digits"),
@@ -31,17 +31,17 @@ const BenefitsApplicationSchema = z.object({
   city: z.string().min(1, "City is required"),
   state: z.string().length(2, "State must be 2 characters"),
   zipCode: z.string().length(5, "ZIP code must be 5 digits"),
-  
+
   // Military Service
   branch: z.enum(["army", "navy", "airforce", "marines", "coastguard", "spaceforce"]),
   serviceStartDate: z.string().min(8, "Service start date is required"),
   serviceEndDate: z.string().min(8, "Service end date is required"),
   dischargeType: z.enum(["honorable", "general", "other"]),
-  
+
   // Benefits Selection
   benefitType: z.enum(["disability", "education", "healthcare", "pension"]),
   additionalInfo: z.string().optional(),
-  
+
   // Agreement
   certifyInfo: z.boolean().refine((val) => val === true, {
     message: "You must certify that the information is accurate",
@@ -75,13 +75,13 @@ export function VAInspiredDemo() {
     },
   });
 
-  const handleSubmit = async (values: BenefitsApplicationValues) => {
+  const handleSubmit = async (_values: BenefitsApplicationValues) => {
     // Simulate API submission
     await new Promise((resolve) => setTimeout(resolve, 2000));
     const id = `VA-${Date.now()}`;
     setApplicationId(id);
     setSubmitted(true);
-    console.log("Submitted application:", values);
+    // Application submitted: values
   };
 
   if (submitted && applicationId) {
@@ -91,11 +91,10 @@ export function VAInspiredDemo() {
   return (
     <div className="mx-auto max-w-4xl p-6">
       <div className="mb-8">
-        <h1 className="mb-2 text-3xl font-bold text-gray-900">
-          Apply for VA Benefits
-        </h1>
+        <h1 className="mb-2 text-3xl font-bold text-gray-900">Apply for VA Benefits</h1>
         <p className="text-lg text-gray-600">
-          Complete this form to apply for Veterans Affairs benefits. Your progress is automatically saved.
+          Complete this form to apply for Veterans Affairs benefits. Your progress is automatically
+          saved.
         </p>
       </div>
 
@@ -112,10 +111,7 @@ export function VAInspiredDemo() {
         showSaveIndicator
         analyticsPrefix="va_benefits"
       >
-        <FormStep
-          title="Personal Information"
-          description="Tell us about yourself"
-        >
+        <FormStep title="Personal Information" description="Tell us about yourself">
           <Form {...form}>
             <div className="space-y-4">
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -130,7 +126,7 @@ export function VAInspiredDemo() {
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control}
                   name="lastName"
@@ -178,10 +174,7 @@ export function VAInspiredDemo() {
           </Form>
         </FormStep>
 
-        <FormStep
-          title="Contact Information"
-          description="How can we reach you?"
-        >
+        <FormStep title="Contact Information" description="How can we reach you?">
           <Form {...form}>
             <div className="space-y-4">
               <FormField
@@ -328,16 +321,16 @@ export function VAInspiredDemo() {
                 "zipCode",
               ],
             })}
-            onEdit={(field) => {
+            onEdit={(_field) => {
               // Navigate to appropriate step based on field
-              console.log("Edit field:", field);
+              // Edit field: field
             }}
           />
 
           <div className="mt-6 space-y-4">
             <Alert variant="warning">
-              By submitting this application, you certify that all information provided is true
-              and accurate to the best of your knowledge.
+              By submitting this application, you certify that all information provided is true and
+              accurate to the best of your knowledge.
             </Alert>
           </div>
         </FormStep>
@@ -413,12 +406,8 @@ function ApplicationStatus({ applicationId }: { applicationId: string }) {
       />
 
       <div className="mt-8 flex gap-4">
-        <ButtonEnhanced variant="default">
-          Download Confirmation
-        </ButtonEnhanced>
-        <ButtonEnhanced variant="outline">
-          Return to Dashboard
-        </ButtonEnhanced>
+        <ButtonEnhanced variant="default">Download Confirmation</ButtonEnhanced>
+        <ButtonEnhanced variant="outline">Return to Dashboard</ButtonEnhanced>
       </div>
     </div>
   );

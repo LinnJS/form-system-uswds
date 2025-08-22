@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 import sharedConfig from "@acme/tailwind-config";
-import uswdsTailwindPreset from "./src/lib/uswds-tailwind-preset";
+import tailwindPreset from "./src/lib/tailwind-preset";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 const config: Config = {
   darkMode: ["class"],
@@ -11,7 +12,7 @@ const config: Config = {
   ],
   presets: [
     sharedConfig,
-    uswdsTailwindPreset // Add USWDS preset
+    tailwindPreset // Add design system preset
   ],
   theme: {
     extend: {
@@ -21,9 +22,32 @@ const config: Config = {
         serif: ['Merriweather', 'Georgia', '"Times New Roman"', 'serif'],
         mono: ['"Roboto Mono"', '"Courier New"', 'monospace'],
       },
+      // Add container settings for shadcn components
+      container: {
+        center: true,
+        padding: "2rem",
+        screens: {
+          "2xl": "1400px",
+        },
+      },
+      // Animation presets for shadcn components
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
     },
   },
-  plugins: [],
+  plugins: [tailwindcssAnimate],
 };
 
 export default config;

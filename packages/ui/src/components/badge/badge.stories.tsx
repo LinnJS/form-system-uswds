@@ -1,15 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
-import { Badge, Tag } from "./badge";
+import { Badge, Identifier, Tag } from "./badge";
 
 const meta = {
-  title: "USWDS/Badge",
+  title: "Components/Badge",
   component: Badge,
   parameters: {
     layout: "centered",
     docs: {
       description: {
-        component: "USWDS-compliant Badge and Tag components for labeling and categorization.",
+        component:
+          "USWDS-compliant Badge and Tag components for labeling and categorization with color variants matching alert types.",
       },
     },
   },
@@ -19,6 +20,11 @@ const meta = {
       control: "boolean",
       description: "Whether to use the big variant",
     },
+    variant: {
+      control: "select",
+      options: ["default", "info", "warning", "error", "success", "emergency"],
+      description: "Color variant matching alert types",
+    },
   },
 } satisfies Meta<typeof Badge>;
 
@@ -27,175 +33,171 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    children: "Badge",
-  },
-};
-
-export const Primary: Story = {
-  args: {
-    children: "Primary",
-  },
-};
-
-export const Success: Story = {
-  args: {
-    children: "Success",
-  },
-};
-
-export const Warning: Story = {
-  args: {
-    children: "Warning",
-  },
-};
-
-export const Error: Story = {
-  args: {
-    children: "Error",
+    children: "Default",
+    variant: "default",
   },
 };
 
 export const Info: Story = {
   args: {
     children: "Info",
+    variant: "info",
   },
 };
 
-export const Outline: Story = {
+export const Success: Story = {
   args: {
-    children: "Outline",
+    children: "Success",
+    variant: "success",
   },
 };
 
-export const New: Story = {
+export const Warning: Story = {
   args: {
-    children: "NEW",
+    children: "Warning",
+    variant: "warning",
   },
 };
 
-export const BigVariant: Story = {
+export const Error: Story = {
   args: {
-    children: "5",
+    children: "Error",
+    variant: "error",
+  },
+};
+
+export const Emergency: Story = {
+  args: {
+    children: "Emergency",
+    variant: "emergency",
+  },
+};
+
+export const Big: Story = {
+  args: {
+    children: "Big Tag",
     big: true,
+    variant: "default",
   },
 };
 
-export const Variants: Story = {
-  render: () => (
-    <div className="flex items-center gap-4">
-      <Badge>Default</Badge>
-      <Badge big>Big Variant</Badge>
-    </div>
-  ),
+export const BigSuccess: Story = {
+  args: {
+    children: "Approved",
+    big: true,
+    variant: "success",
+  },
+};
+
+export const BigWarning: Story = {
+  args: {
+    children: "Pending",
+    big: true,
+    variant: "warning",
+  },
+};
+
+export const BigError: Story = {
+  args: {
+    children: "Rejected",
+    big: true,
+    variant: "error",
+  },
 };
 
 export const AllVariants: Story = {
   render: () => (
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap gap-2">
+        <Badge variant="default">Default</Badge>
+        <Badge variant="info">Info</Badge>
+        <Badge variant="success">Success</Badge>
+        <Badge variant="warning">Warning</Badge>
+        <Badge variant="error">Error</Badge>
+        <Badge variant="emergency">Emergency</Badge>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        <Badge variant="default" big>
+          Default Big
+        </Badge>
+        <Badge variant="info" big>
+          Info Big
+        </Badge>
+        <Badge variant="success" big>
+          Success Big
+        </Badge>
+        <Badge variant="warning" big>
+          Warning Big
+        </Badge>
+        <Badge variant="error" big>
+          Error Big
+        </Badge>
+        <Badge variant="emergency" big>
+          Emergency Big
+        </Badge>
+      </div>
+    </div>
+  ),
+};
+
+export const StatusIndicators: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center gap-2">
+        <span className="text-gray-70">Order Status:</span>
+        <Badge variant="success">Completed</Badge>
+      </div>
+      <div className="flex items-center gap-2">
+        <span className="text-gray-70">Payment:</span>
+        <Badge variant="warning">Pending</Badge>
+      </div>
+      <div className="flex items-center gap-2">
+        <span className="text-gray-70">Verification:</span>
+        <Badge variant="error">Failed</Badge>
+      </div>
+      <div className="flex items-center gap-2">
+        <span className="text-gray-70">Priority:</span>
+        <Badge variant="emergency">Urgent</Badge>
+      </div>
+      <div className="flex items-center gap-2">
+        <span className="text-gray-70">Notice:</span>
+        <Badge variant="info">New Feature</Badge>
+      </div>
+    </div>
+  ),
+};
+
+export const CategoryTags: Story = {
+  render: () => (
     <div className="flex flex-wrap gap-2">
-      <Badge>Default</Badge>
-      <Badge>Primary</Badge>
-      <Badge>Secondary</Badge>
-      <Badge>Success</Badge>
-      <Badge>Warning</Badge>
-      <Badge>Error</Badge>
-      <Badge>Info</Badge>
-      <Badge>Outline</Badge>
-      <Badge>NEW</Badge>
-      <Badge big>Big Badge</Badge>
+      <Tag>Technology</Tag>
+      <Tag>Healthcare</Tag>
+      <Tag>Education</Tag>
+      <Tag>Finance</Tag>
+      <Tag big>Featured</Tag>
+      <Tag variant="success" big>
+        Active
+      </Tag>
+      <Tag variant="error" big>
+        Expired
+      </Tag>
     </div>
   ),
 };
 
-export const Tags: Story = {
+const IdentifierStory: Story = {
   render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-lg font-semibold mb-2">Status Tags</h3>
-        <div className="flex flex-wrap gap-2">
-          <Tag>Draft</Tag>
-          <Tag>In Review</Tag>
-          <Tag>Approved</Tag>
-          <Tag>Pending</Tag>
-          <Tag>Rejected</Tag>
-          <Tag>Archived</Tag>
-        </div>
-      </div>
-      <div>
-        <h3 className="text-lg font-semibold mb-2">Category Tags</h3>
-        <div className="flex flex-wrap gap-2">
-          <Tag>Technology</Tag>
-          <Tag>Healthcare</Tag>
-          <Tag>Education</Tag>
-          <Tag>Finance</Tag>
-          <Tag>Government</Tag>
-        </div>
-      </div>
-    </div>
+    <Identifier
+      agency="General Services Administration"
+      parentAgency="U.S. Government"
+      requiredLinks={[
+        { href: "#", text: "About" },
+        { href: "#", text: "Accessibility" },
+        { href: "#", text: "FOIA requests" },
+        { href: "#", text: "Privacy policy" },
+      ]}
+    />
   ),
 };
 
-export const InContext: Story = {
-  render: () => (
-    <div className="space-y-4 max-w-2xl">
-      <div className="border rounded-lg p-4">
-        <div className="flex items-start justify-between mb-2">
-          <h3 className="text-lg font-semibold">Application Status</h3>
-          <Badge>Approved</Badge>
-        </div>
-        <p className="text-gray-600">
-          Your application has been reviewed and approved. You will receive further instructions via
-          email.
-        </p>
-      </div>
-
-      <div className="border rounded-lg p-4">
-        <div className="flex items-start justify-between mb-2">
-          <h3 className="text-lg font-semibold">Document Review</h3>
-          <Badge>Pending</Badge>
-        </div>
-        <p className="text-gray-600">
-          Your documents are currently under review. This process typically takes 3-5 business days.
-        </p>
-      </div>
-
-      <div className="border rounded-lg p-4">
-        <div className="flex items-start gap-2 mb-2">
-          <h3 className="text-lg font-semibold">New Feature</h3>
-          <Badge>
-            NEW
-          </Badge>
-        </div>
-        <p className="text-gray-600">
-          Check out our latest feature that allows you to track your application in real-time.
-        </p>
-      </div>
-    </div>
-  ),
-};
-
-export const NotificationBadges: Story = {
-  render: () => (
-    <div className="flex gap-6">
-      <div className="relative">
-        <button className="px-4 py-2 border rounded-md">Messages</button>
-        <Badge className="absolute -top-2 -right-2 rounded-full px-2">
-          3
-        </Badge>
-      </div>
-
-      <div className="relative">
-        <button className="px-4 py-2 border rounded-md">Notifications</button>
-        <Badge big className="absolute -top-2 -right-2">
-          12
-        </Badge>
-      </div>
-
-      <div className="relative">
-        <button className="px-4 py-2 border rounded-md">Updates</button>
-        <Badge className="absolute -top-2 -right-2">
-          NEW
-        </Badge>
-      </div>
-    </div>
-  ),
-};
+export { IdentifierStory as Identifier };

@@ -1,10 +1,10 @@
 "use client";
 
+import { Check, ChevronLeft, ChevronRight, Save } from "lucide-react";
 import * as React from "react";
 import { type UseFormReturn } from "react-hook-form";
-import { cn } from "../../lib/utils";
 import { ButtonEnhanced } from "../../components/button/button-enhanced";
-import { ChevronLeft, ChevronRight, Save, Check } from "lucide-react";
+import { cn } from "../../lib/utils";
 
 export interface StorageAdapter {
   getItem: (key: string) => Promise<string | null>;
@@ -16,17 +16,19 @@ export class LocalStorageAdapter implements StorageAdapter {
   async getItem(key: string): Promise<string | null> {
     return localStorage.getItem(key);
   }
-  
+
   async setItem(key: string, value: string): Promise<void> {
     localStorage.setItem(key, value);
   }
-  
+
   async removeItem(key: string): Promise<void> {
     localStorage.removeItem(key);
   }
 }
 
-export interface FormWizardProps<TFieldValues extends Record<string, unknown> = Record<string, unknown>> {
+export interface FormWizardProps<
+  TFieldValues extends Record<string, unknown> = Record<string, unknown>,
+> {
   /** React Hook Form instance */
   form: UseFormReturn<TFieldValues>;
   /** Storage key for save-in-progress */
@@ -103,17 +105,22 @@ export function FormWizard<TFieldValues extends Record<string, unknown> = Record
       try {
         const saved = await storageAdapter.getItem(storageKey);
         if (saved) {
-          const data = JSON.parse(saved);
+          const data = JSON.parse(saved) as {
+            values: TFieldValues;
+            currentStep?: number;
+            visitedSteps?: number[];
+            lastSaved: string;
+          };
           form.reset(data.values);
-          setCurrentStep(data.currentStep || 0);
-          setVisitedSteps(new Set(data.visitedSteps || [0]));
+          setCurrentStep(data.currentStep ?? 0);
+          setVisitedSteps(new Set(data.visitedSteps ?? [0]));
           setLastSaved(new Date(data.lastSaved));
         }
       } catch (error) {
         console.error("Failed to load saved progress:", error);
       }
     };
-    loadProgress();
+    void loadProgress();
   }, [storageKey, storageAdapter, form]);
 
   // Auto-save functionality
@@ -128,7 +135,7 @@ export function FormWizard<TFieldValues extends Record<string, unknown> = Record
       };
       await storageAdapter.setItem(storageKey, JSON.stringify(data));
       setLastSaved(new Date());
-      
+
       // Emit analytics event
       if (window.__USWDS_ANALYTICS_HANDLER__) {
         window.__USWDS_ANALYTICS_HANDLER__({
@@ -149,14 +156,14 @@ export function FormWizard<TFieldValues extends Record<string, unknown> = Record
 
   // Auto-save interval
   React.useEffect(() => {
-    const interval = setInterval(saveProgress, autoSaveInterval);
+    const interval = setInterval(() => void saveProgress(), autoSaveInterval);
     return () => clearInterval(interval);
   }, [saveProgress, autoSaveInterval]);
 
   // Navigation handlers
   const handleNext = async () => {
     const currentStepElement = steps[currentStep];
-    
+
     // Validate current step if validation function provided
     if (currentStepElement?.props.validate) {
       const isValid = await currentStepElement.props.validate();
@@ -178,7 +185,7 @@ export function FormWizard<TFieldValues extends Record<string, unknown> = Record
     } else {
       const nextStep = currentStep + 1;
       setCurrentStep(nextStep);
-      setVisitedSteps(prev => new Set([...prev, nextStep]));
+      setVisitedSteps((prev) => new Set([...prev, nextStep]));
       onStepChange?.(nextStep, "next");
       await saveProgress();
     }
@@ -226,7 +233,7 @@ export function FormWizard<TFieldValues extends Record<string, unknown> = Record
               </div>
             )}
           </div>
-          
+
           {/* Progress bar */}
           <div className="relative">
             <div className="h-2 overflow-hidden rounded-full bg-gray-200">
@@ -252,7 +259,9 @@ export function FormWizard<TFieldValues extends Record<string, unknown> = Record
                 className={cn(
                   "text-sm font-medium transition-colors",
                   index === currentStep && "text-blue-600",
-                  visitedSteps.has(index) && index !== currentStep && "text-gray-600 hover:text-blue-600",
+                  visitedSteps.has(index) &&
+                    index !== currentStep &&
+                    "text-gray-600 hover:text-blue-600",
                   !visitedSteps.has(index) && "cursor-not-allowed text-gray-400"
                 )}
                 aria-current={index === currentStep ? "step" : undefined}

@@ -11,8 +11,6 @@ export interface AccordionProps extends React.HTMLAttributes<HTMLDivElement> {
   bordered?: boolean;
   /** Items to be expanded by default */
   defaultExpanded?: string[];
-  /** Additional Tailwind utilities */
-  twClass?: string;
 }
 
 export interface AccordionItemProps extends React.HTMLAttributes<HTMLElement> {
@@ -24,8 +22,6 @@ export interface AccordionItemProps extends React.HTMLAttributes<HTMLElement> {
   headingLevel?: 2 | 3 | 4 | 5 | 6;
   /** Whether item is expanded by default */
   defaultExpanded?: boolean;
-  /** Additional Tailwind utilities */
-  twClass?: string;
 }
 
 /**
@@ -39,7 +35,6 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
       multiselectable = false,
       bordered = false,
       defaultExpanded = [],
-      twClass,
       children,
       ...props
     },
@@ -47,8 +42,8 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
   ) => {
     const accordionClasses = cn(
       "usa-accordion",
+      "font-sans",
       bordered && "usa-accordion--bordered",
-      twClass,
       className
     );
 
@@ -72,7 +67,12 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
 
     // Clone children with expanded state
     const enhancedChildren = React.Children.map(children, (child) => {
-      if (React.isValidElement<AccordionItemProps & { expanded?: boolean; onToggle?: () => void }>(child) && child.type === AccordionItem) {
+      if (
+        React.isValidElement<AccordionItemProps & { expanded?: boolean; onToggle?: () => void }>(
+          child
+        ) &&
+        child.type === AccordionItem
+      ) {
         const itemId = child.props.itemId ?? child.props.heading;
         return React.cloneElement(child, {
           expanded: expandedItems.has(itemId),
@@ -102,7 +102,7 @@ Accordion.displayName = "Accordion";
  * Uses proper heading elements and ARIA attributes
  */
 export const AccordionItem = forwardRef<
-  HTMLElement,
+  HTMLButtonElement,
   AccordionItemProps & { expanded?: boolean; onToggle?: () => void }
 >(
   (
@@ -114,20 +114,19 @@ export const AccordionItem = forwardRef<
       defaultExpanded = false,
       expanded: controlledExpanded,
       onToggle,
-      twClass,
       children,
       ...props
     },
     ref
   ) => {
     const generatedId = useId();
-    const id = itemId || generatedId;
+    const id = itemId ?? generatedId;
     const contentId = `${id}-content`;
     const buttonId = `${id}-button`;
 
     // Use local state if not controlled
     const [localExpanded, setLocalExpanded] = useState(defaultExpanded);
-    const isExpanded = controlledExpanded !== undefined ? controlledExpanded : localExpanded;
+    const isExpanded = controlledExpanded ?? localExpanded;
 
     const handleToggle = () => {
       if (onToggle) {
@@ -137,15 +136,17 @@ export const AccordionItem = forwardRef<
       }
     };
 
-    const HeadingTag = `h${headingLevel}` as "h2" | "h3" | "h4" | "h5" | "h6";
+    const HeadingTag = `h${headingLevel}`;
 
     return (
       <>
-        <HeadingTag className="usa-accordion__heading">
+        {React.createElement(
+          HeadingTag,
+          { className: "usa-accordion__heading" },
           <button
-            ref={ref as any}
+            ref={ref}
             type="button"
-            className={cn("usa-accordion__button", twClass, className)}
+            className={cn("usa-accordion__button", className)}
             aria-expanded={isExpanded}
             aria-controls={contentId}
             id={buttonId}
@@ -154,7 +155,7 @@ export const AccordionItem = forwardRef<
           >
             {heading}
           </button>
-        </HeadingTag>
+        )}
         <div
           id={contentId}
           className="usa-accordion__content usa-prose"
@@ -169,10 +170,3 @@ export const AccordionItem = forwardRef<
 );
 
 AccordionItem.displayName = "AccordionItem";
-
-// Legacy exports for compatibility
-export const AccordionButton = AccordionItem;
-export const AccordionContent = ({ children }: { children: React.ReactNode }) => <>{children}</>;
-
-export interface AccordionButtonProps extends AccordionItemProps {}
-export interface AccordionContentProps extends React.HTMLAttributes<HTMLDivElement> {}

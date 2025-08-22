@@ -1,9 +1,9 @@
-import type { FieldValidation, ValidatorFunction } from "./types";
+import type { FieldValidation, ValidatorFunction, FieldValue } from "./types";
 
 export const validators = {
   required:
     (message = "This field is required"): ValidatorFunction =>
-    (value: any) => {
+    (value: FieldValue) => {
       if (
         value === null ||
         value === undefined ||
@@ -17,9 +17,10 @@ export const validators = {
 
   minLength:
     (min: number, message?: string): ValidatorFunction =>
-    (value: any) => {
+    (value: FieldValue) => {
       const msg = message || `Must be at least ${min} characters`;
-      if (value && value.length < min) {
+      const strValue = typeof value === 'string' ? value : String(value || '');
+      if (strValue && strValue.length < min) {
         return msg;
       }
       return undefined;
@@ -27,9 +28,10 @@ export const validators = {
 
   maxLength:
     (max: number, message?: string): ValidatorFunction =>
-    (value: any) => {
+    (value: FieldValue) => {
       const msg = message || `Must be no more than ${max} characters`;
-      if (value && value.length > max) {
+      const strValue = typeof value === 'string' ? value : String(value || '');
+      if (strValue && strValue.length > max) {
         return msg;
       }
       return undefined;
@@ -37,9 +39,10 @@ export const validators = {
 
   email:
     (message = "Please enter a valid email address"): ValidatorFunction =>
-    (value: any) => {
+    (value: FieldValue) => {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (value && !emailRegex.test(value)) {
+      const strValue = typeof value === 'string' ? value : '';
+      if (strValue && !emailRegex.test(strValue)) {
         return message;
       }
       return undefined;
@@ -47,8 +50,9 @@ export const validators = {
 
   pattern:
     (pattern: RegExp, message = "Invalid format"): ValidatorFunction =>
-    (value: any) => {
-      if (value && !pattern.test(value)) {
+    (value: FieldValue) => {
+      const strValue = typeof value === 'string' ? value : String(value || '');
+      if (strValue && !pattern.test(strValue)) {
         return message;
       }
       return undefined;
@@ -56,7 +60,7 @@ export const validators = {
 
   min:
     (min: number, message?: string): ValidatorFunction =>
-    (value: any) => {
+    (value: FieldValue) => {
       const msg = message || `Must be at least ${min}`;
       const numValue = Number(value);
       if (!isNaN(numValue) && numValue < min) {
@@ -67,7 +71,7 @@ export const validators = {
 
   max:
     (max: number, message?: string): ValidatorFunction =>
-    (value: any) => {
+    (value: FieldValue) => {
       const msg = message || `Must be no more than ${max}`;
       const numValue = Number(value);
       if (!isNaN(numValue) && numValue > max) {
@@ -78,7 +82,7 @@ export const validators = {
 
   compose:
     (...validators: ValidatorFunction[]): ValidatorFunction =>
-    (value: any) => {
+    (value: FieldValue) => {
       for (const validator of validators) {
         const error = validator(value);
         if (error) {
@@ -131,12 +135,12 @@ export function createValidator(validation: FieldValidation): ValidatorFunction 
   return validators.compose(...validatorFunctions);
 }
 
-export function validateField(value: any, validation: FieldValidation): string | undefined {
+export function validateField(value: FieldValue, validation: FieldValidation): string | undefined {
   const validator = createValidator(validation);
   return validator(value);
 }
 
-export function validateForm<T extends Record<string, any>>(
+export function validateForm<T extends Record<string, FieldValue>>(
   values: T,
   validations: Record<keyof T, FieldValidation>
 ): Record<string, string[]> {

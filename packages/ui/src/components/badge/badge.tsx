@@ -1,31 +1,60 @@
 "use client";
 
+import { cva, type VariantProps } from "class-variance-authority";
 import React, { forwardRef } from "react";
+import { designClasses } from "../../lib/design-tokens";
 import { cn } from "../../lib/utils";
-import { uswdsClasses } from "../../lib/uswds-config";
 
-export interface TagProps extends React.HTMLAttributes<HTMLSpanElement> {
+const tagVariants = cva(
+  // Base USWDS tag class
+  "usa-tag",
+  {
+    variants: {
+      variant: {
+        default: "",
+        info: "",
+        warning: "",
+        error: "",
+        success: "",
+        emergency: "",
+      },
+      size: {
+        default: "",
+        big: "usa-tag--big",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+);
+
+export interface TagProps
+  extends React.HTMLAttributes<HTMLSpanElement>,
+    VariantProps<typeof tagVariants> {
   /**
    * Whether to use the big variant
-   * Maps to USWDS usa-tag--big
+   * @deprecated Use size="big" instead
    */
   big?: boolean;
 }
 
 /**
  * USWDS Tag Component
- * Small status indicators or labels
+ * Small status indicators or labels with color variants matching alerts
  */
 const Tag = forwardRef<HTMLSpanElement, TagProps>(
-  ({ className, big = false, children, ...props }, ref) => {
-    const tagClasses = cn(
-      uswdsClasses.badge.base,
-      big && uswdsClasses.badge.big,
-      className
-    );
+  ({ className, variant, size, big, children, ...props }, ref) => {
+    // Support legacy "big" prop
+    const actualSize = big ? "big" : size;
 
     return (
-      <span ref={ref} className={tagClasses} {...props}>
+      <span
+        ref={ref}
+        className={cn(tagVariants({ variant, size: actualSize }), className)}
+        {...props}
+      >
         {children}
       </span>
     );
@@ -80,11 +109,7 @@ const Identifier = forwardRef<HTMLDivElement, IdentifierProps>(
     ref
   ) => {
     return (
-      <div
-        ref={ref}
-        className={cn(uswdsClasses.badge.identifier, className)}
-        {...props}
-      >
+      <div ref={ref} className={cn(designClasses.badge.identifier, className)} {...props}>
         <section className="usa-identifier__section usa-identifier__section--masthead">
           <div className="usa-identifier__container">
             <div className="usa-identifier__identity">
@@ -125,4 +150,4 @@ const Identifier = forwardRef<HTMLDivElement, IdentifierProps>(
 
 Identifier.displayName = "Identifier";
 
-export { Badge, Identifier, Tag };
+export { Badge, Identifier, Tag, tagVariants };

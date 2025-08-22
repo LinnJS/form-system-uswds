@@ -3,7 +3,7 @@ import React from "react";
 import { Alert } from "./alert";
 
 const meta = {
-  title: "USWDS/Alert",
+  title: "Components/Alert",
   component: Alert,
   parameters: {
     layout: "padded",

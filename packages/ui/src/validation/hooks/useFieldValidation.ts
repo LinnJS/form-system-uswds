@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
-import type { FieldValidation } from "../types";
+import type { FieldValidation, FieldValue } from "../types";
 import { validateField } from "../validators";
 
 export interface UseFieldValidationOptions {
   validation?: FieldValidation;
   validateOnChange?: boolean;
   validateOnBlur?: boolean;
-  initialValue?: any;
+  initialValue?: FieldValue;
 }
 
 export function useFieldValidation({
@@ -31,7 +31,7 @@ export function useFieldValidation({
   }, [value, validation]);
 
   const handleChange = useCallback(
-    (newValue: any) => {
+    (newValue: FieldValue) => {
       setValue(newValue);
 
       if (validateOnChange && touched) {

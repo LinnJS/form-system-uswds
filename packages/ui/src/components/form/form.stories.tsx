@@ -317,10 +317,7 @@ export const CustomValidation = () => {
       .number({ message: "Age must be a number" })
       .min(18, "You must be at least 18 years old")
       .max(120, "Please enter a valid age"),
-    website: z.union([
-      z.string().url("Please enter a valid URL"),
-      z.literal(""),
-    ]).optional(),
+    website: z.union([z.string().url("Please enter a valid URL"), z.literal("")]).optional(),
     role: z.enum(["user", "admin", "moderator"], {
       message: "Please select a valid role",
     }),
@@ -367,9 +364,9 @@ export const CustomValidation = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel required>Age</FormLabel>
-              <FormInput 
-                type="number" 
-                placeholder="25" 
+              <FormInput
+                type="number"
+                placeholder="25"
                 {...field}
                 onChange={(e) => field.onChange(e.target.valueAsNumber)}
               />

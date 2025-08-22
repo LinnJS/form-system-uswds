@@ -1,9 +1,9 @@
 "use client";
 
+import { cva } from "class-variance-authority";
+import { AlertCircle, Check, Circle, Clock, XCircle } from "lucide-react";
 import * as React from "react";
 import { cn } from "../../lib/utils";
-import { Check, Clock, AlertCircle, XCircle, Circle } from "lucide-react";
-import { cva, type VariantProps } from "class-variance-authority";
 
 const statusVariants = cva("", {
   variants: {
@@ -48,7 +48,7 @@ export interface StatusTimelineProps extends React.HTMLAttributes<HTMLDivElement
 
 const StatusIcon: React.FC<{ status: TimelineEvent["status"] }> = ({ status }) => {
   const iconClass = "h-5 w-5";
-  
+
   switch (status) {
     case "complete":
       return <Check className={iconClass} aria-label="Complete" />;
@@ -82,7 +82,7 @@ export const StatusTimeline = React.forwardRef<HTMLDivElement, StatusTimelinePro
 
     const handleEventClick = (event: TimelineEvent) => {
       if (event.expandable) {
-        setExpandedItems(prev => {
+        setExpandedItems((prev) => {
           const newSet = new Set(prev);
           if (newSet.has(event.id)) {
             newSet.delete(event.id);

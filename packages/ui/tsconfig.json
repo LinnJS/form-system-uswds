@@ -1,7 +1,11 @@
 {
   "extends": "@acme/typescript-config/react-library.json",
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    }
   },
   "include": [
     "src",
@@ -11,7 +15,10 @@
     "vite.config.mjs",
     "vitest.config.ts",
     "tailwind.config.ts",
-    "postcss.config.cjs"
+    "postcss.config.cjs",
+    "playwright.config.ts",
+    "tests/**/*.ts",
+    "tests/**/*.spec.ts"
   ],
   "exclude": ["node_modules", "dist", "storybook-static", "**/*.stories.tsx"]
 }

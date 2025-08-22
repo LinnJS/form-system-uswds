@@ -1,0 +1,170 @@
+/**
+ * Custom layer definitions for USWDS components
+ * These must be in a separate file to avoid CSS import order issues
+ */
+
+/* Additional USWDS-specific customizations */
+@layer base {
+  /* Ensure USWDS fonts are properly loaded */
+  :root {
+    /* USWDS font stack */
+    --font-lang: 'Source Sans Pro Web', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+    --font-serif: Merriweather Web, Georgia, Cambria, 'Times New Roman', Times, serif;
+    --font-code: 'Roboto Mono Web', 'Bitstream Vera Sans Mono', Consolas, Courier, monospace;
+
+    /* USWDS color system integration */
+    --usa-blue-60v: #005ea2;
+    --usa-blue-warm-60v: #2672de;
+    --usa-red-60v: #d83933;
+    --usa-orange-50: #fa9441;
+    --usa-gold-30v: #ffbe2e;
+    --usa-green-60v: #2e8540;
+    --usa-mint-40v: #34a37e;
+    --usa-cyan-40v: #00bde3;
+  }
+}
+
+@layer components {
+  /* Ensure USWDS components integrate with React */
+  .usa-accordion,
+  .usa-alert,
+  .usa-button,
+  .usa-card,
+  .usa-tag {
+    /* Ensure consistent box-sizing */
+    box-sizing: border-box;
+  }
+
+  /* VA.gov-inspired enhancements */
+  .usa-form-group {
+    @apply mb-6;
+  }
+
+  .usa-label {
+    @apply font-bold text-gray-900;
+  }
+
+  .usa-hint {
+    @apply text-gray-600 text-sm mt-1;
+  }
+
+  .usa-error-message {
+    @apply text-red-600 font-bold text-sm mt-1;
+  }
+
+  /* Focus states for better accessibility */
+  .usa-focus:focus,
+  .usa-button:focus,
+  .usa-input:focus,
+  .usa-select:focus,
+  .usa-textarea:focus {
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+  }
+
+  /* Disabled states */
+  .usa-button:disabled,
+  .usa-input:disabled,
+  .usa-select:disabled,
+  .usa-textarea:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+}
+
+@layer utilities {
+  /* USWDS utility classes that work with Tailwind */
+  .usa-sr-only {
+    @apply sr-only;
+  }
+
+  .width-full {
+    @apply w-full;
+  }
+
+  .display-none {
+    @apply hidden;
+  }
+
+  .display-block {
+    @apply block;
+  }
+
+  .display-inline-block {
+    @apply inline-block;
+  }
+
+  .display-flex {
+    @apply flex;
+  }
+
+  /* Grid utilities */
+  .grid-container {
+    @apply container mx-auto px-4;
+  }
+
+  .grid-row {
+    @apply flex flex-wrap -mx-2;
+  }
+
+  .grid-col {
+    @apply px-2;
+  }
+
+  /* Spacing utilities */
+  .margin-top-0 { @apply mt-0; }
+  .margin-top-1 { @apply mt-2; }
+  .margin-top-2 { @apply mt-4; }
+  .margin-top-3 { @apply mt-6; }
+  .margin-top-4 { @apply mt-8; }
+  .margin-top-5 { @apply mt-10; }
+
+  .margin-bottom-0 { @apply mb-0; }
+  .margin-bottom-1 { @apply mb-2; }
+  .margin-bottom-2 { @apply mb-4; }
+  .margin-bottom-3 { @apply mb-6; }
+  .margin-bottom-4 { @apply mb-8; }
+  .margin-bottom-5 { @apply mb-10; }
+
+  .padding-top-0 { @apply pt-0; }
+  .padding-top-1 { @apply pt-2; }
+  .padding-top-2 { @apply pt-4; }
+  .padding-top-3 { @apply pt-6; }
+  .padding-top-4 { @apply pt-8; }
+  .padding-top-5 { @apply pt-10; }
+
+  .padding-bottom-0 { @apply pb-0; }
+  .padding-bottom-1 { @apply pb-2; }
+  .padding-bottom-2 { @apply pb-4; }
+  .padding-bottom-3 { @apply pb-6; }
+  .padding-bottom-4 { @apply pb-8; }
+  .padding-bottom-5 { @apply pb-10; }
+}
+
+/* Print styles */
+@media print {
+  .usa-button,
+  .usa-alert {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .usa-button {
+    border: 2px solid currentColor;
+  }
+
+  .usa-alert {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .usa-accordion__content,
+  .usa-alert,
+  .usa-button {
+    animation: none !important;
+    transition: none !important;
+  }
+}

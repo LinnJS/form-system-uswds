@@ -8,7 +8,8 @@ import {
   type UseControllerProps,
 } from "react-hook-form";
 import { cn } from "../../lib/utils";
-import { Input, type InputProps, Textarea } from "./input-direct";
+import { Input, type InputProps } from "./input";
+import { Textarea } from "./textarea";
 
 interface FormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -73,10 +74,10 @@ export function FormField<
           ...inputProps,
           ...field,
           id: fieldId,
-          state: hasError ? ("error" as const) : undefined,
+          state: hasError ? "error" : undefined,
           error: errorMessage,
           disabled: isSubmitting || inputProps.disabled,
-          "aria-invalid": hasError ? ("true" as const) : undefined,
+          "aria-invalid": hasError ? "true" : undefined,
         };
 
         // Render textarea
@@ -91,9 +92,8 @@ export function FormField<
               label={inputProps.label}
               hint={inputProps.hint}
               required={inputProps.required}
-              twClass={inputProps.twClass}
               className={inputProps.className}
-              rows={inputProps.rows || 5}
+              rows={inputProps.rows ?? 5}
               {...field}
             />
           );
@@ -131,7 +131,7 @@ export function FormField<
                 className={cn(
                   "usa-select",
                   hasError && "usa-input--error",
-                  inputProps.twClass,
+
                   inputProps.className
                 )}
                 aria-describedby={
@@ -178,9 +178,10 @@ export function FormField<
               )}
               {choices.map((choice, index) => {
                 const choiceId = `${fieldId}-${index}`;
-                const isChecked = Array.isArray(field.value)
-                  ? field.value.includes(choice.value)
-                  : field.value === choice.value;
+                const fieldValue = typeof field.value === 'string' || Array.isArray(field.value) ? field.value : '';
+                const isChecked = Array.isArray(fieldValue)
+                  ? fieldValue.includes(choice.value)
+                  : fieldValue === choice.value;
 
                 return (
                   <div key={choice.value} className="usa-checkbox">
@@ -192,12 +193,13 @@ export function FormField<
                       value={choice.value}
                       checked={isChecked}
                       onChange={(e) => {
+                        const currentValue = typeof field.value === 'string' || Array.isArray(field.value) ? field.value : '';
                         const newValue = e.target.checked
-                          ? Array.isArray(field.value)
-                            ? [...field.value, choice.value]
+                          ? Array.isArray(currentValue)
+                            ? [...currentValue, choice.value]
                             : [choice.value]
-                          : Array.isArray(field.value)
-                            ? field.value.filter((v: string) => v !== choice.value)
+                          : Array.isArray(currentValue)
+                            ? currentValue.filter((v) => v !== choice.value)
                             : [];
                         field.onChange(newValue);
                       }}

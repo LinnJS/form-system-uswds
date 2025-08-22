@@ -13,7 +13,16 @@ const meta = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["default", "secondary", "accent-cool", "accent-warm", "base", "outline", "inverse", "unstyled"],
+      options: [
+        "default",
+        "secondary",
+        "accent-cool",
+        "accent-warm",
+        "base",
+        "outline",
+        "inverse",
+        "unstyled",
+      ],
       description: "The visual style variant of the button",
     },
     size: {

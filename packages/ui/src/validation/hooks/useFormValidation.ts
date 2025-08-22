@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import type { FieldValidation, FormValidationState } from "../types";
+import type { FieldValidation, FormValidationState, FieldValue } from "../types";
 import { validateField, validateForm } from "../validators";
 
 export interface UseFormValidationOptions<T> {
@@ -9,7 +9,7 @@ export interface UseFormValidationOptions<T> {
   validateOnBlur?: boolean;
 }
 
-export function useFormValidation<T extends Record<string, any>>({
+export function useFormValidation<T extends Record<string, FieldValue>>({
   initialValues,
   validations,
   validateOnChange = false,
@@ -24,7 +24,7 @@ export function useFormValidation<T extends Record<string, any>>({
   }, [errors]);
 
   const validateSingleField = useCallback(
-    (field: keyof T, value: any) => {
+    (field: keyof T, value: FieldValue) => {
       const validation = validations[field];
       if (!validation) return undefined;
 
@@ -47,7 +47,7 @@ export function useFormValidation<T extends Record<string, any>>({
   }, []);
 
   const handleChange = useCallback(
-    (field: keyof T) => (value: any) => {
+    (field: keyof T) => (value: FieldValue) => {
       setValues((prev) => ({ ...prev, [field]: value }));
 
       if (validateOnChange && touched[field as string]) {
@@ -90,7 +90,7 @@ export function useFormValidation<T extends Record<string, any>>({
   }, [initialValues]);
 
   const setFieldValue = useCallback(
-    (field: keyof T, value: any) => {
+    (field: keyof T, value: FieldValue) => {
       handleChange(field)(value);
     },
     [handleChange]

@@ -3,6 +3,7 @@
 ## Overview
 
 The `@acme/ui` package provides comprehensive styling through a unified CSS system that integrates:
+
 - USWDS (U.S. Web Design System) v3
 - Tailwind CSS utilities
 - Custom component styles
@@ -74,10 +75,8 @@ import { vaFormPatterns, vaAlertPatterns } from "@acme/ui";
 
 // Use pattern classes
 <div className={vaFormPatterns.fieldset}>
-  <label className={vaFormPatterns.requiredIndicator}>
-    Email *
-  </label>
-</div>
+  <label className={vaFormPatterns.requiredIndicator}>Email *</label>
+</div>;
 ```
 
 ## Built CSS Distribution
@@ -97,6 +96,7 @@ pnpm build:css
 ```
 
 This generates optimized CSS with:
+
 - USWDS components
 - Tailwind utilities
 - PostCSS optimizations
@@ -106,6 +106,7 @@ This generates optimized CSS with:
 ## Component-Specific Styles
 
 ### Buttons
+
 ```jsx
 // USWDS button variants
 <Button variant="default" />
@@ -121,6 +122,7 @@ This generates optimized CSS with:
 ```
 
 ### Cards
+
 ```jsx
 // USWDS card variants
 <Card variant="default" />
@@ -130,6 +132,7 @@ This generates optimized CSS with:
 ```
 
 ### Alerts
+
 ```jsx
 // USWDS alert types
 <Alert variant="info" />
@@ -164,11 +167,7 @@ For Next.js apps:
 // app/layout.tsx
 import "@acme/ui/styles";
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>{children}</body>
@@ -186,6 +185,7 @@ open packages/ui/dist/test.html
 ```
 
 This displays:
+
 - All button variants
 - Card components
 - Form fields with validation
@@ -204,6 +204,7 @@ To customize the style system:
 ## Browser Support
 
 Styles are autoprefixed for:
+
 - Chrome (last 2 versions)
 - Firefox (last 2 versions)
 - Safari (last 2 versions)

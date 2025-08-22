@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { cn } from "../../lib/utils";
-import { Input } from "./input-direct";
+import { Input } from "./input";
 
 export type MaskType = "ssn" | "phone" | "zip" | "zip+4" | "date" | "ein" | "custom";
 
@@ -61,7 +61,8 @@ const MASK_CONFIGS: Record<Exclude<MaskType, "custom">, MaskConfig> = {
   },
 };
 
-export interface MaskedInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "onChange"> {
+export interface MaskedInputProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "onChange"> {
   /** Type of mask to apply */
   maskType: MaskType;
   /** Custom mask configuration (when maskType is "custom") */
@@ -80,8 +81,6 @@ export interface MaskedInputProps extends Omit<React.InputHTMLAttributes<HTMLInp
   hint?: string;
   /** Error message */
   error?: string;
-  /** Additional Tailwind utilities */
-  twClass?: string;
   /** Show formatted preview below input */
   showPreview?: boolean;
   /** Analytics event name */
@@ -96,12 +95,11 @@ export const MaskedInput = React.forwardRef<HTMLInputElement, MaskedInputProps>(
       customMask,
       showMaskOnFocus = true,
       showMaskOnHover = false,
-      keepMaskChars = false,
+      keepMaskChars: _keepMaskChars = false,
       onValueChange,
       label,
       hint,
       error,
-      twClass,
       showPreview = false,
       analyticsEvent,
       value: controlledValue,
@@ -113,7 +111,7 @@ export const MaskedInput = React.forwardRef<HTMLInputElement, MaskedInputProps>(
     ref
   ) => {
     const config = maskType === "custom" ? customMask! : MASK_CONFIGS[maskType];
-    const [value, setValue] = React.useState(controlledValue || defaultValue || "");
+    const [_value, setValue] = React.useState(controlledValue ?? defaultValue ?? "");
     const [maskedValue, setMaskedValue] = React.useState("");
     const [isFocused, setIsFocused] = React.useState(false);
     const [isHovered, setIsHovered] = React.useState(false);
@@ -128,11 +126,11 @@ export const MaskedInput = React.forwardRef<HTMLInputElement, MaskedInputProps>(
 
     const mask = (val: string): string => {
       if (!config) return val;
-      
+
       const unmasked = unmask(val);
       let masked = "";
       let valueIndex = 0;
-      
+
       for (let i = 0; i < config.pattern.length && valueIndex < unmasked.length; i++) {
         const patternChar = config.pattern[i];
         if (patternChar === "X" || patternChar === "9") {
@@ -142,13 +140,13 @@ export const MaskedInput = React.forwardRef<HTMLInputElement, MaskedInputProps>(
           masked += patternChar;
         }
       }
-      
+
       return masked;
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       let newValue = e.target.value;
-      
+
       // Apply constraints
       if (config) {
         if (config.numericOnly) {
@@ -164,18 +162,18 @@ export const MaskedInput = React.forwardRef<HTMLInputElement, MaskedInputProps>(
 
       const masked = mask(newValue);
       const unmasked = unmask(newValue);
-      
+
       setValue(unmasked);
       setMaskedValue(masked);
-      
+
       // Update input value
       if (inputRef.current) {
         inputRef.current.value = masked;
       }
-      
+
       // Callback with both values
       onValueChange?.(unmasked, masked);
-      
+
       // Analytics
       if (analyticsEvent && window.__USWDS_ANALYTICS_HANDLER__) {
         window.__USWDS_ANALYTICS_HANDLER__({
@@ -205,7 +203,7 @@ export const MaskedInput = React.forwardRef<HTMLInputElement, MaskedInputProps>(
     // Format functions for preview
     const formatPreview = (val: string): string => {
       const unmasked = unmask(val);
-      
+
       switch (maskType) {
         case "ssn":
           return unmasked ? `***-**-${unmasked.slice(-4)}` : "";
@@ -248,36 +246,35 @@ export const MaskedInput = React.forwardRef<HTMLInputElement, MaskedInputProps>(
             )}
           </label>
         )}
-        
+
         {hint && (
           <span id={hintId} className="usa-hint">
             {hint}
           </span>
         )}
-        
+
         {error && (
           <span id={errorId} className="usa-error-message" role="alert">
             <span className="usa-sr-only">Error:</span> {error}
           </span>
         )}
-        
+
         <Input
           ref={inputRef}
           id={inputId}
           type="text"
           className={cn(className)}
-          twClass={twClass}
           placeholder={showPlaceholder ? config?.placeholder : props.placeholder}
           onChange={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          defaultValue={mask(String(defaultValue || ""))}
+          defaultValue={mask(String(defaultValue ?? ""))}
           aria-describedby={[hintId, errorId, previewId].filter(Boolean).join(" ") || undefined}
           aria-invalid={error ? "true" : undefined}
           state={error ? "error" : undefined}
           {...props}
         />
-        
+
         {showPreview && maskedValue && (
           <div id={previewId} className="text-sm text-gray-600">
             <span className="font-medium">Formatted: </span>
@@ -292,59 +289,43 @@ export const MaskedInput = React.forwardRef<HTMLInputElement, MaskedInputProps>(
 MaskedInput.displayName = "MaskedInput";
 
 // Convenience components for common patterns
-export const SSNInput = React.forwardRef<
-  HTMLInputElement,
-  Omit<MaskedInputProps, "maskType">
->((props, ref) => (
-  <MaskedInput
-    ref={ref}
-    maskType="ssn"
-    label="Social Security Number"
-    hint="Enter your 9-digit SSN"
-    showPreview
-    {...props}
-  />
-));
+export const SSNInput = React.forwardRef<HTMLInputElement, Omit<MaskedInputProps, "maskType">>(
+  (props, ref) => (
+    <MaskedInput
+      ref={ref}
+      maskType="ssn"
+      label="Social Security Number"
+      hint="Enter your 9-digit SSN"
+      showPreview
+      {...props}
+    />
+  )
+);
 SSNInput.displayName = "SSNInput";
 
-export const PhoneInput = React.forwardRef<
-  HTMLInputElement,
-  Omit<MaskedInputProps, "maskType">
->((props, ref) => (
-  <MaskedInput
-    ref={ref}
-    maskType="phone"
-    label="Phone Number"
-    hint="10-digit US phone number"
-    {...props}
-  />
-));
+export const PhoneInput = React.forwardRef<HTMLInputElement, Omit<MaskedInputProps, "maskType">>(
+  (props, ref) => (
+    <MaskedInput
+      ref={ref}
+      maskType="phone"
+      label="Phone Number"
+      hint="10-digit US phone number"
+      {...props}
+    />
+  )
+);
 PhoneInput.displayName = "PhoneInput";
 
-export const ZIPInput = React.forwardRef<
-  HTMLInputElement,
-  Omit<MaskedInputProps, "maskType">
->((props, ref) => (
-  <MaskedInput
-    ref={ref}
-    maskType="zip"
-    label="ZIP Code"
-    hint="5-digit ZIP code"
-    {...props}
-  />
-));
+export const ZIPInput = React.forwardRef<HTMLInputElement, Omit<MaskedInputProps, "maskType">>(
+  (props, ref) => (
+    <MaskedInput ref={ref} maskType="zip" label="ZIP Code" hint="5-digit ZIP code" {...props} />
+  )
+);
 ZIPInput.displayName = "ZIPInput";
 
-export const DateInput = React.forwardRef<
-  HTMLInputElement,
-  Omit<MaskedInputProps, "maskType">
->((props, ref) => (
-  <MaskedInput
-    ref={ref}
-    maskType="date"
-    label="Date"
-    hint="MM/DD/YYYY format"
-    {...props}
-  />
-));
+export const DateInput = React.forwardRef<HTMLInputElement, Omit<MaskedInputProps, "maskType">>(
+  (props, ref) => (
+    <MaskedInput ref={ref} maskType="date" label="Date" hint="MM/DD/YYYY format" {...props} />
+  )
+);
 DateInput.displayName = "DateInput";

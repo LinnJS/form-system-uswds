@@ -1,22 +1,14 @@
-/**
- * USWDS Utility Functions
- * Provides consistent API for USWDS components with shadcn/ui-like developer experience
- */
-
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+// Removed unused import - cn is exported from utils.ts separately
 
 /**
- * Merges class names with proper Tailwind CSS precedence
- * This is the standard cn utility used throughout the library
- */
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
-
-/**
- * USWDS Component Factory
- * Creates consistent component APIs with USWDS styling
+ * Creates a USWDS component with consistent API and variant support
+ * @param baseClasses - Base CSS classes for the component
+ * @param variants - Optional variant configurations
+ * @returns Component configuration object with base classes and className generator
+ * @example
+ * const button = createUSWDSComponent("usa-button", \{
+ *   size: \{ small: "usa-button--small", large: "usa-button--large" \}
+ * \})
  */
 export function createUSWDSComponent<T extends Record<string, Record<string, string>>>(
   baseClasses: string,
@@ -31,11 +23,14 @@ export function createUSWDSComponent<T extends Record<string, Record<string, str
       if (variants && props) {
         Object.entries(props).forEach(([key, value]) => {
           if (!value) return;
-          const variantGroup = variants[key as keyof T];
-          if (variantGroup && value in variantGroup) {
-            const styles = variantGroup[value];
-            if (styles) {
-              classes.push(styles);
+          // Type guard to ensure key is valid
+          if (key in variants) {
+            const variantGroup = variants[key as keyof T];
+            if (variantGroup && value in variantGroup) {
+              const styles = variantGroup[value];
+              if (styles) {
+                classes.push(styles);
+              }
             }
           }
         });
@@ -46,34 +41,19 @@ export function createUSWDSComponent<T extends Record<string, Record<string, str
   };
 }
 
-/**
- * USWDS Focus Ring Utility
- * Applies consistent focus styles across components
- */
+/** USWDS-compliant focus ring styles for keyboard navigation */
 export const focusRing = "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2";
 
-/**
- * USWDS Disabled State Utility
- * Applies consistent disabled styles
- */
+/** USWDS-compliant disabled state styles */
 export const disabledState = "disabled:pointer-events-none disabled:opacity-50";
 
-/**
- * USWDS Screen Reader Only
- * Hides content visually but keeps it available to screen readers
- */
+/** Visually hidden but accessible to screen readers */
 export const srOnly = "sr-only";
 
-/**
- * USWDS Not Screen Reader Only
- * Shows content that was previously screen reader only
- */
+/** Reverses screen reader only styling */
 export const notSrOnly = "not-sr-only";
 
-/**
- * USWDS Validation States
- * Consistent validation styling for form elements
- */
+/** USWDS form validation state styles */
 export const validationStates = {
   error: "border-red-600 focus:ring-red-500",
   success: "border-green-600 focus:ring-green-500",
@@ -81,10 +61,7 @@ export const validationStates = {
   default: "border-gray-300 focus:ring-blue-500",
 };
 
-/**
- * USWDS Typography Scale
- * Based on USWDS type scale
- */
+/** USWDS typography scale mapping */
 export const typeScale = {
   "3xs": "text-[10px]",
   "2xs": "text-xs", // 12px
@@ -100,10 +77,7 @@ export const typeScale = {
   "6xl": "text-[56px]", // 56px
 };
 
-/**
- * USWDS Spacing Scale
- * Based on 8px grid system
- */
+/** USWDS spacing scale based on 8px grid */
 export const spacingScale = {
   "05": "0.25rem", // 4px
   1: "0.5rem", // 8px
@@ -118,10 +92,7 @@ export const spacingScale = {
   10: "5rem", // 80px
 };
 
-/**
- * USWDS Color Utilities
- * Quick access to common USWDS colors
- */
+/** USWDS text color utilities */
 export const colors = {
   primary: "text-blue-600",
   primaryHover: "hover:text-blue-700",
@@ -135,9 +106,7 @@ export const colors = {
   info: "text-cyan-600",
 };
 
-/**
- * USWDS Background Color Utilities
- */
+/** USWDS background color utilities */
 export const bgColors = {
   primary: "bg-blue-600",
   primaryHover: "hover:bg-blue-700",
@@ -152,8 +121,11 @@ export const bgColors = {
 };
 
 /**
- * Format USWDS Classes
- * Ensures USWDS class prefixes are properly applied
+ * Formats class names following USWDS BEM naming convention
+ * @param component - Component name (e.g., "button", "card")
+ * @param element - Optional element name for BEM syntax
+ * @returns Formatted USWDS class name
+ * @example formatUSWDSClass("button", "icon") // "usa-button__icon"
  */
 export function formatUSWDSClass(component: string, element?: string): string {
   if (element) {
@@ -163,8 +135,9 @@ export function formatUSWDSClass(component: string, element?: string): string {
 }
 
 /**
- * Get USWDS Icon Size
- * Returns consistent icon sizing classes
+ * Returns Tailwind classes for USWDS-compliant icon sizes
+ * @param size - Icon size variant
+ * @returns Tailwind size class
  */
 export function getIconSize(size: "sm" | "default" | "lg" | "xl" = "default"): string {
   const sizes = {

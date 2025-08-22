@@ -1,5 +1,7 @@
+export type FieldValue = string | number | boolean | Date | string[] | undefined | null;
+
 export interface ValidationRule {
-  validate: (value: any) => boolean;
+  validate: (value: FieldValue) => boolean;
   message: string;
 }
 
@@ -8,7 +10,7 @@ export interface ValidationResult {
   errors: string[];
 }
 
-export type ValidatorFunction = (value: any) => string | undefined;
+export type ValidatorFunction = (value: FieldValue) => string | undefined;
 
 export interface FieldValidation {
   required?: boolean;

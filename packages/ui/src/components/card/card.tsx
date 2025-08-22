@@ -1,46 +1,48 @@
 "use client";
 
+import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
+import { designClasses } from "../../lib/design-tokens";
 import { cn } from "../../lib/utils";
-import { uswdsClasses } from "../../lib/uswds-config";
 
-export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  /**
-   * The visual variant of the card
-   * Maps to USWDS card modifiers
-   */
-  variant?: "default" | "flag" | "header-first" | "media-right";
-  /**
-   * Whether the media should be exdent (extend beyond card boundaries)
-   * Maps to USWDS usa-card__media--exdent
-   */
-  exdent?: boolean;
-  /**
-   * Whether the media should be inset
-   * Maps to USWDS usa-card__media--inset
-   */
-  inset?: boolean;
-}
+const cardVariants = cva([designClasses.card.base, "font-sans"], {
+  variants: {
+    variant: {
+      default: "",
+      flag: designClasses.card.flag,
+      "header-first": designClasses.card.headerFirst,
+      "media-right": designClasses.card.mediaRight,
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+});
+
+const cardMediaVariants = cva(designClasses.card.media, {
+  variants: {
+    exdent: {
+      true: designClasses.card.exdent,
+    },
+    inset: {
+      true: designClasses.card.inset,
+    },
+  },
+});
+
+export interface CardProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof cardVariants> {}
 
 /**
  * USWDS Card Component
  * A flexible container for grouping related content
  */
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant = "default", children, ...props }, ref) => {
-    const cardClasses = cn(
-      uswdsClasses.card.base,
-      variant === "flag" && uswdsClasses.card.flag,
-      variant === "header-first" && uswdsClasses.card.headerFirst,
-      variant === "media-right" && uswdsClasses.card.mediaRight,
-      className
-    );
-
+  ({ className, variant, children, ...props }, ref) => {
     return (
-      <div ref={ref} className={cardClasses} {...props}>
-        <div className={uswdsClasses.card.container}>
-          {children}
-        </div>
+      <div ref={ref} className={cn(cardVariants({ variant }), className)} {...props}>
+        <div className={designClasses.card.container}>{children}</div>
       </div>
     );
   }
@@ -52,11 +54,7 @@ Card.displayName = "Card";
  */
 const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(uswdsClasses.card.header, className)}
-      {...props}
-    />
+    <div ref={ref} className={cn(designClasses.card.header, className)} {...props} />
   )
 );
 CardHeader.displayName = "CardHeader";
@@ -66,11 +64,7 @@ CardHeader.displayName = "CardHeader";
  */
 const CardTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
   ({ className, ...props }, ref) => (
-    <h3
-      ref={ref}
-      className={cn(uswdsClasses.card.heading, className)}
-      {...props}
-    />
+    <h3 ref={ref} className={cn(designClasses.card.heading, className)} {...props} />
   )
 );
 CardTitle.displayName = "CardTitle";
@@ -87,55 +81,11 @@ const CardDescription = React.forwardRef<
 CardDescription.displayName = "CardDescription";
 
 /**
- * USWDS Card Media Container
- */
-interface CardMediaProps extends React.HTMLAttributes<HTMLDivElement> {
-  exdent?: boolean;
-  inset?: boolean;
-}
-
-const CardMedia = React.forwardRef<HTMLDivElement, CardMediaProps>(
-  ({ className, exdent = false, inset = false, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(
-        uswdsClasses.card.media,
-        exdent && uswdsClasses.card.exdent,
-        inset && uswdsClasses.card.inset,
-        className
-      )}
-      {...props}
-    />
-  )
-);
-CardMedia.displayName = "CardMedia";
-
-/**
- * USWDS Card Image
- */
-interface CardImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-  className?: string;
-  alt?: string;
-}
-
-const CardImage = React.forwardRef<HTMLImageElement, CardImageProps>(
-  ({ className, alt = "", ...props }, ref) => (
-    <img
-      ref={ref}
-      className={cn(uswdsClasses.card.img, className)}
-      alt={alt}
-      {...props}
-    />
-  )
-);
-CardImage.displayName = "CardImage";
-
-/**
- * USWDS Card Body/Content
+ * USWDS Card Content/Body
  */
 const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn(uswdsClasses.card.body, className)} {...props} />
+    <div ref={ref} className={cn(designClasses.card.body, className)} {...props} />
   )
 );
 CardContent.displayName = "CardContent";
@@ -145,18 +95,41 @@ CardContent.displayName = "CardContent";
  */
 const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn(uswdsClasses.card.footer, className)} {...props} />
+    <div ref={ref} className={cn(designClasses.card.footer, className)} {...props} />
   )
 );
 CardFooter.displayName = "CardFooter";
 
+export interface CardMediaProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof cardMediaVariants> {}
+
 /**
- * USWDS Card Group
- * Container for multiple cards
+ * USWDS Card Media Container
+ */
+const CardMedia = React.forwardRef<HTMLDivElement, CardMediaProps>(
+  ({ className, exdent, inset, ...props }, ref) => (
+    <div ref={ref} className={cn(cardMediaVariants({ exdent, inset }), className)} {...props} />
+  )
+);
+CardMedia.displayName = "CardMedia";
+
+/**
+ * USWDS Card Image
+ */
+const CardImage = React.forwardRef<HTMLImageElement, React.ImgHTMLAttributes<HTMLImageElement>>(
+  ({ className, alt = "", ...props }, ref) => (
+    <img ref={ref} className={cn(designClasses.card.img, className)} alt={alt} {...props} />
+  )
+);
+CardImage.displayName = "CardImage";
+
+/**
+ * USWDS Card Group Container
  */
 const CardGroup = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn(uswdsClasses.card.group, className)} {...props} />
+    <div ref={ref} className={cn(designClasses.card.group, className)} {...props} />
   )
 );
 CardGroup.displayName = "CardGroup";
@@ -170,5 +143,7 @@ export {
   CardHeader,
   CardImage,
   CardMedia,
-  CardTitle
+  cardMediaVariants,
+  CardTitle,
+  cardVariants,
 };
