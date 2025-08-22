@@ -74,10 +74,10 @@ export function FormField<
           ...inputProps,
           ...field,
           id: fieldId,
-          state: hasError ? "error" : undefined,
+          state: hasError ? "error" as const : undefined,
           error: errorMessage,
           disabled: isSubmitting || inputProps.disabled,
-          "aria-invalid": hasError ? "true" : undefined,
+          "aria-invalid": hasError ? true : undefined,
         };
 
         // Render textarea

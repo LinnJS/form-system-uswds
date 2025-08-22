@@ -15,7 +15,7 @@ export function useFieldValidation({
   validateOnBlur = true,
   initialValue = "",
 }: UseFieldValidationOptions = {}) {
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = useState<FieldValue>(initialValue);
   const [error, setError] = useState<string | undefined>();
   const [touched, setTouched] = useState(false);
 

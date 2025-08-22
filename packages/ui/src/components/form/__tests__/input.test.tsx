@@ -220,7 +220,7 @@ describe("Input Component", () => {
       const handleChange = vi.fn();
       render(<Input value="test value" onChange={handleChange} />);
       const input = screen.getByRole("textbox");
-      expect(input.value).toBe("test value");
+      expect((input as HTMLInputElement).value).toBe("test value");
     });
   });
 });
