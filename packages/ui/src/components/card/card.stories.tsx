@@ -14,7 +14,7 @@ const meta = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["default", "outline", "elevated"],
+      options: ["default", "flag", "header-first", "media-right"],
       description: "The visual style variant of the card",
     },
   },
@@ -101,61 +101,58 @@ export const SimpleCard: Story = {
   },
 };
 
-export const OutlineCard: Story = {
+export const FlagCard: Story = {
   render: () => (
-    <Card variant="outline" className="w-[350px]">
+    <Card variant="flag" className="w-[350px]">
       <CardHeader>
-        <CardTitle>Outline Card</CardTitle>
-        <CardDescription>This card has an outline variant</CardDescription>
+        <CardTitle>Flag Card</CardTitle>
+        <CardDescription>This card uses the flag variant</CardDescription>
       </CardHeader>
       <CardContent>
-        <p>The outline variant provides a more subtle appearance with a colored border.</p>
+        <p>The flag variant provides a horizontal layout with media on the side.</p>
       </CardContent>
     </Card>
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // Test that outline variant is applied
-    const card = canvasElement.querySelector('[class*="rounded-lg"]');
+    // Test that flag variant is applied
+    const card = canvasElement.querySelector('[class*="usa-card"]');
     await expect(card).toBeInTheDocument();
-    await expect(card).toHaveClass("border-primary/20");
 
     // Test content
-    const title = canvas.getByText("Outline Card");
+    const title = canvas.getByText("Flag Card");
     await expect(title).toBeInTheDocument();
 
-    const content = canvas.getByText(/outline variant provides/);
+    const content = canvas.getByText(/flag variant provides/);
     await expect(content).toBeInTheDocument();
   },
 };
 
-export const ElevatedCard: Story = {
+export const HeaderFirstCard: Story = {
   render: () => (
-    <Card variant="elevated" className="w-[350px]">
+    <Card variant="header-first" className="w-[350px]">
       <CardHeader>
-        <CardTitle>Elevated Card</CardTitle>
-        <CardDescription>This card appears elevated with a shadow</CardDescription>
+        <CardTitle>Header First Card</CardTitle>
+        <CardDescription>This card uses the header-first variant</CardDescription>
       </CardHeader>
       <CardContent>
-        <p>The elevated variant removes the border and adds a prominent shadow effect.</p>
+        <p>The header-first variant positions the header before other content elements.</p>
       </CardContent>
     </Card>
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // Test that elevated variant is applied
-    const card = canvasElement.querySelector('[class*="rounded-lg"]');
+    // Test that header-first variant is applied
+    const card = canvasElement.querySelector('[class*="usa-card"]');
     await expect(card).toBeInTheDocument();
-    await expect(card).toHaveClass("shadow-lg");
-    await expect(card).not.toHaveClass("border");
 
     // Test content
-    const title = canvas.getByText("Elevated Card");
+    const title = canvas.getByText("Header First Card");
     await expect(title).toBeInTheDocument();
 
-    const content = canvas.getByText(/elevated variant removes/);
+    const content = canvas.getByText(/header-first variant positions/);
     await expect(content).toBeInTheDocument();
   },
 };
@@ -242,23 +239,23 @@ export const AllVariants: Story = {
         </CardContent>
       </Card>
 
-      <Card variant="outline" className="w-[350px]">
+      <Card variant="flag" className="w-[350px]">
         <CardHeader>
-          <CardTitle>Outline Card</CardTitle>
-          <CardDescription>Emphasized border</CardDescription>
+          <CardTitle>Flag Card</CardTitle>
+          <CardDescription>Flag variant</CardDescription>
         </CardHeader>
         <CardContent>
-          <p>This card has a more prominent colored border.</p>
+          <p>This card uses the flag layout variant.</p>
         </CardContent>
       </Card>
 
-      <Card variant="elevated" className="w-[350px]">
+      <Card variant="header-first" className="w-[350px]">
         <CardHeader>
-          <CardTitle>Elevated Card</CardTitle>
-          <CardDescription>Shadow effect</CardDescription>
+          <CardTitle>Header First Card</CardTitle>
+          <CardDescription>Header first variant</CardDescription>
         </CardHeader>
         <CardContent>
-          <p>This card appears elevated with a shadow and no border.</p>
+          <p>This card uses the header-first variant.</p>
         </CardContent>
       </Card>
     </div>
@@ -268,17 +265,17 @@ export const AllVariants: Story = {
 
     // Test all three card variants are rendered
     const defaultCard = canvas.getByText("Default Card");
-    const outlineCard = canvas.getByText("Outline Card");
-    const elevatedCard = canvas.getByText("Elevated Card");
+    const flagCard = canvas.getByText("Flag Card");
+    const headerFirstCard = canvas.getByText("Header First Card");
 
     await expect(defaultCard).toBeInTheDocument();
-    await expect(outlineCard).toBeInTheDocument();
-    await expect(elevatedCard).toBeInTheDocument();
+    await expect(flagCard).toBeInTheDocument();
+    await expect(headerFirstCard).toBeInTheDocument();
 
     // Test descriptions
     await expect(canvas.getByText("Standard card appearance")).toBeInTheDocument();
-    await expect(canvas.getByText("Emphasized border")).toBeInTheDocument();
-    await expect(canvas.getByText("Shadow effect")).toBeInTheDocument();
+    await expect(canvas.getByText("Flag variant")).toBeInTheDocument();
+    await expect(canvas.getByText("Header first variant")).toBeInTheDocument();
 
     // Test all cards have content
     const cards = canvasElement.querySelectorAll('[class*="rounded-lg"]');

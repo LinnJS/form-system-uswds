@@ -1,112 +1,135 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/**
+ * Global Styles and CSS Variables
+ * Note: Font imports are in imports.css
+ */
 
 @layer base {
   :root {
-    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
-    --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+    /* USWDS Font Families */
+    --font-sans: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-serif: Merriweather, Georgia, "Times New Roman", serif;
+    --font-mono: "Roboto Mono", "Courier New", monospace;
 
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* USWDS Colors as CSS Variables for easy access */
+    --color-primary: #005ea2;
+    --color-primary-dark: #1a4480;
+    --color-primary-darker: #162e51;
+    --color-secondary: #d83933;
+    --color-secondary-dark: #b50909;
+    --color-base: #71767a;
+    --color-base-dark: #565c65;
+    --color-base-darker: #3d4551;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-gray-5: #f0f0f0;
+    --color-gray-10: #e6e6e6;
+    --color-gray-30: #adadad;
+    --color-gray-50: #757575;
+    --color-gray-70: #454545;
+    --color-gray-90: #1b1b1b;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* USWDS Spacing Units */
+    --spacing-05: 4px;
+    --spacing-1: 8px;
+    --spacing-105: 12px;
+    --spacing-2: 16px;
+    --spacing-205: 20px;
+    --spacing-3: 24px;
+    --spacing-4: 32px;
+    --spacing-5: 40px;
+    --spacing-6: 48px;
+    --spacing-7: 56px;
+    --spacing-8: 64px;
+    --spacing-9: 72px;
+    --spacing-10: 80px;
+    --spacing-15: 120px;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* USWDS Border Radius */
+    --radius-0: 0;
+    --radius-sm: 2px;
+    --radius-md: 4px;
+    --radius-lg: 8px;
+    --radius-pill: 99rem;
 
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
+    /* USWDS Box Shadow */
+    --shadow-none: none;
+    --shadow-1: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+    --shadow-2: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    --shadow-3: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+    --shadow-4: 0 12px 24px 0 rgba(0, 0, 0, 0.1);
+    --shadow-5: 0 16px 32px 0 rgba(0, 0, 0, 0.1);
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 36.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-
-    --radius: 0.5rem;
+    /* Transition Durations */
+    --transition-fast: 150ms;
+    --transition-base: 250ms;
+    --transition-slow: 350ms;
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-
+  /* Apply USWDS font to body */
   body {
-    @apply bg-background text-foreground;
     font-family: var(--font-sans);
-    font-feature-settings: "rlig" 1, "calt" 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-size: 1.06rem; /* USWDS base font size (17px) */
+    line-height: 1.5;
+    color: var(--color-gray-90);
+    background-color: var(--color-white);
   }
 
+  /* Heading styles */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-top: 0;
+    margin-bottom: var(--spacing-2);
   }
 
   h1 {
-    @apply text-4xl lg:text-5xl;
+    font-size: 2.44rem; /* 40px */
   }
 
   h2 {
-    @apply text-3xl lg:text-4xl;
+    font-size: 1.95rem; /* 32px */
   }
 
   h3 {
-    @apply text-2xl lg:text-3xl;
+    font-size: 1.56rem; /* 24px */
   }
 
   h4 {
-    @apply text-xl lg:text-2xl;
+    font-size: 1.25rem; /* 20px */
   }
 
-  p {
-    @apply leading-7;
+  h5 {
+    font-size: 1rem; /* 16px */
   }
 
-  code {
+  h6 {
+    font-size: 0.87rem; /* 14px */
+  }
+
+  /* Link styles */
+  a {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  a:hover {
+    color: var(--color-primary-dark);
+  }
+
+  a:visited {
+    color: #54278f; /* USWDS visited purple */
+  }
+
+  /* Code styles */
+  code, pre {
     font-family: var(--font-mono);
+    font-size: 0.87rem;
+  }
+
+  /* Focus styles */
+  :focus {
+    outline: 0.25rem solid #2491ff;
+    outline-offset: 0;
   }
 }

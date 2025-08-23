@@ -1,0 +1,12 @@
+/**
+ * Unified Styles Entry Point
+ * This file integrates USWDS, Tailwind, and custom component styles
+ */
+
+/* All imports must come first to satisfy CSS import rules */
+@import './imports.css';
+
+/* Tailwind directives - these must be the only things in this file after imports */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

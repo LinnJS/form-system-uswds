@@ -1,0 +1,38 @@
+/**
+ * USWDS Design System Overrides
+ * This file applies necessary overrides for React components
+ * Note: USWDS CSS is imported in imports.css
+ */
+
+/* Custom USWDS overrides for React compatibility */
+@layer components {
+  /* Ensure USWDS components work well with React */
+  .usa-accordion__button {
+    @apply w-full text-left;
+  }
+
+  .usa-button {
+    @apply inline-flex items-center justify-center font-bold;
+  }
+
+  .usa-card {
+    @apply overflow-hidden;
+  }
+
+  /* Form components adjustments */
+  .usa-input,
+  .usa-textarea,
+  .usa-select {
+    @apply w-full;
+  }
+
+  /* Alert components */
+  .usa-alert {
+    @apply relative;
+  }
+
+  /* Navigation components */
+  .usa-nav {
+    @apply flex items-center;
+  }
+}

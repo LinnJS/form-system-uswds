@@ -86,74 +86,97 @@ function generateTestHTML(cssFileName: string = "styles.css"): string {
     <link rel="stylesheet" href="${cssFileName}">
 </head>
 <body>
-    <div class="container" style="padding: 2rem;">
-        <h1 style="font-size: 2rem; margin-bottom: 2rem;">Form System Components</h1>
+    <div class="grid-container" style="padding: 2rem;">
+        <h1 class="usa-display">USWDS Form System Components</h1>
 
-        <section style="margin-bottom: 3rem;">
-            <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Buttons</h2>
+        <section class="margin-bottom-4">
+            <h2 class="usa-heading">USWDS Buttons</h2>
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <button class="btn btn-default btn-md">Default Button</button>
-                <button class="btn btn-secondary btn-md">Secondary</button>
-                <button class="btn btn-destructive btn-md">Destructive</button>
-                <button class="btn btn-outline btn-md">Outline</button>
-                <button class="btn btn-ghost btn-md">Ghost</button>
-                <button class="btn btn-link btn-md">Link</button>
+                <button class="usa-button">Default Button</button>
+                <button class="usa-button usa-button--secondary">Secondary</button>
+                <button class="usa-button usa-button--accent-cool">Accent Cool</button>
+                <button class="usa-button usa-button--outline">Outline</button>
+                <button class="usa-button usa-button--inverse">Inverse</button>
+                <button class="usa-button usa-button--unstyled">Unstyled</button>
             </div>
         </section>
 
-        <section style="margin-bottom: 3rem;">
-            <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Card</h2>
-            <div class="card" style="max-width: 400px;">
-                <div class="card-header">
-                    <h3 class="card-title">Card Title</h3>
-                    <p class="card-description">This is a card description</p>
-                </div>
-                <div class="card-content">
-                    <p>Card content goes here. This is a pre-compiled CSS example.</p>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-default btn-md">Action</button>
+        <section class="margin-bottom-4">
+            <h2 class="usa-heading">USWDS Card</h2>
+            <div class="usa-card" style="max-width: 400px;">
+                <div class="usa-card__container">
+                    <div class="usa-card__header">
+                        <h3 class="usa-card__heading">Card Title</h3>
+                    </div>
+                    <div class="usa-card__body">
+                        <p>Card content goes here. This is a USWDS card example.</p>
+                    </div>
+                    <div class="usa-card__footer">
+                        <button class="usa-button">Action</button>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section style="margin-bottom: 3rem;">
-            <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Form Fields</h2>
+        <section class="margin-bottom-4">
+            <h2 class="usa-heading">USWDS Form Fields</h2>
             <div style="max-width: 400px;">
-                <div class="form-field">
-                    <label class="form-field-label">
+                <div class="usa-form-group">
+                    <label class="usa-label" for="email">
                         Email Address
-                        <span class="form-field-required">*</span>
+                        <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
                     </label>
-                    <input type="email" class="form-field-input form-field-input-normal" placeholder="Enter your email">
+                    <input type="email" class="usa-input" id="email" name="email" placeholder="Enter your email">
                 </div>
 
-                <div class="form-field">
-                    <label class="form-field-label form-field-label-error">
+                <div class="usa-form-group usa-form-group--error">
+                    <label class="usa-label usa-label--error" for="password">
                         Password
-                        <span class="form-field-required">*</span>
+                        <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
                     </label>
-                    <input type="password" class="form-field-input form-field-input-error" placeholder="Enter password">
-                    <p class="form-field-error-message">Password must be at least 8 characters</p>
+                    <span class="usa-error-message" role="alert">Password must be at least 8 characters</span>
+                    <input type="password" class="usa-input usa-input--error" id="password" name="password">
                 </div>
             </div>
         </section>
 
-        <section style="margin-bottom: 3rem;">
-            <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Typography</h2>
-            <div class="space-y-4">
-                <h1 class="text-4xl font-bold">Heading 1</h1>
-                <h2 class="text-3xl font-semibold">Heading 2</h2>
-                <h3 class="text-2xl font-semibold">Heading 3</h3>
-                <p class="text-lg">Large paragraph text for emphasis.</p>
-                <p>Regular paragraph text with normal sizing.</p>
-                <p class="text-sm text-gray-600">Small muted text for descriptions.</p>
+        <section class="margin-bottom-4">
+            <h2 class="usa-heading">USWDS Typography</h2>
+            <div>
+                <h1 class="usa-display">Display Heading</h1>
+                <h2 class="usa-heading usa-heading--xl">Extra Large Heading</h2>
+                <h3 class="usa-heading usa-heading--lg">Large Heading</h3>
+                <p class="usa-intro">This is intro text that is larger than body text.</p>
+                <p>Regular body text with USWDS styling.</p>
+                <p class="usa-prose">This is prose text optimized for reading.</p>
+            </div>
+        </section>
+
+        <section class="margin-bottom-4">
+            <h2 class="usa-heading">USWDS Alerts</h2>
+            <div class="usa-alert usa-alert--info margin-bottom-2">
+                <div class="usa-alert__body">
+                    <p class="usa-alert__text">This is an informational alert.</p>
+                </div>
+            </div>
+            <div class="usa-alert usa-alert--warning margin-bottom-2">
+                <div class="usa-alert__body">
+                    <p class="usa-alert__text">This is a warning alert.</p>
+                </div>
+            </div>
+            <div class="usa-alert usa-alert--success">
+                <div class="usa-alert__body">
+                    <p class="usa-alert__text">This is a success alert.</p>
+                </div>
             </div>
         </section>
 
         <section>
-            <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Code</h2>
-            <p>Here is some inline <code class="code">code example</code> in text.</p>
+            <h2 class="usa-heading">USWDS Tags</h2>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="usa-tag">Default Tag</span>
+                <span class="usa-tag usa-tag--big">Big Tag</span>
+            </div>
         </section>
     </div>
 </body>
@@ -173,7 +196,7 @@ async function buildCSS(): Promise<BuildResult> {
   console.log("Building standalone CSS distribution...");
 
   const options: BuildOptions = {
-    inputPath: path.join(__dirname, "..", "src", "styles", "components.css"),
+    inputPath: path.join(__dirname, "..", "src", "styles", "index.css"),
     outputDir: path.join(__dirname, "..", "dist"),
     outputPath: path.join(__dirname, "..", "dist", "styles.css"),
     outputMinPath: path.join(__dirname, "..", "dist", "styles.min.css"),

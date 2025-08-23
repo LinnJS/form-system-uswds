@@ -1,5 +1,6 @@
 import type { Preview } from "@storybook/react";
-import "../src/styles/globals.css";
+// Import the unified styles that include USWDS, Tailwind, and custom styles
+import "../src/styles/index.css";
 
 const preview: Preview = {
   parameters: {

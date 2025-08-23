@@ -1,0 +1,18 @@
+/**
+ * All CSS imports must be in this file
+ * This file is imported first to satisfy CSS import rules
+ */
+
+/* USWDS Base Styles */
+@import '@uswds/uswds/css/uswds.min.css';
+
+/* Google Fonts for USWDS */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+/* Custom style files (these should NOT contain @import statements) */
+@import './components.css';
+@import './design-system.css';
+@import './globals.css';
+@import './custom-layers.css';

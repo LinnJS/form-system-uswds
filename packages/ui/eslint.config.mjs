@@ -42,4 +42,10 @@ export default [
       "@typescript-eslint/prefer-nullish-coalescing": "off",
     },
   },
+  {
+    files: ["**/*.ts", "**/*.tsx"],
+    rules: {
+      "react/prop-types": "off", // TypeScript handles prop validation
+    },
+  },
 ];

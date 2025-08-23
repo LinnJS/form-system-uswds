@@ -1,6 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/**
+ * Component-specific styles
+ * Note: @tailwind directives are in index.css
+ */
 
 @layer components {
   /* Button Component Styles */

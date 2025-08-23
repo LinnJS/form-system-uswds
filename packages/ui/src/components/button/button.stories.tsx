@@ -13,12 +13,21 @@ const meta = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["default", "destructive", "outline", "secondary", "ghost", "link"],
+      options: [
+        "default",
+        "secondary",
+        "accent-cool",
+        "accent-warm",
+        "base",
+        "outline",
+        "inverse",
+        "unstyled",
+      ],
       description: "The visual style variant of the button",
     },
     size: {
       control: "select",
-      options: ["default", "sm", "lg", "icon"],
+      options: ["default", "sm", "big", "lg"],
       description: "The size of the button",
     },
     disabled: {
@@ -97,10 +106,10 @@ export const Secondary: Story = {
   },
 };
 
-export const Destructive: Story = {
+export const AccentCool: Story = {
   args: {
-    children: "Destructive",
-    variant: "destructive",
+    children: "Accent Cool",
+    variant: "accent-cool",
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -108,9 +117,9 @@ export const Destructive: Story = {
 
     await expect(button).toBeInTheDocument();
     await expect(button).not.toBeDisabled();
-    await expect(button).toHaveClass("bg-destructive");
+    await expect(button).toHaveClass("usa-button--accent-cool");
 
-    // Test that destructive variant has appropriate styling
+    // Test that accent-cool variant has appropriate styling
     await userEvent.click(button);
   },
 };
@@ -135,40 +144,40 @@ export const Outline: Story = {
   },
 };
 
-export const Ghost: Story = {
+export const AccentWarm: Story = {
   args: {
-    children: "Ghost",
-    variant: "ghost",
+    children: "Accent Warm",
+    variant: "accent-warm",
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const button = canvas.getByRole("button", { name: /ghost/i });
+    const button = canvas.getByRole("button", { name: /accent warm/i });
 
     await expect(button).toBeInTheDocument();
     await expect(button).not.toBeDisabled();
-    // Ghost variant should not have background by default
-    await expect(button).not.toHaveClass("bg-primary");
+    // Accent Warm variant should have appropriate styling
+    await expect(button).toHaveClass("usa-button--accent-warm");
 
-    // Test hover adds background
+    // Test interaction
     await userEvent.hover(button);
     await userEvent.click(button);
   },
 };
 
-export const Link: Story = {
+export const Inverse: Story = {
   args: {
-    children: "Link",
-    variant: "link",
+    children: "Inverse",
+    variant: "inverse",
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const button = canvas.getByRole("button", { name: /link/i });
+    const button = canvas.getByRole("button", { name: /inverse/i });
 
     await expect(button).toBeInTheDocument();
     await expect(button).not.toBeDisabled();
-    await expect(button).toHaveClass("underline-offset-4");
+    await expect(button).toHaveClass("usa-button--inverse");
 
-    // Test hover underline behavior
+    // Test inverse variant styling
     await userEvent.hover(button);
     await userEvent.click(button);
   },
@@ -212,19 +221,19 @@ export const Large: Story = {
   },
 };
 
-export const Icon: Story = {
+export const Big: Story = {
   args: {
-    children: "🚀",
-    size: "icon",
+    children: "Big Button",
+    size: "big",
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const button = canvas.getByRole("button", { name: /🚀/i });
+    const button = canvas.getByRole("button", { name: /big button/i });
 
     await expect(button).toBeInTheDocument();
     await expect(button).not.toBeDisabled();
-    // Icon size should be square (size-10 sets both height and width)
-    await expect(button).toHaveClass("size-10");
+    // Big size should have appropriate styling
+    await expect(button).toHaveClass("usa-button--big");
 
     await userEvent.click(button);
   },
@@ -257,16 +266,16 @@ export const AllVariants: Story = {
       <div className="flex gap-2 items-center">
         <Button variant="default">Default</Button>
         <Button variant="secondary">Secondary</Button>
-        <Button variant="destructive">Destructive</Button>
+        <Button variant="accent-cool">Accent Cool</Button>
         <Button variant="outline">Outline</Button>
-        <Button variant="ghost">Ghost</Button>
-        <Button variant="link">Link</Button>
+        <Button variant="accent-warm">Accent Warm</Button>
+        <Button variant="inverse">Inverse</Button>
       </div>
       <div className="flex gap-2 items-center">
         <Button size="sm">Small</Button>
         <Button size="default">Default</Button>
         <Button size="lg">Large</Button>
-        <Button size="icon">📱</Button>
+        <Button size="big">Big</Button>
       </div>
       <div className="flex gap-2 items-center">
         <Button disabled>Disabled Default</Button>
@@ -285,26 +294,26 @@ export const AllVariants: Story = {
     // Test that all variants are rendered - there are two "Default" buttons so we use getAllByRole
     const defaultBtns = canvas.getAllByRole("button", { name: /^Default$/i });
     const secondaryBtn = canvas.getByRole("button", { name: /^Secondary$/i });
-    const destructiveBtn = canvas.getByRole("button", { name: /^Destructive$/i });
+    const accentCoolBtn = canvas.getByRole("button", { name: /^Accent Cool$/i });
     const outlineBtn = canvas.getByRole("button", { name: /^Outline$/i });
-    const ghostBtn = canvas.getByRole("button", { name: /^Ghost$/i });
-    const linkBtn = canvas.getByRole("button", { name: /^Link$/i });
+    const accentWarmBtn = canvas.getByRole("button", { name: /^Accent Warm$/i });
+    const inverseBtn = canvas.getByRole("button", { name: /^Inverse$/i });
 
     await expect(defaultBtns).toHaveLength(2); // One for variant, one for size
     await expect(secondaryBtn).toBeInTheDocument();
-    await expect(destructiveBtn).toBeInTheDocument();
+    await expect(accentCoolBtn).toBeInTheDocument();
     await expect(outlineBtn).toBeInTheDocument();
-    await expect(ghostBtn).toBeInTheDocument();
-    await expect(linkBtn).toBeInTheDocument();
+    await expect(accentWarmBtn).toBeInTheDocument();
+    await expect(inverseBtn).toBeInTheDocument();
 
     // Test that all sizes are rendered
     const smallBtn = canvas.getByRole("button", { name: /^Small$/i });
     const largeBtn = canvas.getByRole("button", { name: /^Large$/i });
-    const iconBtn = canvas.getByRole("button", { name: /📱/i });
+    const bigBtn = canvas.getByRole("button", { name: /^Big$/i });
 
     await expect(smallBtn).toBeInTheDocument();
     await expect(largeBtn).toBeInTheDocument();
-    await expect(iconBtn).toBeInTheDocument();
+    await expect(bigBtn).toBeInTheDocument();
 
     // Test that disabled buttons are actually disabled
     const disabledButtons = canvas.getAllByRole("button", { name: /disabled/i });

@@ -8,27 +8,17 @@
       "outputs": [".next/**", "!.next/cache/**", "dist/**", "storybook-static/**"]
     },
     "lint": {
-      "dependsOn": ["^lint"],
       "inputs": ["$TURBO_DEFAULT$", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
       "env": ["NODE_ENV"]
     },
     "typecheck": {
-      "dependsOn": ["^typecheck"],
       "inputs": ["$TURBO_DEFAULT$", "**/*.ts", "**/*.tsx"]
     },
     "check-types": {
-      "dependsOn": ["^check-types"],
       "inputs": ["$TURBO_DEFAULT$", "**/*.ts", "**/*.tsx"]
     },
-    "lint:all": {
-      "dependsOn": ["lint", "typecheck", "check-types"]
-    },
     "lint:fix": {
-      "dependsOn": ["^lint:fix"],
       "inputs": ["$TURBO_DEFAULT$", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
-    },
-    "lint:fix:all": {
-      "dependsOn": ["lint:fix", "typecheck", "check-types"]
     },
     "dev": {
       "cache": false,
@@ -43,8 +33,8 @@
       "persistent": true
     },
     "test": {
-      "dependsOn": ["build"],
-      "cache": false
+      "cache": false,
+      "env": ["CI"]
     }
   }
 }

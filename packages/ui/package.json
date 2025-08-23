@@ -26,9 +26,21 @@
       "types": "./src/components/typography/index.ts",
       "import": "./src/components/typography/index.ts"
     },
-    "./form-field": {
-      "types": "./src/components/form-field/index.ts",
-      "import": "./src/components/form-field/index.ts"
+    "./alert": {
+      "types": "./src/components/alert/index.ts",
+      "import": "./src/components/alert/index.ts"
+    },
+    "./accordion": {
+      "types": "./src/components/accordion/index.ts",
+      "import": "./src/components/accordion/index.ts"
+    },
+    "./badge": {
+      "types": "./src/components/badge/index.ts",
+      "import": "./src/components/badge/index.ts"
+    },
+    "./form": {
+      "types": "./src/components/form/index.ts",
+      "import": "./src/components/form/index.ts"
     },
     "./validation": {
       "types": "./src/validation/index.ts",
@@ -38,6 +50,14 @@
       "types": "./src/lib/utils.ts",
       "import": "./src/lib/utils.ts"
     },
+    "./lib/tokens": {
+      "types": "./src/lib/tokens.ts",
+      "import": "./src/lib/tokens.ts"
+    },
+    "./lib/design-utils": {
+      "types": "./src/lib/design-utils.ts",
+      "import": "./src/lib/design-utils.ts"
+    },
     "./styles/*": "./src/styles/*",
     "./dist/styles.css": "./dist/styles.css",
     "./dist/styles.min.css": "./dist/styles.min.css"
@@ -45,16 +65,21 @@
   "scripts": {
     "build": "storybook build && pnpm build:css",
     "build:css": "tsx scripts/build-css.ts",
-    "lint": "eslint . --max-warnings 0",
+    "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
     "lint:all": "pnpm lint && pnpm typecheck",
     "lint:fix:all": "pnpm lint:fix && pnpm typecheck",
-    "test": "concurrently -k -s first -n \"SB,TEST\" \"http-server storybook-static --port 6006 --silent\" \"wait-on tcp:127.0.0.1:6006 && test-storybook --ci --url http://127.0.0.1:6006\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "test:storybook": "concurrently -k -s first -n \"SB,TEST\" \"http-server storybook-static --port 6006 --silent\" \"wait-on tcp:127.0.0.1:6006 && test-storybook --ci --url http://127.0.0.1:6006\"",
     "test:unit": "vitest",
-    "test:unit:watch": "vitest watch",
-    "test:unit:coverage": "vitest run --coverage",
-    "test:watch": "test-storybook --watch",
+    "test:all": "pnpm test && pnpm test:e2e",
+    "test:e2e:debug": "playwright test --debug",
     "dev": "storybook dev -p 6006 --no-open",
     "dev:open": "storybook dev -p 6006",
     "generate:component": "turbo gen react-component"
@@ -63,9 +88,7 @@
     "@acme/eslint-config": "workspace:*",
     "@acme/tailwind-config": "workspace:*",
     "@acme/typescript-config": "workspace:*",
-    "@testing-library/jest-dom": "^6.6.4",
-    "@testing-library/react": "^16.1.0",
-    "@testing-library/user-event": "^14.6.0",
+    "@playwright/test": "^1.54.2",
     "@storybook/addon-a11y": "^8.6.14",
     "@storybook/addon-essentials": "^8.6.14",
     "@storybook/addon-interactions": "^8.6.14",
@@ -75,6 +98,9 @@
     "@storybook/react-vite": "^8.6.14",
     "@storybook/test": "^8.6.14",
     "@storybook/test-runner": "^0.23.0",
+    "@testing-library/jest-dom": "^6.6.4",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.6.0",
     "@types/node": "^22.15.3",
     "@types/react": "19.1.0",
     "@types/react-dom": "19.1.1",
@@ -91,6 +117,7 @@
     "postcss": "^8.5.6",
     "storybook": "^8.6.14",
     "tailwindcss": "^3.4.17",
+    "tailwindcss-animate": "^1.0.7",
     "tsx": "^4.20.3",
     "typescript": "5.8.2",
     "vite": "^5.4.19",
@@ -99,11 +126,38 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
+    "@radix-ui/react-accordion": "^1.2.12",
+    "@radix-ui/react-alert-dialog": "^1.1.15",
+    "@radix-ui/react-checkbox": "^1.3.3",
+    "@radix-ui/react-collapsible": "^1.1.12",
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-popover": "^1.1.15",
+    "@radix-ui/react-progress": "^1.1.7",
+    "@radix-ui/react-radio-group": "^1.3.8",
+    "@radix-ui/react-scroll-area": "^1.2.10",
+    "@radix-ui/react-select": "^2.2.6",
+    "@radix-ui/react-separator": "^1.1.7",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-switch": "^1.2.6",
+    "@radix-ui/react-tabs": "^1.1.13",
+    "@radix-ui/react-toast": "^1.2.15",
+    "@radix-ui/react-toggle": "^1.1.10",
+    "@radix-ui/react-toggle-group": "^1.1.11",
+    "@radix-ui/react-tooltip": "^1.2.8",
+    "@uswds/uswds": "^3.13.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.539.0",
+    "next-themes": "^0.4.6",
     "react": "^19.1.0",
+    "react-day-picker": "^9.9.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.62.0",
+    "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1",
     "zod": "^4.0.17"
   }

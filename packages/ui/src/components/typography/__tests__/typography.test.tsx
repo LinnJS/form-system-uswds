@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { H1, H2, H3, Lead, Paragraph, Text } from "./typography";
+import { H1, H2, H3, Lead, Paragraph, Text } from "../index";
 
 describe("Typography Components", () => {
   describe("H1", () => {
@@ -8,7 +8,7 @@ describe("Typography Components", () => {
       render(<H1>Heading 1</H1>);
       const element = screen.getByText("Heading 1");
       expect(element.tagName).toBe("H1");
-      expect(element).toHaveClass("text-4xl", "font-extrabold");
+      expect(element).toHaveClass("font-serif", "tracking-tight", "text-4xl");
     });
 
     it("applies custom className", () => {
@@ -22,7 +22,7 @@ describe("Typography Components", () => {
       render(<H2>Heading 2</H2>);
       const element = screen.getByText("Heading 2");
       expect(element.tagName).toBe("H2");
-      expect(element).toHaveClass("text-3xl", "font-semibold");
+      expect(element).toHaveClass("font-serif", "tracking-tight", "text-3xl");
     });
   });
 
@@ -31,7 +31,7 @@ describe("Typography Components", () => {
       render(<H3>Heading 3</H3>);
       const element = screen.getByText("Heading 3");
       expect(element.tagName).toBe("H3");
-      expect(element).toHaveClass("text-2xl", "font-semibold");
+      expect(element).toHaveClass("font-serif", "tracking-tight", "text-2xl");
     });
   });
 
@@ -40,7 +40,7 @@ describe("Typography Components", () => {
       render(<Paragraph>Test paragraph</Paragraph>);
       const element = screen.getByText("Test paragraph");
       expect(element.tagName).toBe("P");
-      expect(element).toHaveClass("leading-7");
+      expect(element).toHaveClass("font-sans", "text-base", "leading-relaxed");
     });
   });
 
@@ -49,7 +49,7 @@ describe("Typography Components", () => {
       render(<Lead>Lead text</Lead>);
       const element = screen.getByText("Lead text");
       expect(element.tagName).toBe("P");
-      expect(element).toHaveClass("text-xl", "text-gray-600");
+      expect(element).toHaveClass("font-sans", "text-xl", "text-gray-600");
     });
   });
 
@@ -58,7 +58,7 @@ describe("Typography Components", () => {
       render(<Text>Small text</Text>);
       const element = screen.getByText("Small text");
       expect(element.tagName).toBe("P");
-      expect(element).toHaveClass("text-sm", "text-gray-600");
+      expect(element).toHaveClass("font-sans", "text-base");
     });
   });
 
