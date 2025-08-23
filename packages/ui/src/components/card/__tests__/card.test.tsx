@@ -26,18 +26,20 @@ describe("Card Components", () => {
     const card = container.firstChild;
     expect(card).toBeInstanceOf(HTMLElement);
     if (card instanceof HTMLElement) {
-      expect(card.className).toContain("usa-card");
+      expect(card.className).toContain("bg-white");
+      expect(card.className).toContain("border-gray-30");
+      expect(card.className).toContain("rounded-lg");
     }
   });
 
   it("applies CardHeader styling classes", () => {
-    const { container } = render(
+    render(
       <Card>
         <CardHeader>Header Content</CardHeader>
       </Card>
     );
-    const header = container.querySelector(".usa-card__header");
-    expect(header).toBeInTheDocument();
+    const header = screen.getByText("Header Content");
+    expect(header).toHaveClass("px-4", "pt-4", "pb-2");
   });
 
   it("applies CardTitle styling classes", () => {
@@ -50,7 +52,7 @@ describe("Card Components", () => {
     );
     const title = screen.getByText("Title Text");
     expect(title.tagName).toBe("H3");
-    expect(title.className).toContain("usa-card__heading");
+    expect(title).toHaveClass("text-xl", "font-bold", "text-gray-90");
   });
 
   it("applies CardDescription styling classes", () => {
@@ -63,27 +65,27 @@ describe("Card Components", () => {
     );
     const description = screen.getByText("Description Text");
     expect(description.tagName).toBe("P");
-    expect(description.className).toContain("usa-card__subhead");
+    expect(description).toHaveClass("text-sm", "text-gray-70", "mt-1");
   });
 
   it("applies CardContent styling classes", () => {
-    const { container } = render(
+    render(
       <Card>
         <CardContent>Content Text</CardContent>
       </Card>
     );
-    const content = container.querySelector(".usa-card__body");
-    expect(content).toBeInTheDocument();
+    const content = screen.getByText("Content Text");
+    expect(content).toHaveClass("px-4", "py-2", "text-gray-90");
   });
 
   it("applies CardFooter styling classes", () => {
-    const { container } = render(
+    render(
       <Card>
         <CardFooter>Footer Content</CardFooter>
       </Card>
     );
-    const footer = container.querySelector(".usa-card__footer");
-    expect(footer).toBeInTheDocument();
+    const footer = screen.getByText("Footer Content");
+    expect(footer).toHaveClass("px-4", "pb-4", "pt-2", "text-sm");
   });
 
   it("forwards ref correctly for Card", () => {

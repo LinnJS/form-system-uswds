@@ -3,6 +3,7 @@
 import * as React from "react";
 import { forwardRef, useId, useState } from "react";
 import { cn } from "../../lib/utils";
+import { ChevronDown } from "lucide-react";
 
 export interface AccordionProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Allow multiple sections open at once */
@@ -25,8 +26,9 @@ export interface AccordionItemProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /**
- * Direct USWDS Accordion Component
- * Implements full USWDS accordion HTML structure with ARIA attributes
+ * USWDS Accordion Component
+ * Provides expandable/collapsible content sections
+ * @see https://designsystem.digital.gov/components/accordion/
  */
 export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
   (
@@ -41,9 +43,13 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
     ref
   ) => {
     const accordionClasses = cn(
-      "usa-accordion",
       "font-sans",
-      bordered && "usa-accordion--bordered",
+      "divide-gray-30 divide-y",
+      bordered && [
+        "border",
+        "border-gray-30",
+        "rounded",
+      ],
       className
     );
 
@@ -98,8 +104,8 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
 Accordion.displayName = "Accordion";
 
 /**
- * Direct USWDS Accordion Item
- * Uses proper heading elements and ARIA attributes
+ * USWDS Accordion Item
+ * Individual expandable section within an accordion
  */
 export const AccordionItem = forwardRef<
   HTMLButtonElement,
@@ -136,29 +142,56 @@ export const AccordionItem = forwardRef<
       }
     };
 
-    const HeadingTag = `h${headingLevel}`;
+    const HeadingTag = `h${headingLevel}` as keyof React.JSX.IntrinsicElements;
 
     return (
       <>
-        {React.createElement(
-          HeadingTag,
-          { className: "usa-accordion__heading" },
+        <HeadingTag className="m-0 font-serif">
           <button
             ref={ref}
             type="button"
-            className={cn("usa-accordion__button", className)}
+            className={cn(
+              // Base button styles
+              "flex w-full items-center justify-between",
+              "px-3 py-2",
+              "text-gray-90 text-left font-bold",
+              "bg-gray-5",
+              // Hover state
+              "hover:bg-gray-10",
+              // Focus state
+              "focus-visible:outline-none",
+              "focus-visible:ring-2",
+              "focus-visible:ring-primary",
+              "focus-visible:ring-offset-2",
+              // Active state
+              "active:bg-gray-20",
+              // Transition
+              "transition-all duration-200",
+              className
+            )}
             aria-expanded={isExpanded}
             aria-controls={contentId}
             id={buttonId}
             onClick={handleToggle}
             {...props}
           >
-            {heading}
+            <span>{heading}</span>
+            <ChevronDown
+              className={cn(
+                "size-5 shrink-0 transition-transform duration-200",
+                isExpanded && "rotate-180"
+              )}
+              aria-hidden="true"
+            />
           </button>
-        )}
+        </HeadingTag>
         <div
           id={contentId}
-          className="usa-accordion__content usa-prose"
+          className={cn(
+            "overflow-hidden transition-all duration-200",
+            isExpanded ? "max-h-screen" : "max-h-0",
+            isExpanded && "text-gray-90 p-3"
+          )}
           hidden={!isExpanded}
           aria-labelledby={buttonId}
         >

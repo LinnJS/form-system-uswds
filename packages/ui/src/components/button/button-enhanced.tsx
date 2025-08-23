@@ -6,7 +6,7 @@ import * as React from "react";
 import { cn } from "../../lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center font-sans font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -77,8 +77,8 @@ export const ButtonEnhanced = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const handleClick = React.useCallback(
       (e: React.MouseEvent<HTMLButtonElement>) => {
         // Emit analytics event if configured
-        if (analyticsEvent && window.__USWDS_ANALYTICS_HANDLER__) {
-          window.__USWDS_ANALYTICS_HANDLER__({
+        if (analyticsEvent && typeof window !== 'undefined' && (window as any).__USWDS_ANALYTICS_HANDLER__) {
+          (window as any).__USWDS_ANALYTICS_HANDLER__({
             event: analyticsEvent,
             element: "button",
             metadata: {

@@ -31,12 +31,12 @@ export default function DocsHome() {
           </Lead>
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
             <Link href="/getting-started">
-              <Button size="big" className="w-full sm:w-auto">
+              <Button size="lg" className="w-full sm:w-auto">
                 Get Started
               </Button>
             </Link>
             <Link href="/components">
-              <Button size="big" variant="outline" className="w-full sm:w-auto">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto">
                 Browse Components
               </Button>
             </Link>

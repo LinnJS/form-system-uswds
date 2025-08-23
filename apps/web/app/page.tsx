@@ -24,12 +24,12 @@ export default function Home() {
           </Lead>
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
             <Link href="/validation-demo">
-              <Button size="big" className="w-full sm:w-auto">
+              <Button size="lg" className="w-full sm:w-auto">
                 View Demo
               </Button>
             </Link>
             <Link href="#getting-started">
-              <Button size="big" variant="outline" className="w-full sm:w-auto">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto">
                 Get Started
               </Button>
             </Link>

@@ -6,19 +6,19 @@ describe("Tag Component", () => {
   it("renders with default variant", () => {
     render(<Tag>Default Tag</Tag>);
     const tag = screen.getByText("Default Tag");
-    expect(tag).toHaveClass("usa-tag");
+    expect(tag).toHaveClass("bg-gray-60", "text-white");
   });
 
   it("renders with big size", () => {
     render(<Tag size="big">Big Tag</Tag>);
     const tag = screen.getByText("Big Tag");
-    expect(tag).toHaveClass("usa-tag--big");
+    expect(tag).toHaveClass("px-2", "py-1", "text-sm");
   });
 
   it("supports legacy big prop", () => {
     render(<Tag big>Legacy Big</Tag>);
     const tag = screen.getByText("Legacy Big");
-    expect(tag).toHaveClass("usa-tag--big");
+    expect(tag).toHaveClass("px-2", "py-1", "text-sm");
   });
 
   it("applies custom className", () => {
@@ -39,19 +39,41 @@ describe("Tag Component", () => {
     render(<Tag data-testid="test-tag">Test Tag</Tag>);
     expect(screen.getByTestId("test-tag")).toBeInTheDocument();
   });
+
+  it("renders all color variants correctly", () => {
+    const { rerender } = render(<Tag variant="info">Info</Tag>);
+    let tag = screen.getByText("Info");
+    expect(tag).toHaveClass("bg-info");
+    
+    rerender(<Tag variant="warning">Warning</Tag>);
+    tag = screen.getByText("Warning");
+    expect(tag).toHaveClass("bg-warning", "text-gray-90");
+    
+    rerender(<Tag variant="error">Error</Tag>);
+    tag = screen.getByText("Error");
+    expect(tag).toHaveClass("bg-error");
+    
+    rerender(<Tag variant="success">Success</Tag>);
+    tag = screen.getByText("Success");
+    expect(tag).toHaveClass("bg-success");
+    
+    rerender(<Tag variant="emergency">Emergency</Tag>);
+    tag = screen.getByText("Emergency");
+    expect(tag).toHaveClass("bg-emergency-dark");
+  });
 });
 
 describe("Badge Component", () => {
   it("renders as Tag alias", () => {
     render(<Badge>Badge Content</Badge>);
     const badge = screen.getByText("Badge Content");
-    expect(badge).toHaveClass("usa-tag");
+    expect(badge).toHaveClass("bg-gray-60", "text-white");
   });
 
   it("accepts all Tag props", () => {
     render(<Badge size="big" className="custom">Badge</Badge>);
     const badge = screen.getByText("Badge");
-    expect(badge).toHaveClass("usa-tag--big", "custom");
+    expect(badge).toHaveClass("px-2", "py-1", "text-sm", "custom");
   });
 });
 
@@ -110,13 +132,13 @@ describe("Identifier Component", () => {
     expect(privacyLink).toHaveAttribute("href", "/privacy");
   });
 
-  it("applies usa-identifier class", () => {
+  it("applies base identifier styles", () => {
     const { container } = render(
       <Identifier agency="Test Agency">Content</Identifier>
     );
     
-    const identifier = container.querySelector(".usa-identifier");
-    expect(identifier).toBeInTheDocument();
+    const identifier = container.firstElementChild;
+    expect(identifier).toHaveClass("bg-gray-10", "font-sans");
   });
 
   it("has correct structure with sections", () => {
@@ -124,9 +146,13 @@ describe("Identifier Component", () => {
       <Identifier agency="Test Agency">Content</Identifier>
     );
     
-    expect(container.querySelector(".usa-identifier__section--masthead")).toBeInTheDocument();
-    expect(container.querySelector(".usa-identifier__container")).toBeInTheDocument();
-    expect(container.querySelector(".usa-identifier__identity")).toBeInTheDocument();
+    // Check for section structure
+    const sections = container.querySelectorAll("section");
+    expect(sections.length).toBeGreaterThan(0);
+    
+    // Check for container structure
+    const containers = container.querySelectorAll(".container");
+    expect(containers.length).toBeGreaterThan(0);
   });
 
   it("applies custom className", () => {
@@ -136,7 +162,7 @@ describe("Identifier Component", () => {
       </Identifier>
     );
     
-    const identifier = container.querySelector(".usa-identifier");
+    const identifier = container.firstElementChild;
     expect(identifier).toHaveClass("custom-identifier");
   });
 

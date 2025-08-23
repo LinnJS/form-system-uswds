@@ -38,11 +38,32 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
     const hasSuccess = state === "success" || !!success;
 
     const selectClasses = cn(
-      "usa-select",
-      {
-        "usa-input--error": hasError,
-        "usa-input--success": hasSuccess,
-      },
+      // Base select styles
+      "font-sans",
+      "block w-full",
+      "rounded",
+      "border-2",
+      "px-2 py-1",
+      "text-gray-90",
+      "bg-white",
+      "shadow-1",
+      "appearance-none",
+      "bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23565c65%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:1.5rem] bg-[position:right_0.5rem_center] bg-no-repeat pr-10",
+      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+      "disabled:bg-gray-10 disabled:cursor-not-allowed disabled:opacity-50",
+      "transition-all duration-200",
+      // State-based styles
+      hasError ? [
+        "border-error-dark",
+        "focus-visible:ring-error",
+      ] : hasSuccess ? [
+        "border-success",
+        "focus-visible:ring-success",
+      ] : [
+        "border-gray-60",
+        "hover:border-gray-70",
+        "focus-visible:ring-primary",
+      ],
       className
     );
 
@@ -67,12 +88,12 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
     }
 
     return (
-      <div className="usa-form-group">
+      <div className="font-sans">
         {label && (
-          <label htmlFor={selectId} className="usa-label">
+          <label htmlFor={selectId} className="text-gray-90 mb-05 block font-bold">
             {label}
             {required && (
-              <abbr title="required" className="usa-hint usa-hint--required">
+              <abbr title="required" className="text-error ml-05 no-underline">
                 *
               </abbr>
             )}
@@ -80,19 +101,19 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
         )}
 
         {hint && (
-          <div id={hintId} className="usa-hint">
+          <div id={hintId} className="text-gray-60 mb-05 text-sm">
             {hint}
           </div>
         )}
 
         {error && (
-          <span id={errorId} className="usa-error-message" role="alert">
+          <span id={errorId} className="text-error mt-05 block text-sm font-bold" role="alert">
             {error}
           </span>
         )}
 
         {success && (
-          <span id={successId} className="usa-success-message">
+          <span id={successId} className="text-success mt-05 block text-sm font-bold">
             {success}
           </span>
         )}

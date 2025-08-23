@@ -72,10 +72,10 @@ const DialogContent = React.forwardRef<
       <DialogPrimitive.Close
         className={cn(
           "absolute",
-          "right-uswds-2",
-          "top-uswds-2",
-          "rounded-uswds-sm",
-          "p-uswds-1",
+          "right-2",
+          "top-2",
+          "rounded-sm",
+          "p-1",
           "opacity-70",
           "transition-all",
           "hover:opacity-100",
@@ -99,9 +99,9 @@ const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
   <div
     className={cn(
       "flex flex-col",
-      "space-y-uswds-105", // 12px gap
+      "space-y-105", // gap
       "text-center sm:text-left",
-      "mb-uswds-3", // 24px margin bottom
+      "mb-3", // margin bottom
       className
     )}
     {...props}
@@ -115,10 +115,10 @@ const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
     className={cn(
       "flex flex-col-reverse sm:flex-row",
       "sm:justify-end",
-      "sm:space-x-uswds-2", // 16px gap
-      "space-y-uswds-2 space-y-reverse sm:space-y-0",
-      "mt-uswds-4", // 32px margin top
-      "pt-uswds-3", // 24px padding top
+      "sm:space-x-2", // gap
+      "space-y-2 space-y-reverse sm:space-y-0",
+      "mt-4", // margin top
+      "pt-3", // padding top
       "border-gray-30 border-t",
       className
     )}
@@ -135,10 +135,10 @@ const DialogTitle = React.forwardRef<
   <DialogPrimitive.Title
     ref={ref}
     className={cn(
-      baseStyles,
-      "font-uswds-bold", // 700 weight
+      "font-serif", // Use serif font for headings
+      "font-bold", // 700 weight
       "text-xl", // 28px from USWDS
-      "leading-uswds-3", // 1.35 line height
+      "leading-3", // line height
       "text-gray-90",
       "tracking-tight",
       className
@@ -159,7 +159,7 @@ const DialogDescription = React.forwardRef<
       baseStyles,
       "text-base", // 17px from USWDS
       "text-gray-60",
-      "leading-uswds-4", // 1.5 line height
+      "leading-4", // line height
       className
     )}
     {...props}

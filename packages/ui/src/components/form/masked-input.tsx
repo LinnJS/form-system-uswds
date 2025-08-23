@@ -175,8 +175,8 @@ export const MaskedInput = React.forwardRef<HTMLInputElement, MaskedInputProps>(
       onValueChange?.(unmasked, masked);
 
       // Analytics
-      if (analyticsEvent && window.__USWDS_ANALYTICS_HANDLER__) {
-        window.__USWDS_ANALYTICS_HANDLER__({
+      if (analyticsEvent && typeof window !== 'undefined' && (window as any).__USWDS_ANALYTICS_HANDLER__) {
+        (window as any).__USWDS_ANALYTICS_HANDLER__({
           event: analyticsEvent,
           element: "masked_input",
           metadata: {

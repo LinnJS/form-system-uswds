@@ -2,25 +2,57 @@
 
 import { cva, type VariantProps } from "class-variance-authority";
 import React, { forwardRef } from "react";
-import { designClasses } from "../../lib/design-tokens";
 import { cn } from "../../lib/utils";
 
 const tagVariants = cva(
-  // Base USWDS tag class
-  "usa-tag",
+  [
+    // Base tag styles
+    "inline-flex items-center",
+    "font-sans font-bold",
+    "rounded-sm",
+    "text-white",
+    "transition-all duration-200",
+    "whitespace-nowrap",
+  ],
   {
     variants: {
       variant: {
-        default: "",
-        info: "",
-        warning: "",
-        error: "",
-        success: "",
-        emergency: "",
+        // Default gray (dark gray for contrast)
+        default: [
+          "bg-gray-60",  // Darker gray matching USWDS base-dark
+          "text-white",
+        ],
+        // Info (blue)
+        info: [
+          "bg-info",
+          "text-white",
+        ],
+        // Warning (yellow)
+        warning: [
+          "bg-warning",
+          "text-gray-90",
+        ],
+        // Error (red)
+        error: [
+          "bg-error",
+          "text-white",
+        ],
+        // Success (green)
+        success: [
+          "bg-success",
+          "text-white",
+        ],
+        // Emergency (dark red)
+        emergency: [
+          "bg-emergency-dark",
+          "text-white",
+        ],
       },
       size: {
-        default: "",
-        big: "usa-tag--big",
+        // Default size
+        default: "py-05 px-1 text-xs", // 8px horizontal, 4px vertical, 12px font
+        // Big size
+        big: "px-2 py-1 text-sm", // 16px horizontal, 8px vertical, 14px font
       },
     },
     defaultVariants: {
@@ -42,7 +74,8 @@ export interface TagProps
 
 /**
  * USWDS Tag Component
- * Small status indicators or labels with color variants matching alerts
+ * Small status indicators or labels for drawing attention to content
+ * @see https://designsystem.digital.gov/components/tag/
  */
 const Tag = forwardRef<HTMLSpanElement, TagProps>(
   ({ className, variant, size, big, children, ...props }, ref) => {
@@ -72,6 +105,7 @@ Badge.displayName = "Badge";
 /**
  * USWDS Identifier Component
  * Used for official government identifiers and logos
+ * @see https://designsystem.digital.gov/components/identifier/
  */
 export interface IdentifierProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -109,27 +143,37 @@ const Identifier = forwardRef<HTMLDivElement, IdentifierProps>(
     ref
   ) => {
     return (
-      <div ref={ref} className={cn(designClasses.badge.identifier, className)} {...props}>
-        <section className="usa-identifier__section usa-identifier__section--masthead">
-          <div className="usa-identifier__container">
-            <div className="usa-identifier__identity">
-              {logo && <div className="usa-identifier__logo">{logo}</div>}
-              <div className="usa-identifier__identity-text">
-                {parentAgency && <p className="usa-identifier__identity-domain">{parentAgency}</p>}
-                <p className="usa-identifier__identity-disclaimer">
-                  An official website of the <span>{agency}</span>
+      <div 
+        ref={ref} 
+        className={cn(
+          "bg-gray-10 font-sans",
+          className
+        )} 
+        {...props}
+      >
+        <section className="border-gray-30 border-b py-2">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center gap-2">
+              {logo && <div className="shrink-0">{logo}</div>}
+              <div className="text-gray-70 text-sm">
+                {parentAgency && <p className="font-bold">{parentAgency}</p>}
+                <p>
+                  An official website of the <span className="font-bold">{agency}</span>
                 </p>
               </div>
             </div>
           </div>
         </section>
         {requiredLinks.length > 0 && (
-          <nav className="usa-identifier__section usa-identifier__section--required-links">
-            <div className="usa-identifier__container">
-              <ul className="usa-identifier__required-links-list">
+          <nav className="border-gray-30 border-b py-2">
+            <div className="container mx-auto px-4">
+              <ul className="flex flex-wrap gap-4 text-sm">
                 {requiredLinks.map((link, index) => (
-                  <li key={index} className="usa-identifier__required-links-item">
-                    <a href={link.href} className="usa-identifier__required-link">
+                  <li key={index}>
+                    <a 
+                      href={link.href} 
+                      className="text-primary focus-visible:ring-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                    >
                       {link.text}
                     </a>
                   </li>
@@ -139,8 +183,8 @@ const Identifier = forwardRef<HTMLDivElement, IdentifierProps>(
           </nav>
         )}
         {children && (
-          <section className="usa-identifier__section usa-identifier__section--usagov">
-            <div className="usa-identifier__container">{children}</div>
+          <section className="py-2">
+            <div className="container mx-auto px-4">{children}</div>
           </section>
         )}
       </div>

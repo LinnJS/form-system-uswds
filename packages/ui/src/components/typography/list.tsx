@@ -41,7 +41,7 @@ const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListProps>(
       Component,
       {
         ref,
-        className: cn(listVariants({ type, spacing, position }), "ml-6", className),
+        className: cn(listVariants({ type, spacing, position }), "ml-6 font-sans", className),
         ...props,
       },
       children
@@ -57,7 +57,7 @@ export interface ListItemProps extends React.HTMLAttributes<HTMLLIElement> {
 
 const ListItem = React.forwardRef<HTMLLIElement, ListItemProps>(
   ({ className, children, ...props }, ref) => (
-    <li ref={ref} className={cn("", className)} {...props}>
+    <li ref={ref} className={cn("font-sans", className)} {...props}>
       {children}
     </li>
   )
@@ -91,7 +91,7 @@ const DescriptionList = React.forwardRef<HTMLDListElement, DescriptionListProps>
     };
 
     return (
-      <dl ref={ref} className={cn(spacingClasses[spacing], className)} {...props}>
+      <dl ref={ref} className={cn(spacingClasses[spacing], "font-sans", className)} {...props}>
         {children}
       </dl>
     );
@@ -101,14 +101,14 @@ DescriptionList.displayName = "DescriptionList";
 
 export const DescriptionTerm = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
   ({ className, ...props }, ref) => (
-    <dt ref={ref} className={cn("font-semibold", className)} {...props} />
+    <dt ref={ref} className={cn("font-sans font-semibold", className)} {...props} />
   )
 );
 DescriptionTerm.displayName = "DescriptionTerm";
 
 export const DescriptionDetails = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
   ({ className, ...props }, ref) => (
-    <dd ref={ref} className={cn("ml-0 text-gray-600", className)} {...props} />
+    <dd ref={ref} className={cn("ml-0 font-sans text-gray-600", className)} {...props} />
   )
 );
 DescriptionDetails.displayName = "DescriptionDetails";

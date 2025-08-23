@@ -19,7 +19,7 @@ const RadioGroup = React.forwardRef<
     <RadioGroupPrimitive.Root
       className={cn(
         "grid",
-        "gap-uswds-2", // 16px gap between items
+        "gap-2", // gap between items
         baseStyles,
         className
       )}
@@ -42,16 +42,19 @@ const RadioGroupItem = React.forwardRef<
         // Base radio styles
         "aspect-square size-5",
         "rounded-full",
-        "border-gray-60 border-2",
+        "border-2",
         "bg-white",
         "font-sans", // USWDS Source Sans Pro
+        
+        // Default border - darker for visibility
+        "border-gray-70",
 
         // Interactive states
-        "transition-colors duration-200",
-        "hover:border-primary-light",
+        "transition-all duration-200",
+        "hover:border-primary",
 
-        // Checked state
-        "data-[state=checked]:border-primary",
+        // Checked state - keep dark border for visibility
+        "data-[state=checked]:border-gray-70",
         "data-[state=checked]:text-primary",
 
         // Focus and disabled states from utilities

@@ -27,7 +27,7 @@ export default function Error({
         We apologize for the inconvenience. An error occurred while processing your request.
       </p>
       <div className="flex gap-4">
-        <Button onClick={reset} variant="default">
+        <Button onClick={reset} variant="primary">
           Try again
         </Button>
         <Button onClick={() => window.location.replace("/")} variant="outline">

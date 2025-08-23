@@ -156,8 +156,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {characterCount && maxLength && (
           <span
             className={cn(
-              "usa-character-count__message",
-              currentLength > maxLength && "usa-character-count__message--invalid"
+              "mt-05 block text-sm",
+              currentLength > maxLength ? "text-error font-bold" : "text-gray-60"
             )}
             aria-live="polite"
           >

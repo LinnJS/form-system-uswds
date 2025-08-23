@@ -137,8 +137,8 @@ export function FormWizard<TFieldValues extends Record<string, unknown> = Record
       setLastSaved(new Date());
 
       // Emit analytics event
-      if (window.__USWDS_ANALYTICS_HANDLER__) {
-        window.__USWDS_ANALYTICS_HANDLER__({
+      if (typeof window !== 'undefined' && (window as any).__USWDS_ANALYTICS_HANDLER__) {
+        (window as any).__USWDS_ANALYTICS_HANDLER__({
           event: `${analyticsPrefix}_save`,
           element: "form_wizard",
           metadata: {

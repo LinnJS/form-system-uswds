@@ -11,39 +11,41 @@ describe("Button Component", () => {
   it("applies default variant classes correctly", () => {
     render(<Button>Default</Button>);
     const button = screen.getByRole("button");
-    expect(button.className).toContain("usa-button");
+    expect(button.className).toContain("bg-primary");
+    expect(button.className).toContain("text-white");
   });
 
   it("applies variant classes correctly", () => {
     const { rerender } = render(<Button variant="primary">Primary</Button>);
     let button = screen.getByRole("button");
-    expect(button.className).toContain("usa-button");
+    expect(button.className).toContain("bg-primary");
 
     rerender(<Button variant="secondary">Secondary</Button>);
     button = screen.getByRole("button");
-    expect(button.className).toContain("usa-button--secondary");
+    expect(button.className).toContain("bg-secondary");
 
     rerender(<Button variant="outline">Outline</Button>);
     button = screen.getByRole("button");
-    expect(button.className).toContain("usa-button--outline");
+    expect(button.className).toContain("border-primary");
 
     rerender(<Button variant="base">Base</Button>);
     button = screen.getByRole("button");
-    expect(button.className).toContain("usa-button--base");
+    expect(button.className).toContain("bg-gray-50");
 
-    rerender(<Button variant="inverse">Inverse</Button>);
+    rerender(<Button variant="outline-inverse">Inverse</Button>);
     button = screen.getByRole("button");
-    expect(button.className).toContain("usa-button--inverse");
+    expect(button.className).toContain("border-white");
 
     rerender(<Button variant="unstyled">Unstyled</Button>);
     button = screen.getByRole("button");
-    expect(button.className).toContain("usa-button--unstyled");
+    expect(button.className).toContain("bg-transparent");
   });
 
   it("applies size classes correctly", () => {
     render(<Button size="lg">Large Button</Button>);
     const button = screen.getByRole("button");
-    expect(button.className).toContain("usa-button--big");
+    expect(button.className).toContain("text-lg");
+    expect(button.className).toContain("px-4");
   });
 
   it("handles disabled state", () => {

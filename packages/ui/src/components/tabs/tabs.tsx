@@ -46,7 +46,7 @@ const TabsTrigger = React.forwardRef<
       "mb-[-2px]", // Overlap the border
       "data-[state=active]:bg-white",
       "data-[state=active]:border-b-2",
-      "data-[state=active]:border-uswds-primary",
+      "data-[state=active]:border-primary",
       className
     )}
     {...props}
@@ -63,10 +63,10 @@ const TabsContent = React.forwardRef<
     ref={ref}
     className={cn(
       baseStyles,
-      "mt-uswds-3", // 24px margin top
-      "p-uswds-3", // 24px padding
+      "mt-3", // margin top
+      "p-3", // padding
       "bg-white",
-      "rounded-b-uswds", // Rounded bottom corners
+      "rounded-b-md", // Rounded bottom corners
       focusStyles,
       "data-[state=active]:animate-in",
       "data-[state=active]:fade-in-0",

@@ -105,8 +105,8 @@ export const ReviewTable = React.forwardRef<HTMLDivElement, ReviewTableProps>(
 
     const handleEdit = (field: ReviewField) => {
       // Emit analytics
-      if (window.__USWDS_ANALYTICS_HANDLER__) {
-        window.__USWDS_ANALYTICS_HANDLER__({
+      if (typeof window !== 'undefined' && (window as any).__USWDS_ANALYTICS_HANDLER__) {
+        (window as any).__USWDS_ANALYTICS_HANDLER__({
           event: `${analyticsPrefix}_edit`,
           element: "review_field",
           metadata: {

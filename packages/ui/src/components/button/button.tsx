@@ -6,27 +6,89 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const buttonVariants = cva(
-  // Base USWDS button class
-  "usa-button",
+  // Base button styles matching USWDS
+  [
+    "inline-flex items-center justify-center",
+    "font-sans font-bold",
+    "rounded", // 4px border radius
+    "transition-all duration-200",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+    "disabled:cursor-not-allowed disabled:opacity-50",
+    "whitespace-nowrap",
+  ],
   {
     variants: {
       variant: {
-        primary: "",  // Default usa-button styling
-        secondary: "usa-button--secondary",
-        "accent-cool": "usa-button--accent-cool",
-        "accent-warm": "usa-button--accent-warm",
-        base: "usa-button--base",
-        outline: "usa-button--outline",
-        inverse: "usa-button--inverse",
-        unstyled: "usa-button--unstyled",
+        // Primary button (default)
+        primary: [
+          "bg-primary text-white",
+          "hover:bg-primary-dark",
+          "active:bg-primary-darker",
+          "focus-visible:ring-primary",
+        ],
+        // Secondary button
+        secondary: [
+          "bg-secondary text-white",
+          "hover:bg-secondary-dark",
+          "active:bg-secondary-darker",
+          "focus-visible:ring-secondary",
+        ],
+        // Accent cool button
+        "accent-cool": [
+          "bg-accent-cool text-white",
+          "hover:bg-accent-cool-dark",
+          "active:bg-accent-cool-darker",
+          "focus-visible:ring-accent-cool",
+        ],
+        // Accent warm button
+        "accent-warm": [
+          "bg-accent-warm text-gray-90",
+          "hover:bg-accent-warm-dark hover:text-white",
+          "active:bg-accent-warm-darker active:text-white",
+          "focus-visible:ring-accent-warm",
+        ],
+        // Base button (gray)
+        base: [
+          "bg-gray-50 text-white",
+          "hover:bg-gray-60",
+          "active:bg-gray-70",
+          "focus-visible:ring-gray-60",
+        ],
+        // Outline button
+        outline: [
+          "text-primary bg-transparent",
+          "border-primary border-2",
+          "hover:bg-primary hover:text-white",
+          "active:bg-primary-dark active:text-white",
+          "focus-visible:ring-primary",
+        ],
+        // Outline inverse (for dark backgrounds)
+        "outline-inverse": [
+          "bg-transparent text-white",
+          "border-2 border-white",
+          "hover:text-primary hover:bg-white",
+          "active:bg-gray-5 active:text-primary",
+          "focus-visible:ring-white",
+        ],
+        // Unstyled button (minimal styling)
+        unstyled: [
+          "text-primary bg-transparent",
+          "hover:underline",
+          "focus-visible:ring-primary",
+          "p-0",
+        ],
       },
       size: {
-        sm: "", // Default size
-        md: "", // Default size
-        lg: "usa-button--big", // Large/big button
+        // Small size
+        sm: "px-2 py-1 text-sm", // 12px padding horizontal, 8px vertical
+        // Medium size (default)
+        md: "py-105 px-3 text-base", // 16px padding horizontal, 12px vertical
+        // Large/big button
+        lg: "px-4 py-2 text-lg", // 24px padding horizontal, 16px vertical
       },
       fullWidth: {
-        true: "width-full",
+        true: "w-full",
+        false: "",
       },
     },
     defaultVariants: {
@@ -68,21 +130,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       children,
       type = "button",
-      asChild = false,
+      asChild: _asChild = false,
       ...props
     },
     ref
   ) => {
-    const _Comp = asChild ? React.Fragment : "button";
-    const _buttonProps = asChild ? {} : {
-      ref,
-      type,
-      disabled: disabled ?? loading,
-      "aria-disabled": disabled ?? loading,
-      "aria-busy": loading,
-      ...props,
-    };
-
     const content = (
       <>
         {/* Loading spinner */}
@@ -124,9 +176,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
       </>
     );
-
-    // For now, asChild is not fully supported - just render as button
-    // This can be enhanced later with proper slot implementation
 
     return (
       <button

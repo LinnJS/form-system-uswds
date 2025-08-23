@@ -20,7 +20,7 @@ const Switch = React.forwardRef<
       "peer inline-flex h-6 w-11",
       "shrink-0 cursor-pointer",
       "items-center",
-      "rounded-uswds-pill", // Full rounded from USWDS
+      "rounded-full", // Full rounded (pill shape)
       "border-2 border-transparent",
       "font-sans", // USWDS Source Sans Pro
 
@@ -48,7 +48,7 @@ const Switch = React.forwardRef<
         "block size-5",
         "rounded-full",
         "bg-white",
-        "shadow-uswds-2", // Slightly more prominent shadow
+        "shadow-2", // Slightly more prominent shadow
         "ring-0",
         "transition-transform duration-200",
         "data-[state=checked]:translate-x-5",

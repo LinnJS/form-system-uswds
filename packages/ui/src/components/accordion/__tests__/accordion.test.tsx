@@ -16,15 +16,15 @@ describe("Accordion Component", () => {
       expect(screen.getByText("Second Item")).toBeInTheDocument();
     });
 
-    it("applies usa-accordion class", () => {
+    it("applies base classes", () => {
       const { container } = render(
         <Accordion>
           <AccordionItem heading="Item">Content</AccordionItem>
         </Accordion>
       );
       
-      const accordion = container.querySelector(".usa-accordion");
-      expect(accordion).toBeInTheDocument();
+      const accordion = container.firstElementChild;
+      expect(accordion).toHaveClass("font-sans", "divide-y", "divide-gray-30");
     });
 
     it("applies bordered variant", () => {
@@ -34,8 +34,8 @@ describe("Accordion Component", () => {
         </Accordion>
       );
       
-      const accordion = container.querySelector(".usa-accordion");
-      expect(accordion).toHaveClass("usa-accordion--bordered");
+      const accordion = container.firstElementChild;
+      expect(accordion).toHaveClass("border", "border-gray-30", "rounded");
     });
 
     it("applies custom className", () => {
@@ -45,7 +45,7 @@ describe("Accordion Component", () => {
         </Accordion>
       );
       
-      const accordion = container.querySelector(".usa-accordion");
+      const accordion = container.firstElementChild;
       expect(accordion).toHaveClass("custom-accordion");
     });
   });
@@ -71,11 +71,11 @@ describe("Accordion Component", () => {
       );
       
       const button = screen.getByRole("button", { name: "Item" });
-      expect(button).toHaveClass("usa-accordion__button");
+      expect(button).toHaveClass("flex", "w-full", "items-center", "justify-between");
     });
 
     it("renders content with correct classes", () => {
-      const { container } = render(
+      render(
         <Accordion defaultExpanded={["item1"]}>
           <AccordionItem heading="Item" itemId="item1">
             <div data-testid="content">Content</div>
@@ -83,33 +83,37 @@ describe("Accordion Component", () => {
         </Accordion>
       );
       
-      const content = container.querySelector(".usa-accordion__content");
+      const content = screen.getByTestId("content").parentElement;
       expect(content).toBeInTheDocument();
-      expect(content).toHaveClass("usa-prose");
+      expect(content).toHaveClass("p-3", "text-gray-90");
     });
   });
 
   describe("Expand/Collapse Behavior", () => {
     it("starts with items collapsed by default", () => {
-      const { container } = render(
+      render(
         <Accordion>
-          <AccordionItem heading="Item">Content</AccordionItem>
+          <AccordionItem heading="Item">
+            <div data-testid="content">Content</div>
+          </AccordionItem>
         </Accordion>
       );
       
-      const content = container.querySelector(".usa-accordion__content");
+      const content = screen.getByTestId("content").parentElement;
       expect(content).toHaveAttribute("hidden");
     });
 
     it("expands item when clicked", () => {
-      const { container } = render(
+      render(
         <Accordion>
-          <AccordionItem heading="Item">Content</AccordionItem>
+          <AccordionItem heading="Item">
+            <div data-testid="content">Content</div>
+          </AccordionItem>
         </Accordion>
       );
       
       const button = screen.getByRole("button", { name: "Item" });
-      const content = container.querySelector(".usa-accordion__content");
+      const content = screen.getByTestId("content").parentElement;
       
       fireEvent.click(button);
       expect(content).not.toHaveAttribute("hidden");
@@ -117,14 +121,16 @@ describe("Accordion Component", () => {
     });
 
     it("collapses expanded item when clicked again", () => {
-      const { container } = render(
+      render(
         <Accordion defaultExpanded={["Item"]}>
-          <AccordionItem heading="Item">Content</AccordionItem>
+          <AccordionItem heading="Item">
+            <div data-testid="content">Content</div>
+          </AccordionItem>
         </Accordion>
       );
       
       const button = screen.getByRole("button", { name: "Item" });
-      const content = container.querySelector(".usa-accordion__content");
+      const content = screen.getByTestId("content").parentElement;
       
       // Initially expanded
       expect(content).not.toHaveAttribute("hidden");
@@ -137,65 +143,84 @@ describe("Accordion Component", () => {
     });
 
     it("respects defaultExpanded prop", () => {
-      const { container } = render(
+      render(
         <Accordion defaultExpanded={["item1", "item2"]}>
-          <AccordionItem heading="Item 1" itemId="item1">Content 1</AccordionItem>
-          <AccordionItem heading="Item 2" itemId="item2">Content 2</AccordionItem>
-          <AccordionItem heading="Item 3" itemId="item3">Content 3</AccordionItem>
+          <AccordionItem heading="Item 1" itemId="item1">
+            <div data-testid="content1">Content 1</div>
+          </AccordionItem>
+          <AccordionItem heading="Item 2" itemId="item2">
+            <div data-testid="content2">Content 2</div>
+          </AccordionItem>
+          <AccordionItem heading="Item 3" itemId="item3">
+            <div data-testid="content3">Content 3</div>
+          </AccordionItem>
         </Accordion>
       );
       
-      const contents = container.querySelectorAll(".usa-accordion__content");
-      expect(contents[0]).not.toHaveAttribute("hidden");
-      expect(contents[1]).not.toHaveAttribute("hidden");
-      expect(contents[2]).toHaveAttribute("hidden");
+      const content1 = screen.getByTestId("content1").parentElement;
+      const content2 = screen.getByTestId("content2").parentElement;
+      const content3 = screen.getByTestId("content3").parentElement;
+      
+      expect(content1).not.toHaveAttribute("hidden");
+      expect(content2).not.toHaveAttribute("hidden");
+      expect(content3).toHaveAttribute("hidden");
     });
   });
 
   describe("Multiselectable Behavior", () => {
     it("allows only one item expanded when not multiselectable", () => {
-      const { container } = render(
+      render(
         <Accordion>
-          <AccordionItem heading="Item 1">Content 1</AccordionItem>
-          <AccordionItem heading="Item 2">Content 2</AccordionItem>
+          <AccordionItem heading="Item 1">
+            <div data-testid="content1">Content 1</div>
+          </AccordionItem>
+          <AccordionItem heading="Item 2">
+            <div data-testid="content2">Content 2</div>
+          </AccordionItem>
         </Accordion>
       );
       
       const button1 = screen.getByRole("button", { name: "Item 1" });
       const button2 = screen.getByRole("button", { name: "Item 2" });
-      const contents = container.querySelectorAll(".usa-accordion__content");
+      const content1 = screen.getByTestId("content1").parentElement;
+      const content2 = screen.getByTestId("content2").parentElement;
       
       // Expand first item
       fireEvent.click(button1);
-      expect(contents[0]).not.toHaveAttribute("hidden");
-      expect(contents[1]).toHaveAttribute("hidden");
+      expect(content1).not.toHaveAttribute("hidden");
+      expect(content2).toHaveAttribute("hidden");
       
       // Expand second item (should collapse first)
       fireEvent.click(button2);
-      expect(contents[0]).toHaveAttribute("hidden");
-      expect(contents[1]).not.toHaveAttribute("hidden");
+      expect(content1).toHaveAttribute("hidden");
+      expect(content2).not.toHaveAttribute("hidden");
     });
 
     it("allows multiple items expanded when multiselectable", () => {
-      const { container } = render(
+      render(
         <Accordion multiselectable>
-          <AccordionItem heading="Item 1">Content 1</AccordionItem>
-          <AccordionItem heading="Item 2">Content 2</AccordionItem>
+          <AccordionItem heading="Item 1">
+            <div data-testid="content1">Content 1</div>
+          </AccordionItem>
+          <AccordionItem heading="Item 2">
+            <div data-testid="content2">Content 2</div>
+          </AccordionItem>
         </Accordion>
       );
       
       const button1 = screen.getByRole("button", { name: "Item 1" });
       const button2 = screen.getByRole("button", { name: "Item 2" });
-      const contents = container.querySelectorAll(".usa-accordion__content");
+      const content1 = screen.getByTestId("content1").parentElement;
+      const content2 = screen.getByTestId("content2").parentElement;
       
       // Expand first item
       fireEvent.click(button1);
-      expect(contents[0]).not.toHaveAttribute("hidden");
+      expect(content1).not.toHaveAttribute("hidden");
       
       // Expand second item (should not collapse first)
       fireEvent.click(button2);
-      expect(contents[0]).not.toHaveAttribute("hidden");
-      expect(contents[1]).not.toHaveAttribute("hidden");
+      expect(content1).not.toHaveAttribute("hidden");
+      expect(content2).not.toHaveAttribute("hidden");
     });
 
     it("sets data-allow-multiple attribute when multiselectable", () => {
@@ -205,7 +230,7 @@ describe("Accordion Component", () => {
         </Accordion>
       );
       
-      const accordion = container.querySelector(".usa-accordion");
+      const accordion = container.firstElementChild;
       expect(accordion).toHaveAttribute("data-allow-multiple");
     });
   });
@@ -226,28 +251,32 @@ describe("Accordion Component", () => {
     });
 
     it("has correct aria-controls attribute", () => {
-      const { container } = render(
+      render(
         <Accordion>
-          <AccordionItem heading="Item" itemId="test-item">Content</AccordionItem>
+          <AccordionItem heading="Item" itemId="test-item">
+            <div data-testid="content">Content</div>
+          </AccordionItem>
         </Accordion>
       );
       
       const button = screen.getByRole("button", { name: "Item" });
-      const content = container.querySelector(".usa-accordion__content");
+      const content = screen.getByTestId("content").parentElement;
       const contentId = content?.getAttribute("id");
       
       expect(button).toHaveAttribute("aria-controls", contentId);
     });
 
     it("has correct aria-labelledby attribute on content", () => {
-      const { container } = render(
+      render(
         <Accordion>
-          <AccordionItem heading="Item" itemId="test-item">Content</AccordionItem>
+          <AccordionItem heading="Item" itemId="test-item">
+            <div data-testid="content">Content</div>
+          </AccordionItem>
         </Accordion>
       );
       
       const button = screen.getByRole("button", { name: "Item" });
-      const content = container.querySelector(".usa-accordion__content");
+      const content = screen.getByTestId("content").parentElement;
       const buttonId = button.getAttribute("id");
       
       expect(content).toHaveAttribute("aria-labelledby", buttonId);
@@ -264,7 +293,7 @@ describe("Accordion Component", () => {
       );
       
       expect(ref).toBeInstanceOf(HTMLDivElement);
-      expect(ref).toHaveClass("usa-accordion");
+      expect(ref).toHaveClass("font-sans");
     });
 
     it("forwards ref to accordion item button", () => {
@@ -278,7 +307,7 @@ describe("Accordion Component", () => {
       );
       
       expect(ref).toBeInstanceOf(HTMLButtonElement);
-      expect(ref).toHaveClass("usa-accordion__button");
+      expect(ref).toHaveClass("flex", "w-full");
     });
   });
 });

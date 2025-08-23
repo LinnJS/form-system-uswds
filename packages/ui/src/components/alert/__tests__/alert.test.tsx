@@ -7,37 +7,51 @@ describe("Alert Component", () => {
     it("renders with default info variant", () => {
       render(<Alert>Information message</Alert>);
       const alert = screen.getByRole("region");
-      expect(alert).toHaveClass("usa-alert", "usa-alert--info");
+      expect(alert).toHaveClass("bg-info-lighter", "border-info");
       expect(alert).toHaveTextContent("Information message");
     });
 
     it("renders all variants correctly", () => {
-      const variants = ["info", "warning", "error", "success", "emergency"] as const;
+      const { rerender } = render(<Alert variant="info">Test</Alert>);
+      let alert = screen.getByRole("region");
+      expect(alert).toHaveClass("bg-info-lighter", "border-info");
       
-      variants.forEach(variant => {
-        const { container } = render(<Alert variant={variant}>Test</Alert>);
-        const alert = container.querySelector(".usa-alert");
-        expect(alert).toHaveClass(`usa-alert--${variant}`);
-      });
+      rerender(<Alert variant="warning">Test</Alert>);
+      alert = screen.getByRole("region");
+      expect(alert).toHaveClass("bg-warning-lighter", "border-warning");
+      
+      rerender(<Alert variant="error">Test</Alert>);
+      alert = screen.getByRole("alert");
+      expect(alert).toHaveClass("bg-error-lighter", "border-error-dark");
+      
+      rerender(<Alert variant="success">Test</Alert>);
+      alert = screen.getByRole("status");
+      expect(alert).toHaveClass("bg-success-lighter", "border-success");
+      
+      rerender(<Alert variant="emergency">Test</Alert>);
+      alert = screen.getByRole("region");
+      expect(alert).toHaveClass("bg-emergency", "border-emergency-dark");
     });
 
     it("renders with heading", () => {
       render(<Alert heading="Important Notice">Content</Alert>);
       const heading = screen.getByRole("heading", { level: 3 });
-      expect(heading).toHaveClass("usa-alert__heading");
+      expect(heading).toHaveClass("font-bold", "text-lg");
       expect(heading).toHaveTextContent("Important Notice");
     });
 
     it("renders with slim modifier", () => {
       render(<Alert slim>Slim alert</Alert>);
       const alert = screen.getByRole("region");
-      expect(alert).toHaveClass("usa-alert--slim");
+      expect(alert).toHaveClass("p-2"); // Slim padding
     });
 
     it("renders with no-icon modifier", () => {
       render(<Alert noIcon>No icon alert</Alert>);
       const alert = screen.getByRole("region");
-      expect(alert).toHaveClass("usa-alert--no-icon");
+      // Icon should not be present
+      const icon = alert.querySelector('span[aria-hidden="true"]');
+      expect(icon).not.toBeInTheDocument();
     });
   });
 
@@ -124,34 +138,39 @@ describe("SiteAlert Component", () => {
   it("renders with correct structure", () => {
     render(<SiteAlert>Site-wide alert</SiteAlert>);
     const section = screen.getByRole("region", { name: /site alert/i });
-    expect(section).toHaveClass("usa-site-alert");
+    expect(section).toHaveClass("w-full", "font-sans");
   });
 
   it("renders all variants correctly", () => {
-    const variants = ["info", "warning", "error", "success", "emergency"] as const;
+    const { rerender } = render(<SiteAlert variant="info">Test</SiteAlert>);
+    let section = screen.getByRole("region", { name: /site alert/i });
+    expect(section).toHaveClass("bg-info-lighter", "text-gray-90");
     
-    variants.forEach(variant => {
-      const { container } = render(<SiteAlert variant={variant}>Test</SiteAlert>);
-      const alert = container.querySelector(".usa-site-alert");
-      const expectedClass = variant === "error" || variant === "emergency" 
-        ? "usa-site-alert--emergency" 
-        : "usa-site-alert--info";
-      expect(alert).toHaveClass(expectedClass);
-    });
+    rerender(<SiteAlert variant="warning">Test</SiteAlert>);
+    section = screen.getByRole("region", { name: /site alert/i });
+    expect(section).toHaveClass("bg-warning-lighter", "text-gray-90");
+    
+    rerender(<SiteAlert variant="error">Test</SiteAlert>);
+    section = screen.getByRole("region", { name: /site alert/i });
+    expect(section).toHaveClass("bg-emergency", "text-white");
+    
+    rerender(<SiteAlert variant="emergency">Test</SiteAlert>);
+    section = screen.getByRole("region", { name: /site alert/i });
+    expect(section).toHaveClass("bg-emergency", "text-white");
   });
 
   it("renders with slim modifier", () => {
-    const { container } = render(<SiteAlert slim>Slim site alert</SiteAlert>);
-    const alert = container.querySelector(".usa-site-alert");
-    expect(alert).toHaveClass("usa-site-alert--slim");
+    render(<SiteAlert slim>Slim site alert</SiteAlert>);
+    const section = screen.getByRole("region", { name: /site alert/i });
+    expect(section).toHaveClass("py-2", "px-4"); // Slim padding
   });
 
   it("applies custom className", () => {
-    const { container } = render(
+    render(
       <SiteAlert className="custom-site-alert">Custom</SiteAlert>
     );
-    const alert = container.querySelector(".usa-site-alert");
-    expect(alert).toHaveClass("custom-site-alert");
+    const section = screen.getByRole("region", { name: /site alert/i });
+    expect(section).toHaveClass("custom-site-alert");
   });
 
   it("forwards ref correctly", () => {

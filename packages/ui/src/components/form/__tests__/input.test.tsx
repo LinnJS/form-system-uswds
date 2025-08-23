@@ -119,7 +119,7 @@ describe("Input Component", () => {
     it("shows invalid state when over limit", () => {
       render(<Input characterCount maxLength={5} value="too long" />);
       const message = screen.getByText(/-\d+ characters remaining/);
-      expect(message).toHaveClass("usa-character-count__message--invalid");
+      expect(message).toHaveClass("text-error", "font-bold");
     });
   });
 
